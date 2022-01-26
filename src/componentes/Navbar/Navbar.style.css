@@ -7,6 +7,7 @@
 
 #basic-nav-dropdown {
   font-size: 16px;
+
   /* background-color: #f0e9; */
 }
 
@@ -67,4 +68,20 @@
 
 #signup-link {
   font-size: 14px;
+}
+
+.dropdown-item {
+  font-size: 14px;
+}
+
+#categories-items:hover {
+}
+
+#categories-items:active {
+  text-decoration: none;
+  background-color: #f0e9f1;
+}
+
+#minhaconta-items:active {
+  background-color: #f0e9f1;
 }

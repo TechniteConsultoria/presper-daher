@@ -6,6 +6,8 @@ import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
 import "./Home.style.css";
 
+import cursos from "../../data/cursos";
+
 function Home() {
   const cursosPopulares = [
     {
@@ -209,16 +211,71 @@ function Home() {
             </Carousel>
           </Row>
         </Container>
-        <Container fluid="md" className="courses-container">
-          <Container fluid="md">
+        <br />
+        <Container>
+          <div className="container-item">
             <Row>
               <Col>
-                <h2>Cursos de Medicina</h2>
+                <h2>Cursos populares</h2>
                 <p>Os melhores cursos para você estudar quando e onde quiser</p>
               </Col>
             </Row>
-          </Container>
-          <Container fluid="md">
+          </div>
+          <hr />
+
+          <div className="container-item">
+            <div className="courses-container">
+              {cursos?.map((item) => (
+                <CardComponent
+                  key={item.id}
+                  img={item.img}
+                  title={item.title}
+                  author={item.author}
+                  rating={item.rating}
+                  price={item.price}
+                  sold={item.sold}
+                  // onClick={() => {
+                  //   setCourse(item);
+                  //   showEditCourseModal(true);
+                  // }}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="container-item">
+            <Row>
+              <Col>
+                <h2>Depoimentos</h2>
+                <p>Veja o que estão falando sobre nós</p>
+              </Col>
+            </Row>
+          </div>
+          <hr />
+          <div className="container-item">
+            <div>
+              {comments?.map((item) => (
+                <Row>
+                  <Col key={item.id}>
+                    <CommentsCard
+                      img={item.img}
+                      author={item.author}
+                      text={item.text}
+                      onClick={() =>
+                        console.log("Clicou no card de ID:", item.id)
+                      }
+                    />
+                  </Col>
+                </Row>
+              ))}
+            </div>
+          </div>
+        </Container>
+
+        <div className="container-item">
+          {/* <Container fluid="md"> */}
+
+          {/* </Container> */}
+          {/* <Container fluid="md">
             <Row>
               <Nav variant="tabs" defaultActiveKey="link-1">
                 <Nav.Item>
@@ -299,8 +356,8 @@ function Home() {
                 </Col>
               </Row>
             ))}
-          </Container>
-        </Container>
+          </Container> */}
+        </div>
       </div>
     </>
   );

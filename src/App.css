@@ -13,8 +13,9 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+
   /* background: #cdb2cf; */
-  background-color: #f0e9f1;
+  /* background-color: #f0e9f1; */
 
   background-size: cover;
   background-position: center;

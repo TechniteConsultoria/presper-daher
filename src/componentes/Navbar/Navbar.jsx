@@ -34,17 +34,18 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
+            <Navbar.Brand href="/" id="nav-brand">
+              Presper Daher
+            </Navbar.Brand>
+
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="navbar-items ">
-                <Navbar.Brand href="/" id="nav-brand">
-                  Presper Daher
-                </Navbar.Brand>
                 <Nav className="me-auto" id="teste">
                   <NavDropdown title="Categorias" id="basic-nav-dropdown">
                     {categorias.map((item) => {
                       return (
                         <li key={item.id}>
-                          <NavDropdown.Item href={`/`}>
+                          <NavDropdown.Item href={`/`} id="categories-items">
                             {item.nome}
                           </NavDropdown.Item>
                         </li>
@@ -88,19 +89,30 @@ function NavbarComponent() {
                     </Nav.Link>
                   ) : (
                     <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
-                      <NavDropdown.Item href={`/perfil`}>
+                      <NavDropdown.Item href={`/perfil`} id="minhaconta-items">
                         Perfil
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`/my-courses`}>
+                      <NavDropdown.Item
+                        href={`/my-courses`}
+                        id="minhaconta-items"
+                      >
                         Meus Cursos
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`/my-certificates`}>
+                      <NavDropdown.Item
+                        href={`/my-certificates`}
+                        id="minhaconta-items"
+                      >
                         Certificados
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`/my-payment-info`}>
+                      <NavDropdown.Item
+                        href={`/my-payment-info`}
+                        id="minhaconta-items"
+                      >
                         Formas de Pagamento
                       </NavDropdown.Item>
-                      <NavDropdown.Item href={`/`}>Sair</NavDropdown.Item>
+                      <NavDropdown.Item href={`/`} id="minhaconta-items">
+                        Sair
+                      </NavDropdown.Item>
                     </NavDropdown>
                   )}
                 </Nav>
