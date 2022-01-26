@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
+/* * {
+  font-family: "Poppins", sans-serif;
+} */
+
+/* body {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background: linear-gradient(
+    270deg,
+    #c4c4c4 9.21%,
+    rgba(196, 196, 196, 0) 85.55%
+  );
+  background-color: #cdb2cf;
+} */
+
+.container-signup {
+  /* height: 100vh; */
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  max-width: 100%;
+
+  /* background-color: #cdb2cf; */
+  background-color: #f0e9f1;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  width: 400px;
+}
+
+.title-card {
+  text-align: center;
+  font-family: Poppins;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 45px;
+  font-feature-settings: "pnum" on, "lnum" on;
+  color: #000000;
+}
+
+.subtitle {
+  color: #666666;
+  font-size: 15px;
+}
+
+.form {
+  border: none;
+  border-bottom: 0.5px solid #727272;
+  margin: 15px 0px;
+  outline: none;
+  width: 100%;
+  background: rgba(255, 255, 255, 0);
+}
+
+label {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  /* identical to box height, or 138% */
+  letter-spacing: -0.078px;
+
+  color: #0a0a0a;
+}
+
+a {
+  font-size: 12px;
+}
+
+.link-reset-password {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  /* identical to box height, or 138% */
+
+  letter-spacing: -0.078px;
+
+  color: #0a0a0a;
+}
+
+.btn-submit {
+  color: white;
+  width: 384px;
+  height: 60px;
+  background: #d51072;
+  border-radius: 10px;
+  border: 0px solid;
+  margin-left: 60px;
+}
+
+.register {
+  text-align: center;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  margin-top: 20px;
+  /* identical to box height, or 24px */
+
+  color: #666666;
+}
+/*
+.bg-register{
+    background-image: url("../img/backgroud-register.png");
+    background-size: cover;
+    background-position: center;
+}
+.bg-reset{
+    background-image: url("../img/backgroud-reset.png");
+    background-size: cover;
+    background-position: center;
+}
+*/
