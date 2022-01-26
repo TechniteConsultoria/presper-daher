@@ -1,0 +1,36 @@
+.credit-cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  /* background-color: #987; */
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+
+.card-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  /* background-color: #987; */
+  margin-bottom: 20px;
+  padding-left: 24px;
+}
+
+.btn-del {
+  margin: 8px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  font-size: 16px;
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.btn-del:hover {
+  background-color: #fff;
+  color: rgb(191, 46, 60);
+}
