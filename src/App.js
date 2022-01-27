@@ -36,6 +36,7 @@ function App() {
         <Route path="/my-certificates" element={<MyCertificates />} />
         <Route path="/my-payment-info" element={<MyPaymentInfo />} />
         <Route path="/admin" element={<Admin />} />
+        {/* 8 */}
       </Routes>
 
       <div>
