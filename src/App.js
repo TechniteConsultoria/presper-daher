@@ -35,9 +35,7 @@ function App() {
         <Route path="/my-courses" element={<MyCourses />}></Route>
         <Route path="/my-certificates" element={<MyCertificates />} />
         <Route path="/my-payment-info" element={<MyPaymentInfo />} />
-        <Route path="/admin" element={<Admin />}>
-          {/* <Route path="/admin/cursos" element={<Courses />} /> */}
-        </Route>
+        <Route path="/admin" element={<Admin />} />
       </Routes>
 
       <div>
