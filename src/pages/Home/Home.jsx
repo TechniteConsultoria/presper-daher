@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Carousel, Col, Nav } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Carousel,
+  Col,
+  Form,
+  Button,
+  Alert,
+} from "react-bootstrap";
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
@@ -148,6 +156,13 @@ function Home() {
     },
   ];
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [msgSent, isMsgSent] = useState(false);
+  const [msgResult, isMsgResult] = useState(false);
+
   const [coursesList, setCoursesList] = useState([]);
 
   const navigate = useNavigate();
@@ -156,8 +171,23 @@ function Home() {
     navigate(`/course/${id}`);
   }
 
+  function handleSubmit() {
+    const data = {
+      name: name,
+      email: email,
+      message: message,
+    };
+
+    isMsgSent(true);
+    isMsgResult(true);
+  }
+
   useEffect(() => {
     setCoursesList(cursosPopulares);
+    setName("");
+    setEmail("");
+    setMessage("");
+    isMsgSent(false);
   }, []);
 
   return (
@@ -225,7 +255,7 @@ function Home() {
 
           <div className="container-item">
             <div className="courses-container">
-              {cursos?.map((item) => (
+              {cursos?.map((item, id) => (
                 <CardComponent
                   key={item.id}
                   img={item.img}
@@ -242,6 +272,7 @@ function Home() {
               ))}
             </div>
           </div>
+
           <div className="container-item">
             <Row>
               <Col>
@@ -254,8 +285,8 @@ function Home() {
           <div className="container-item">
             <div>
               {comments?.map((item) => (
-                <Row>
-                  <Col key={item.id}>
+                <Row key={item.id}>
+                  <Col>
                     <CommentsCard
                       img={item.img}
                       author={item.author}
@@ -269,95 +300,86 @@ function Home() {
               ))}
             </div>
           </div>
-        </Container>
-
-        <div className="container-item">
-          {/* <Container fluid="md"> */}
-
-          {/* </Container> */}
-          {/* <Container fluid="md">
-            <Row>
-              <Nav variant="tabs" defaultActiveKey="link-1">
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="link-1"
-                    onClick={() => setCoursesList(cursosPopulares)}
-                    className="nav-link-courses"
-                  >
-                    Populares
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="link-2"
-                    onClick={() => setCoursesList(cursosNovos)}
-                    className="nav-link-courses"
-                  >
-                    Novos
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="link-3"
-                    onClick={() => setCoursesList(cursosBemAvaliados)}
-                    className="nav-link-courses"
-                  >
-                    Bem avaliados
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Row>
-          </Container>
-          <Container fluid style={{ width: "100%" }}>
-            <Row
-            // style={{
-            //   width: "280px",
-            //   height: "auto",
-            //   display: "flex",
-            //   flexDirection: "row",
-            // }}
-            >
-              {coursesList?.map((item) => (
-                <Col sm={3} key={item.id}>
-                  <CardComponent
-                    img={item.img}
-                    title={item.title}
-                    author={item.author}
-                    rating={item.rating}
-                    price={item.price}
-                    onClick={() => handleClick(item.id)}
-                  />
-                </Col>
-              ))}
-            </Row>
-          </Container>
-
-          <Container fluid="md" style={{ marginTop: "100px" }}>
+          <div className="container-item" id="contact-us">
             <Row>
               <Col>
-                <h2>Depoimentos</h2>
-                <p>Veja o que estão falando sobre nós</p>
-                <hr></hr>
+                <h2>Fale Conosco</h2>
+                <p>Entre em contato e nos deixe saber o que está achando</p>
               </Col>
             </Row>
-          </Container>
-          <Container fluid="md">
-            {comments?.map((item) => (
-              <Row>
-                <Col key={item.id}>
-                  <CommentsCard
-                    img={item.img}
-                    author={item.author}
-                    text={item.text}
-                    onClick={() =>
-                      console.log("Clicou no card de ID:", item.id)
-                    }
+          </div>
+          <div className="contact-us-container">
+            <div id="form">
+              <Form
+                // action="submit"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+
+                  // setVideosList();
+                }}
+              >
+                <Form.Group className="mb-3">
+                  <Form.Label column sm="2">
+                    Nome
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Nome"
+                    onChange={(e) => setName(e.target.value)}
+                    required
                   />
-                </Col>
-              </Row>
-            ))}
-          </Container> */}
-        </div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label column sm="2">
+                    Email
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
+                  <Form.Label column sm="2">
+                    Mensagem
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Mensagem"
+                    onChange={(e) => setMessage(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+                <Button
+                  style={{
+                    backgroundColor: "#14B8A6",
+                    border: "none",
+                    boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
+                  }}
+                  type="submit"
+                >
+                  Enviar
+                </Button>
+              </Form>
+              <br />
+              {msgSent && (
+                <Alert variant={msgResult ? "success" : "danger"}>
+                  {msgResult
+                    ? "Sua mensagem foi enviada com sucesso!"
+                    : "Ops! Ocorreu um erro ao enviar sua mensagem. Tente novamente."}
+                </Alert>
+              )}
+            </div>
+          </div>
+        </Container>
+
+        <div className="container-item"></div>
       </div>
     </>
   );
