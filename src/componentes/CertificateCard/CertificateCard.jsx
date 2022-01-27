@@ -3,9 +3,7 @@ import { Card } from "react-bootstrap";
 
 import { BsDownload } from "react-icons/bs";
 
-import { PDFDocument, rgb, StandardFonts, degrees } from "pdf-lib";
-
-const certificate = "../../assets/cert.jpg";
+// const certificate = "../../assets/cert.jpg";
 
 function CertificateCard(props) {
   async function generatePDF(name) {
@@ -22,14 +20,14 @@ function CertificateCard(props) {
           borderRadius: "4px 4px 4px 4px",
           boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
           marginTop: "16px",
-          cursor: "pointer",
+          // cursor: "pointer",
         }}
         // onClick={this.state.onClick}
       >
         <Card.Img
           variant="top"
           src="https://m.media-amazon.com/images/I/81W5nfYYxoL._AC_SX679_.jpg"
-          style={{ borderRadius: "4px 4px 0px 0px", height: "120px" }}
+          style={{ borderRadius: "4px 4px 0px 0px", height: "160px" }}
         />
 
         <Card.Body>
@@ -44,6 +42,7 @@ function CertificateCard(props) {
             }}
           >
             <BsDownload
+              style={{ fontSize: "24px", cursor: "pointer" }}
               onClick={() => {
                 console.log("Download Certificate");
                 generatePDF("teste");
