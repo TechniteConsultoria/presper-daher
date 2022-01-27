@@ -1,6 +1,8 @@
 import React from "react";
 import { Col, Card } from "react-bootstrap";
 
+import "./CommentsCard.styles.css";
+
 export default class CommentsCard extends React.Component {
   constructor(props) {
     super(props);
@@ -15,33 +17,19 @@ export default class CommentsCard extends React.Component {
   render() {
     return (
       <>
-        <Col>
-          <Card
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-              border: "none",
-            }}
-          >
-            <Card.Img
-              variant="top"
-              src={this.state.img}
-              style={{
-                borderRadius: "50%",
-                height: "112px",
-                width: "112px",
-                boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
-              }}
-            />
+        <Card id="card">
+          <div id="img">
+            {" "}
+            <Card.Img id="card-img" variant="top" src={this.state.img} />
+          </div>
+          <div>
             <Card.Body>
               <Card.Title>{this.state.author}</Card.Title>
               <Card.Text>{this.state.text}</Card.Text>
             </Card.Body>
-          </Card>
-          <hr />
-        </Col>
+          </div>
+        </Card>
+        <hr />
       </>
     );
   }
