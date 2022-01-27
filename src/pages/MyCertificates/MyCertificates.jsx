@@ -11,8 +11,10 @@ import CertificateCard from "../../componentes/CertificateCard/CertificateCard";
 
 import "./MyCertificates.styles.css";
 
+import cursos from "../../data/cursos";
+
 function MyCertificates() {
-  const certificates = [];
+  const certificates = cursos;
 
   const [classificar, setClassificar] = useState("Título: A a Z");
   const [filtro, setFiltro] = useState("Sem filtro");
@@ -136,7 +138,7 @@ function MyCertificates() {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-            <div className="filtro-item">
+            {/* <div className="filtro-item">
               <Form.Label column sm="10">
                 Filtrar por categoria
               </Form.Label>
@@ -157,19 +159,19 @@ function MyCertificates() {
                   <Dropdown.Item onClick={() => setFiltro("Sem filtro")}>
                     Sem filtro
                   </Dropdown.Item>
-                  {/* {certificates?.map((item, id) => {
+                  {certificates?.map((item, id) => {
                     return (
                       <Dropdown.Item
                         onClick={() => setFiltro(item.value)}
                         key={id}
                       >
-                        {item.value}
+                        {item.category}
                       </Dropdown.Item>
                     );
-                  })} */}
+                  })}
                 </Dropdown.Menu>
               </Dropdown>
-            </div>
+            </div> */}
           </Container>
         </Container>
         <div className="container-item" id="cursos-list">
@@ -185,15 +187,6 @@ function MyCertificates() {
                 }}
               />
             ))}
-            <CertificateCard
-              key={1}
-              title={"Título"}
-              author={"Autor"}
-              onClick={() => {
-                //   setCourse(item);
-                //   showEditCourseModal(true);
-              }}
-            />
           </div>
         </div>
       </Container>
