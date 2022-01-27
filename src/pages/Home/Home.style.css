@@ -42,3 +42,20 @@
   padding: 0;
   margin-bottom: 40px;
 }
+
+.contact-us-container {
+  align-items: center;
+  /* display: flex; */
+  /* flex-direction: row; */
+  padding: 24px;
+  height: auto;
+  width: 100%;
+}
+
+#form {
+  max-width: 400px;
+}
+
+#contact-us {
+  margin-bottom: -32px;
+}
