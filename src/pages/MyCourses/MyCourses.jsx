@@ -92,7 +92,7 @@ function MyCourses() {
                 Pesquisar
               </Form.Label>
               <Form
-                className="search-bar"
+                // className="search-bar"
                 onSubmit={(e) => {
                   e.preventDefault();
                 }}

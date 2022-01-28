@@ -86,17 +86,17 @@ function MyCertificates() {
             </Row>
           </div>
           <hr></hr>
-          <Container className="container-filtro">
+          <div className="container-filtro">
             <div className="filtro-item">
               <Form.Label column sm="6">
                 Pesquisar
               </Form.Label>
               <Form className="search-bar">
                 <FormControl
-                  size="sm"
+                  // size="sm"
                   type="search"
                   placeholder="Pesquisar cursos"
-                  className="me-2"
+                  className="search-bar"
                   aria-label="Search"
                   onChange={(e) => {
                     setBuscarCurso(e.target.value);
@@ -108,17 +108,17 @@ function MyCertificates() {
               </Form>
             </div>
             <div className="filtro-item">
-              <Form.Label column sm="8">
+              <Form.Label column sm="11">
                 Classificar por
               </Form.Label>
               <Dropdown>
                 <Dropdown.Toggle
-                  size="sm"
                   style={{
                     backgroundColor: "#fff",
                     border: "1px solid rgb(108, 117, 125, 0.3)",
                     color: "#000",
-                    width: "200px",
+                    width: "160px",
+                    marginLeft: "0px",
                   }}
                 >
                   {classificar}
@@ -172,7 +172,7 @@ function MyCertificates() {
                 </Dropdown.Menu>
               </Dropdown>
             </div> */}
-          </Container>
+          </div>
         </Container>
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
