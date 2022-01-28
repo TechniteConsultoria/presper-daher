@@ -61,9 +61,10 @@
 }
 
 .courses-container {
-  background-color: #fff;
-  padding: 80px;
-  width: 100%;
+  justify-content: space-evenly;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 
 .w-100 {
@@ -194,11 +195,6 @@
   background-color: rgba(98, 63, 101, 0.13);
 }
 /* 
-.col-card {
-  background-color: #f0e9f1;
-  border: 1px solid #000;
-
-  justify-content: center;
-  width: auto;
-  height: auto;
+.courses-container {
+  background-color: #f87;
 } */

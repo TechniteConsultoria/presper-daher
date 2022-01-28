@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
+import "./MyPaymentInfo.styles.css";
+import "react-credit-cards/es/styles-compiled.css";
 
 import AddCreditCardModal from "../../componentes/Modals/AddCreditCardModal";
 import DeleteCreditCardModal from "../../componentes/Modals/DeleteCreditCardModal";
@@ -10,17 +13,15 @@ import Button from "react-bootstrap/Button";
 
 import Cards from "react-credit-cards";
 
-import PaymentInfoCard from "../../componentes/PaymentInfoCard/PaymentInfoCard";
-
-import "./MyPaymentInfo.styles.css";
-import "react-credit-cards/es/styles-compiled.css";
-
 import cartoes from "../../data/cartoes";
 
 function MyPaymentInfo() {
   const [addCreditCardModalShow, setAddCreditCardModalShow] = useState(false);
   const [deleteCreditCardModalShow, setDeleteCreditCardModalShow] =
     useState(false);
+
+  const [showCvc, setShowCvc] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
 
   return (
     <>
@@ -66,15 +67,24 @@ function MyPaymentInfo() {
             {cartoes?.map((c, id) => {
               return (
                 <div key={id} className="card-box">
-                  <div>
+                  <div
+                    onClick={() => {
+                      setShowCvc(!showCvc);
+                      setCardNumber(c.number);
+                    }}
+                  >
                     <Cards
-                      className="credit-card"
+                      id="credit-card"
                       number={c.number}
                       name={c.name}
                       expiry={c.expiry}
                       cvc={c.cvc}
+                      focused={
+                        showCvc && cardNumber === c.number ? "cvc" : null
+                      }
                     />
                   </div>
+
                   <div>
                     <button
                       className="btn-del"
