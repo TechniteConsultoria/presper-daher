@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
 
+import MaskedInput from "react-maskedinput";
+
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
@@ -73,14 +75,18 @@ function AddCreditCardModal(props) {
                 <Form.Label column sm="2">
                   Número
                 </Form.Label>
-                <Form.Control
+                <MaskedInput
+                  className="masked-input"
                   type="tel"
-                  placeholder="Número do cartão"
+                  name="cardNumber"
+                  mask="111111111111111111"
+                  value={number}
                   onChange={(e) => setNumber(e.target.value)}
-                  onFocus={(e) => setFocus(e.target.value)}
+                  onFocus={(_) => setFocus("number")}
                   required
                 />
               </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label column sm="2">
                   Nome
@@ -89,7 +95,7 @@ function AddCreditCardModal(props) {
                   type="text"
                   placeholder="Nome no cartão"
                   onChange={(e) => setName(e.target.value)}
-                  onFocus={(e) => setFocus(e.target.value)}
+                  onFocus={(_) => setFocus("name")}
                   required
                 />
               </Form.Group>
@@ -97,11 +103,17 @@ function AddCreditCardModal(props) {
                 <Form.Label column sm="2">
                   Validade
                 </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="MM/YY"
-                  onChange={(e) => setExpiry(e.target.value)}
-                  onFocus={(e) => setFocus(e.target.value)}
+                <MaskedInput
+                  className="masked-input"
+                  type="tel"
+                  name="cardExpiry"
+                  mask="11/11"
+                  value={expiry}
+                  onChange={(e) => {
+                    setExpiry(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                  onFocus={(_) => setFocus("expiry")}
                   required
                 />
               </Form.Group>
@@ -109,13 +121,17 @@ function AddCreditCardModal(props) {
                 <Form.Label column sm="2">
                   CVC
                 </Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="CVC"
-                  onChange={(e) => setCvc(e.target.value)}
-                  onFocus={(e) => setFocus(e.target.value)}
-                  min={1}
-                  max={999}
+                <MaskedInput
+                  className="masked-input"
+                  type="tel"
+                  name="cardCvc"
+                  mask="111"
+                  value={cvc}
+                  onChange={(e) => {
+                    setCvc(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                  onFocus={(_) => setFocus("cvc")}
                   required
                 />
               </Form.Group>
