@@ -79,7 +79,7 @@ function AddCreditCardModal(props) {
                   className="masked-input"
                   type="tel"
                   name="cardNumber"
-                  mask="111111111111111111"
+                  mask="1111111111111111"
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
                   onFocus={(_) => setFocus("number")}
