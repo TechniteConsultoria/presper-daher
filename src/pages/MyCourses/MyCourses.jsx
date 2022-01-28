@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import "./MyCourses.styles.css";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -32,11 +34,11 @@ function MyCourses() {
     let sortedList = [];
     if (classificar === "Título: A a Z") {
       sortedList = cursos.sort((a, b) => {
-        return a.title > b.title;
+        return a.title.localeCompare(b.title);
       });
     } else {
       sortedList = cursos.sort((a, b) => {
-        return a.title < b.title;
+        return b.title.localeCompare(a.title);
       });
     }
     console.log(sortedList);
@@ -84,93 +86,97 @@ function MyCourses() {
             </Row>
           </div>
           <hr></hr>
-          <Container className="container-filtro">
+          <div className="container-filtro">
             <div className="filtro-item">
               <Form.Label column sm="6">
                 Pesquisar
               </Form.Label>
-              <Form className="search-bar">
+              <Form
+                className="search-bar"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                }}
+              >
                 <FormControl
-                  size="sm"
+                  // size="sm"
                   type="search"
                   placeholder="Pesquisar cursos"
-                  className="me-2"
+                  className="search-bar"
                   aria-label="Search"
                   onChange={(e) => {
                     setBuscarCurso(e.target.value);
                   }}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                  }}
                 />
               </Form>
             </div>
-            <div className="filtro-item">
-              <Form.Label column sm="8">
-                Classificar por
-              </Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle
-                  size="sm"
-                  style={{
-                    backgroundColor: "#fff",
-                    border: "1px solid rgb(108, 117, 125, 0.3)",
-                    color: "#000",
-                    width: "200px",
-                  }}
-                >
-                  {classificar}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => setClassificar("Título: A a Z")}
+            <div className="filtros-container">
+              <div className="filtro-item">
+                <Form.Label column sm="8">
+                  Classificar por
+                </Form.Label>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    // size="sm"
+                    style={{
+                      backgroundColor: "#fff",
+                      border: "1px solid rgb(108, 117, 125, 0.3)",
+                      color: "#000",
+                      width: "160px",
+                    }}
                   >
-                    Título: A a Z
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => setClassificar("Título: Z a A")}
-                  >
-                    Título: Z a A
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-            <div className="filtro-item">
-              <Form.Label column sm="10">
-                Filtrar por categoria
-              </Form.Label>
-              <Dropdown>
-                <Dropdown.Toggle
-                  size="sm"
-                  style={{
-                    backgroundColor: "#fff",
-                    border: "1px solid rgb(108, 117, 125, 0.3)",
-                    color: "#000",
-                    width: "200px",
-                  }}
-                >
-                  {filtro}
-                </Dropdown.Toggle>
+                    {classificar}
+                  </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => setFiltro("Sem filtro")}>
-                    Sem filtro
-                  </Dropdown.Item>
-                  {categorias?.map((item, id) => {
-                    return (
-                      <Dropdown.Item
-                        onClick={() => setFiltro(item.value)}
-                        key={id}
-                      >
-                        {item.value}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </Dropdown.Menu>
-              </Dropdown>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => setClassificar("Título: A a Z")}
+                    >
+                      Título: A a Z
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => setClassificar("Título: Z a A")}
+                    >
+                      Título: Z a A
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              <div className="filtro-item">
+                <Form.Label column sm="11">
+                  Filtrar por categoria
+                </Form.Label>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    // size="sm"
+                    style={{
+                      backgroundColor: "#fff",
+                      border: "1px solid rgb(108, 117, 125, 0.3)",
+                      color: "#000",
+                      width: "160px",
+                    }}
+                  >
+                    {filtro}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => setFiltro("Sem filtro")}>
+                      Sem filtro
+                    </Dropdown.Item>
+                    {categorias?.map((item, id) => {
+                      return (
+                        <Dropdown.Item
+                          onClick={() => setFiltro(item.value)}
+                          key={id}
+                        >
+                          {item.value}
+                        </Dropdown.Item>
+                      );
+                    })}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </div>
-          </Container>
+          </div>
         </Container>
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
