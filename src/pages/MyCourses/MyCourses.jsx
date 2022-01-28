@@ -111,7 +111,7 @@ function MyCourses() {
             </div>
             <div className="filtros-container">
               <div className="filtro-item">
-                <Form.Label column sm="8">
+                <Form.Label column sm="12" className="label">
                   Classificar por
                 </Form.Label>
                 <Dropdown>
@@ -142,7 +142,7 @@ function MyCourses() {
                 </Dropdown>
               </div>
               <div className="filtro-item">
-                <Form.Label column sm="11">
+                <Form.Label column sm="12" className="label">
                   Filtrar por categoria
                 </Form.Label>
                 <Dropdown>
