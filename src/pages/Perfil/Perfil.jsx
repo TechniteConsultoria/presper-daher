@@ -60,7 +60,7 @@ function Perfil(props) {
       <Container>
         <Container fluid className="container-perfil">
           <div className="container-item">
-            <Row className="row-novo-curso">
+            <Row>
               <Col>
                 <h2>Meu Perfil</h2>
                 <p>Altere sua informações pessoais</p>
@@ -82,7 +82,7 @@ function Perfil(props) {
               />
             </div>
             <div className="form-section">
-              <Form>
+              <Form className="form">
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
