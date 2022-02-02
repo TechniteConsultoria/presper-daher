@@ -1,5 +1,9 @@
 import { useState } from "react";
+import Image from "react-bootstrap/Image";
 import "../css/login.css";
+
+import google from "../assets/google-logo.png";
+import facebook from "../assets/facebook-logo.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -18,12 +22,20 @@ function Login() {
     }
   }
 
+  async function googleLogin() {
+    console.log("Google Login function!");
+  }
+
+  async function facebookLogin() {
+    console.log("Facebook Login function!");
+  }
+
   return (
     <div className="container-signup">
       <section>
         <div className="card p-5">
-          <h2 className="title-card">Realizar Login</h2>
-          <p className="subtitle">Dados para realizar o login:</p>
+          <h2 className="title-card">Login</h2>
+
           <form
             action="submit"
             className="row g-3 d-flex flex-column"
@@ -32,6 +44,24 @@ function Login() {
               handleSubmit();
             }}
           >
+            <br />
+            <button
+              className="btn btn-lg"
+              id="social-login"
+              onClick={googleLogin}
+            >
+              <Image src={google} alt="google-log" className="logo" /> Continuar
+              com Google
+            </button>
+            <button
+              className="btn btn-lg"
+              id="social-login"
+              onClick={facebookLogin}
+            >
+              <Image src={facebook} alt="google-log" className="logo" />{" "}
+              Continuar com Facebook
+            </button>
+            <br />
             <input
               type="email"
               className="form"
