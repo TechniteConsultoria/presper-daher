@@ -9,153 +9,15 @@ import {
   Button,
   Alert,
 } from "react-bootstrap";
+
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
 import "./Home.style.css";
 
-import cursos from "../../data/cursos";
+const axios = require("axios").default;
 
 function Home() {
-  const cursosPopulares = [
-    {
-      id: 1,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 2,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 3,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 4,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 5,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 6,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 7,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-    {
-      id: 8,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas",
-      author: "Julio Almeida",
-      rating: 4,
-      price: 199.99,
-    },
-  ];
-  const cursosNovos = [
-    {
-      id: 4,
-      img: "https://cdn.pixabay.com/photo/2015/02/26/15/40/doctor-650534__340.jpg",
-      title: "Bases Patológicas II",
-      author: "Julio Almeida II",
-      rating: 3,
-      price: 299.99,
-    },
-    {
-      id: 5,
-      img: "https://cdn.pixabay.com/photo/2015/02/26/15/40/doctor-650534__340.jpg",
-      title: "Bases Patológicas II",
-      author: "Julio Almeida II",
-      rating: 3,
-      price: 299.99,
-    },
-    {
-      id: 6,
-      img: "https://cdn.pixabay.com/photo/2015/02/26/15/40/doctor-650534__340.jpg",
-      title: "Bases Patológicas II",
-      author: "Julio Almeida II",
-      rating: 3,
-      price: 299.99,
-    },
-  ];
-  const cursosBemAvaliados = [
-    {
-      id: 7,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas III",
-      author: "Julio Almeida III",
-      rating: 4,
-      price: 399.99,
-    },
-    {
-      id: 8,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas III",
-      author: "Julio Almeida III",
-      rating: 4,
-      price: 399.99,
-    },
-    {
-      id: 9,
-      img: "https://cdn.pixabay.com/photo/2015/07/10/20/54/stethoscope-840125__340.jpg",
-      title: "Bases Patológicas III",
-      author: "Julio Almeida III",
-      rating: 4,
-      price: 399.99,
-    },
-  ];
-  const comments = [
-    {
-      id: 12,
-      img: "https://cdn.pixabay.com/photo/2017/09/01/21/53/blue-2705642_1280.jpg",
-      author: "Cristina Alves",
-      text: "Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.Quem manda na minha terra sou euzis!Sapien in monti palavris qui num significa nadis i pareci latim.",
-    },
-    {
-      id: 13,
-      img: "https://cdn.pixabay.com/photo/2017/08/06/15/13/woman-2593366_1280.jpg",
-      author: "Julia Ramos",
-      text: "Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.Quem manda na minha terra sou euzis!Sapien in monti palavris qui num significa nadis i pareci latim.",
-    },
-    {
-      id: 14,
-      img: "https://cdn.pixabay.com/photo/2016/11/18/19/07/happy-1836445_1280.jpg",
-      author: "Marcos Araújo",
-      text: "Mussum Ipsum, cacilds vidis litro abertis. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis.Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio.Quem manda na minha terra sou euzis!Sapien in monti palavris qui num significa nadis i pareci latim.",
-    },
-  ];
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -164,6 +26,7 @@ function Home() {
   const [msgResult, isMsgResult] = useState(false);
 
   const [coursesList, setCoursesList] = useState([]);
+  const [testimonialsList, setTestimonialsList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -171,23 +34,50 @@ function Home() {
     navigate(`/course/${id}`);
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const data = {
       name: name,
       email: email,
       message: message,
     };
 
-    isMsgSent(true);
-    isMsgResult(true);
-  }
+    axios
+      .post("http://localhost:8000/fale-conosco-mensagens", data)
+      .then((res) => {
+        isMsgSent(true);
+        if (res.status === 201) {
+          isMsgResult(true);
+        } else {
+          isMsgResult(false);
+        }
+      });
 
-  useEffect(() => {
-    setCoursesList(cursosPopulares);
     setName("");
     setEmail("");
     setMessage("");
     isMsgSent(false);
+  }
+
+  async function getCourses() {
+    axios.get("http://localhost:8000/cursos").then((res) => {
+      setCoursesList(res.data);
+    });
+  }
+
+  async function getComments() {
+    axios.get("http://localhost:8000/depoimentos").then((res) => {
+      setTestimonialsList(res.data);
+    });
+  }
+
+  useEffect(() => {
+    setName("");
+    setEmail("");
+    setMessage("");
+    isMsgSent(false);
+
+    getCourses();
+    getComments();
   }, []);
 
   return (
@@ -255,7 +145,7 @@ function Home() {
 
           <div className="container-item">
             <div className="courses-container">
-              {cursos?.map((item, id) => (
+              {coursesList?.map((item, id) => (
                 <CardComponent
                   key={item.id}
                   img={item.img}
@@ -284,7 +174,7 @@ function Home() {
           <hr />
           <div className="container-item">
             <div>
-              {comments?.map((item) => (
+              {testimonialsList?.map((item) => (
                 <Row key={item.id}>
                   <Col>
                     <CommentsCard
@@ -315,8 +205,6 @@ function Home() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleSubmit();
-
-                  // setVideosList();
                 }}
               >
                 <Form.Group className="mb-3">
@@ -327,6 +215,7 @@ function Home() {
                     type="text"
                     placeholder="Nome"
                     onChange={(e) => setName(e.target.value)}
+                    value={name}
                     required
                   />
                 </Form.Group>
@@ -338,6 +227,7 @@ function Home() {
                     type="email"
                     placeholder="Email"
                     onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                     required
                   />
                 </Form.Group>
@@ -353,6 +243,7 @@ function Home() {
                     rows={3}
                     placeholder="Mensagem"
                     onChange={(e) => setMessage(e.target.value)}
+                    value={message}
                     required
                   />
                 </Form.Group>

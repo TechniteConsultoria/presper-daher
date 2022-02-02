@@ -7,9 +7,11 @@ import MaskedInput from "react-maskedinput";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
+const axios = require("axios").default;
+
 function AddCreditCardModal(props) {
-  const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
-    useState(false);
+  const [resultAddCreditCard, setResultAddCreditCard] = useState(false);
+  const [submited, isSubmited] = useState(false);
 
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
@@ -17,19 +19,39 @@ function AddCreditCardModal(props) {
   const [cvc, setCvc] = useState("");
   const [focus, setFocus] = useState("");
 
-  function handleSubmit() {
-    // const data = {
-    //   img: image,
-    //   title: title,
-    //   author: author,
-    //   price: price,
-    //   category: category,
-    //   description: description,
-    //   videos: videosList,
-    // };
-    // setCourse(data);
-    // setResultCreateCourseModalShow(true);
-    // setVideosErrors([]);
+  const { result, ...rest } = props;
+
+  async function handleSubmit() {
+    const data = {
+      number: number,
+      name: name,
+      expiry: expiry,
+      cvc: cvc,
+    };
+
+    axios.post("http://localhost:8000/cartoes", data).then((res) => {
+      // isSubmited(true);
+      result(res.status);
+      // if (res.status === 201) {
+      //   setResultAddCreditCard(true);
+      // }
+    });
+
+    // setTimeout(() => {
+    //   setNumber("");
+    //   setName("");
+    //   setExpiry("");
+    //   setCvc("");
+    //   isSubmited(false);
+    //   props.onHide();
+    // }, 1000);
+
+    setNumber("");
+    setName("");
+    setExpiry("");
+    setCvc("");
+    isSubmited(false);
+    props.onHide();
   }
 
   useEffect(() => {
@@ -37,26 +59,20 @@ function AddCreditCardModal(props) {
     setName("");
     setExpiry("");
     setCvc("");
+    isSubmited(false);
   }, []);
 
   return (
     <>
-      <Modal {...props} centered animation={false}>
-        <Modal.Header
-          closeButton
-          //   onClick={() => {
-          //     setVideosErrors();
-          //     setVideosList();
-          //   }}
-        >
+      <Modal {...rest} centered animation={false}>
+        <Modal.Header closeButton>
           <Modal.Title>Adicionar cartão</Modal.Title>
         </Modal.Header>
         <Form
           action="submit"
-          onSubmit={() => {
+          onSubmit={(e) => {
+            e.preventDefault();
             handleSubmit();
-            props.onHide();
-            // setVideosList();
           }}
         >
           <Modal.Body>
@@ -94,6 +110,7 @@ function AddCreditCardModal(props) {
                 <Form.Control
                   type="text"
                   placeholder="Nome no cartão"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                   onFocus={(_) => setFocus("name")}
                   required
@@ -111,7 +128,6 @@ function AddCreditCardModal(props) {
                   value={expiry}
                   onChange={(e) => {
                     setExpiry(e.target.value);
-                    console.log(e.target.value);
                   }}
                   onFocus={(_) => setFocus("expiry")}
                   required
@@ -129,12 +145,19 @@ function AddCreditCardModal(props) {
                   value={cvc}
                   onChange={(e) => {
                     setCvc(e.target.value);
-                    console.log(e.target.value);
                   }}
                   onFocus={(_) => setFocus("cvc")}
                   required
                 />
               </Form.Group>
+
+              {/* {submited && (
+                <Alert variant={resultAddCreditCard ? "success" : "danger"}>
+                  {resultAddCreditCard
+                    ? "Seu cartão foi registrado com sucesso!"
+                    : "Ops! Ocorreu um erro ao resgistrar seu cartão. Tente novamente."}
+                </Alert>
+              )} */}
             </div>
           </Modal.Body>
 
@@ -147,8 +170,6 @@ function AddCreditCardModal(props) {
               variant="danger"
               onClick={() => {
                 props.onHide();
-                // setVideosErrors([]);
-                // setVideosList();
               }}
             >
               Cancelar

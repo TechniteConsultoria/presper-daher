@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./MyPaymentInfo.styles.css";
 import "react-credit-cards/es/styles-compiled.css";
@@ -10,10 +10,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-
+import Alert from "react-bootstrap/Alert";
 import Cards from "react-credit-cards";
 
-import cartoes from "../../data/cartoes";
+const axios = require("axios").default;
 
 function MyPaymentInfo() {
   const [addCreditCardModalShow, setAddCreditCardModalShow] = useState(false);
@@ -22,6 +22,45 @@ function MyPaymentInfo() {
 
   const [showCvc, setShowCvc] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
+  const [creditCardsList, setCerditCardsList] = useState([]);
+  const [cardId, setCardId] = useState("");
+
+  const [result, setResult] = useState({
+    operation: "",
+    status: "",
+  });
+
+  async function getCreditCards() {
+    axios.get("http://localhost:8000/cartoes").then((res) => {
+      if (res.status === 200) {
+        setCerditCardsList(res.data);
+      }
+    });
+  }
+
+  const getDeleteResult = (result) => {
+    return setResult({
+      operation: "del",
+      status: result.toString(),
+    });
+  };
+
+  const getAddResult = (result) => {
+    return setResult({
+      operation: "add",
+      status: result.toString(),
+    });
+  };
+
+  useEffect(() => {
+    getCreditCards();
+    setTimeout(() => {
+      setResult({
+        operation: "",
+        status: "",
+      });
+    }, 6000);
+  }, [result]);
 
   return (
     <>
@@ -43,7 +82,6 @@ function MyPaymentInfo() {
                     fontSize: "1rem",
                   }}
                   onClick={() => {
-                    // showCreateCourseModal(true);
                     setAddCreditCardModalShow(true);
                   }}
                 >
@@ -62,9 +100,26 @@ function MyPaymentInfo() {
             </Col>
           </Row>
         </div>
+
+        {result.operation === "add" && (
+          <Alert variant={result.status === "201" ? "success" : "danger"}>
+            {result.status === "201"
+              ? "Seu cartão foi registrado com sucesso!"
+              : "Ops! Ocorreu um erro ao resgistrar seu cartão. Tente novamente."}
+          </Alert>
+        )}
+
+        {result.operation === "del" && (
+          <Alert variant={result.status === "200" ? "success" : "danger"}>
+            {result.status === "200"
+              ? "Seu cartão foi removido com sucesso!"
+              : "Ops! Ocorreu um erro ao remover seu cartão. Tente novamente."}
+          </Alert>
+        )}
+
         <div className="credit-cards-container">
           <div>
-            {cartoes?.map((c, id) => {
+            {creditCardsList?.map((c, id) => {
               return (
                 <div key={id} className="card-box">
                   <div
@@ -88,7 +143,10 @@ function MyPaymentInfo() {
                   <div>
                     <button
                       className="btn-del"
-                      onClick={() => setDeleteCreditCardModalShow(true)}
+                      onClick={() => {
+                        setCardId(c.id);
+                        setDeleteCreditCardModalShow(true);
+                      }}
                     >
                       Excluir
                     </button>
@@ -103,10 +161,13 @@ function MyPaymentInfo() {
       <AddCreditCardModal
         show={addCreditCardModalShow}
         onHide={() => setAddCreditCardModalShow(false)}
+        result={getAddResult}
       />
       <DeleteCreditCardModal
         show={deleteCreditCardModalShow}
         onHide={() => setDeleteCreditCardModalShow(false)}
+        result={getDeleteResult}
+        id={cardId}
       />
     </>
   );

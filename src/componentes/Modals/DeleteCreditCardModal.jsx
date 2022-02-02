@@ -1,57 +1,62 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
+const axios = require("axios").default;
+
 // import ResultDeleteVideoModal from "./ResultDeleteVideoModal";
 
 function DeleteCreditCardModal(props) {
   //   const [resultDeleteVideoModalShow, setResultDeleteVideoModalShow] =
   //     useState(false);
 
-  function handleClick() {
-    console.log(props.video);
+  const { result, ...rest } = props;
+
+  async function handleClick(id) {
+    axios.delete(`http://localhost:8000/cartoes/${id}`).then((res) => {
+      result(res.status);
+    });
   }
+
   return (
     <>
-      <Modal {...props} centered animation={false}>
-        <>
-          <Modal.Header closeButton={false}>
-            <Modal.Title>Excluir cartão</Modal.Title>
-          </Modal.Header>
+      <Modal {...rest} centered animation={false}>
+        <Modal.Header closeButton={false}>
+          <Modal.Title>Excluir cartão</Modal.Title>
+        </Modal.Header>
 
-          <Modal.Body>
-            Você tem certeza de que deseja excluir esse cartão? Essa ação não
-            poderá ser desfeita.
-          </Modal.Body>
+        <Modal.Body>
+          Você tem certeza de que deseja excluir esse cartão? Essa ação não
+          poderá ser desfeita.
+        </Modal.Body>
 
-          <Modal.Footer>
-            <Button
-              style={{
-                backgroundColor: "rgb(191, 46, 60)",
-                border: "none",
-                boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
-              }}
-              onClick={() => {
-                props.onHide();
-              }}
-            >
-              Cancelar
-            </Button>
-            <Button
-              style={{
-                backgroundColor: "#14B8A6",
-                border: "none",
-                boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
-              }}
-              onClick={() => {
-                handleClick();
-                // setResultDeleteVideoModalShow(true);
-                props.onHide();
-              }}
-            >
-              Deletar
-            </Button>
-          </Modal.Footer>
-        </>
+        <Modal.Footer>
+          <Button
+            style={{
+              backgroundColor: "rgb(191, 46, 60)",
+              border: "none",
+              boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
+            }}
+            onClick={() => {
+              props.onHide();
+            }}
+          >
+            Cancelar
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "#14B8A6",
+              border: "none",
+              boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
+            }}
+            onClick={(_) => {
+              handleClick(props.id);
+              // setResultDeleteVideoModalShow(true);
+              props.onHide();
+            }}
+          >
+            Deletar
+          </Button>
+        </Modal.Footer>
       </Modal>
       {/* <ResultDeleteVideoModal
         show={resultDeleteVideoModalShow}
