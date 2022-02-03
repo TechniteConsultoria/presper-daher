@@ -123,3 +123,20 @@ a {
     background-position: center;
 }
 */
+
+#social-login {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+
+  border: 1px solid #b5b4b5;
+  color: #181818;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}

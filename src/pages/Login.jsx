@@ -1,10 +1,24 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Image from "react-bootstrap/Image";
+import Alert from "react-bootstrap/Alert";
+
 import "../css/login.css";
 
+import google from "../assets/google-logo.png";
+import facebook from "../assets/facebook-logo.png";
+
+const axios = require("axios").default;
+
 function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [lembrarSenha, setLembrarSenha] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+
   async function handleSubmit() {
     const data = {
       email,
@@ -12,26 +26,86 @@ function Login() {
       lembrarSenha,
     };
     try {
-      console.log(data);
+      const url = "https://fake-api-json-server-presper.herokuapp.com/usuarios";
+      axios.get(url).then((res) => {
+        // TODO: apenas para development
+        const user = res.data.find(({ email }) => email === data.email);
+        if (user !== undefined) {
+          if (user.password === data.senha) {
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/");
+          } else {
+            setShowAlert(true);
+            setTimeout(() => {
+              setShowAlert(false);
+            }, 6000);
+          }
+        } else {
+          setShowAlert(true);
+          setTimeout(() => {
+            setShowAlert(false);
+          }, 6000);
+        }
+        // TODO: apenas para development
+      });
     } catch (error) {
       console.error(error);
     }
   }
 
+  async function googleLogin() {
+    console.log("Google Login function!");
+  }
+
+  async function facebookLogin() {
+    console.log("Facebook Login function!");
+  }
+
+  useEffect(() => {
+    setShowAlert(false);
+  }, []);
+
   return (
     <div className="container-signup">
       <section>
         <div className="card p-5">
-          <h2 className="title-card">Realizar Login</h2>
-          <p className="subtitle">Dados para realizar o login:</p>
+          <h2 className="title-card">Login</h2>
+
+          <div>
+            {showAlert && (
+              <Alert variant="danger">
+                Ops! Não foi possível encontrar o usuário. Cheque suas
+                informações e tente novamente.
+              </Alert>
+            )}
+          </div>
+
           <form
-            action="submit"
+            // action="submit"
             className="row g-3 d-flex flex-column"
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
             }}
           >
+            <br />
+            <button
+              className="btn btn-lg"
+              id="social-login"
+              onClick={googleLogin}
+            >
+              <Image src={google} alt="google-log" className="logo" /> Continuar
+              com Google
+            </button>
+            <button
+              className="btn btn-lg"
+              id="social-login"
+              onClick={facebookLogin}
+            >
+              <Image src={facebook} alt="google-log" className="logo" />{" "}
+              Continuar com Facebook
+            </button>
+            <br />
             <input
               type="email"
               className="form"

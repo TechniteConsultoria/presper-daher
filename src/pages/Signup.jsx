@@ -1,4 +1,8 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
+
+const axios = require("axios").default;
 
 function Signup() {
   const [nome, setNome] = useState("");
@@ -8,23 +12,51 @@ function Signup() {
   const [inscricao, setInscricao] = useState(false);
   const [submit, isSubmit] = useState(false);
 
+  const [showAlert, setShowAlert] = useState(false);
+
+  const navigate = useNavigate();
+
   async function handleSubmit() {
     if (submit && senha === confirmaSenha) {
       const data = {
-        nome,
-        email,
-        senha,
-        confirmaSenha,
-        inscricao,
+        name: nome,
+        email: email,
+        password: senha,
+        subscribe: inscricao,
+        role: "user",
       };
       try {
-        console.log(data);
+        const urlGET =
+          "https://fake-api-json-server-presper.herokuapp.com/usuarios";
+        axios.get(urlGET).then((res) => {
+          // TODO: apenas para development
+          const user = res.data.find(({ email }) => email === data.email);
+          if (user !== undefined) {
+            setShowAlert(true);
+            setTimeout(() => {
+              setShowAlert(false);
+            }, 6000);
+          } else {
+            const url =
+              "https://fake-api-json-server-presper.herokuapp.com/usuarios";
+            axios.post(url, data).then((res) => {
+              if (res.status === 201) {
+                navigate("/");
+              }
+            });
+          }
+          // TODO: apenas para development
+        });
       } catch (error) {
         console.error(error);
       }
       isSubmit(false);
     }
   }
+
+  useEffect(() => {
+    setShowAlert(false);
+  }, []);
 
   return (
     <>
@@ -34,12 +66,16 @@ function Signup() {
             <h2 className="title-card">Sign up</h2>
             <p className="subtitle">Dados para realizar o cadastro:</p>
             {submit && senha !== confirmaSenha && (
-              <div className="alert alert-danger" role="alert">
-                As senhas são inválidas!
-              </div>
+              <Alert variant="danger">As senhas são inválidas!</Alert>
+            )}
+            {showAlert && (
+              <Alert variant="danger">
+                Ops! Parece que vc já está cadastrado em nossa plataforma. Faça
+                o login para acessar sua conta.
+              </Alert>
             )}
             <form
-              action="submit"
+              // action="submit"
               className="row g-3 d-flex flex-column"
               onSubmit={(e) => {
                 e.preventDefault();
