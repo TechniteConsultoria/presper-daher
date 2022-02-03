@@ -41,9 +41,11 @@ function Home() {
       message: message,
     };
 
-    axios
-      .post("http://localhost:8000/fale-conosco-mensagens", data)
-      .then((res) => {
+    const url =
+      "https://fake-api-json-server-presper.herokuapp.com/fale-conosco-mensagens";
+
+    try {
+      axios.post(url, data).then((res) => {
         isMsgSent(true);
         if (res.status === 201) {
           isMsgResult(true);
@@ -51,6 +53,9 @@ function Home() {
           isMsgResult(false);
         }
       });
+    } catch (error) {
+      console.error(error);
+    }
 
     setName("");
     setEmail("");
@@ -59,14 +64,21 @@ function Home() {
   }
 
   async function getCourses() {
-    axios.get("http://localhost:8000/cursos").then((res) => {
-      setCoursesList(res.data);
+    const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
+    axios.get(url).then((res) => {
+      if (res.status === 200) {
+        setCoursesList(res.data);
+      }
     });
   }
 
   async function getComments() {
-    axios.get("http://localhost:8000/depoimentos").then((res) => {
-      setTestimonialsList(res.data);
+    const url =
+      "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
+    axios.get(url).then((res) => {
+      if (res.status === 200) {
+        setTestimonialsList(res.data);
+      }
     });
   }
 

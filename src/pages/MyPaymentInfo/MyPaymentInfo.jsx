@@ -31,7 +31,8 @@ function MyPaymentInfo() {
   });
 
   async function getCreditCards() {
-    axios.get("http://localhost:8000/cartoes").then((res) => {
+    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
+    axios.get(url).then((res) => {
       if (res.status === 200) {
         setCerditCardsList(res.data);
       }

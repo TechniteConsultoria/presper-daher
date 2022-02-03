@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const axios = require("axios").default;
 
-// import ResultDeleteVideoModal from "./ResultDeleteVideoModal";
-
 function DeleteCreditCardModal(props) {
-  //   const [resultDeleteVideoModalShow, setResultDeleteVideoModalShow] =
-  //     useState(false);
-
   const { result, ...rest } = props;
 
   async function handleClick(id) {
-    axios.delete(`http://localhost:8000/cartoes/${id}`).then((res) => {
+    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
+    axios.delete(`${url}/${id}`).then((res) => {
       result(res.status);
     });
   }
@@ -50,7 +46,6 @@ function DeleteCreditCardModal(props) {
             }}
             onClick={(_) => {
               handleClick(props.id);
-              // setResultDeleteVideoModalShow(true);
               props.onHide();
             }}
           >
@@ -58,11 +53,6 @@ function DeleteCreditCardModal(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* <ResultDeleteVideoModal
-        show={resultDeleteVideoModalShow}
-        onHide={() => setResultDeleteVideoModalShow(false)}
-        video={props.video}
-      /> */}
     </>
   );
 }

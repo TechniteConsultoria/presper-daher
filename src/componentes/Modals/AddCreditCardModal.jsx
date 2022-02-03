@@ -10,8 +10,8 @@ import "react-credit-cards/es/styles-compiled.css";
 const axios = require("axios").default;
 
 function AddCreditCardModal(props) {
-  const [resultAddCreditCard, setResultAddCreditCard] = useState(false);
-  const [submited, isSubmited] = useState(false);
+  // const [resultAddCreditCard, setResultAddCreditCard] = useState(false);
+  // const [submited, isSubmited] = useState(false);
 
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
@@ -29,28 +29,16 @@ function AddCreditCardModal(props) {
       cvc: cvc,
     };
 
-    axios.post("http://localhost:8000/cartoes", data).then((res) => {
-      // isSubmited(true);
+    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
+    axios.post(url, data).then((res) => {
       result(res.status);
-      // if (res.status === 201) {
-      //   setResultAddCreditCard(true);
-      // }
     });
-
-    // setTimeout(() => {
-    //   setNumber("");
-    //   setName("");
-    //   setExpiry("");
-    //   setCvc("");
-    //   isSubmited(false);
-    //   props.onHide();
-    // }, 1000);
 
     setNumber("");
     setName("");
     setExpiry("");
     setCvc("");
-    isSubmited(false);
+    // isSubmited(false);
     props.onHide();
   }
 
@@ -59,7 +47,7 @@ function AddCreditCardModal(props) {
     setName("");
     setExpiry("");
     setCvc("");
-    isSubmited(false);
+    // isSubmited(false);
   }, []);
 
   return (
@@ -69,7 +57,7 @@ function AddCreditCardModal(props) {
           <Modal.Title>Adicionar cartão</Modal.Title>
         </Modal.Header>
         <Form
-          action="submit"
+          // action="submit"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
@@ -150,14 +138,6 @@ function AddCreditCardModal(props) {
                   required
                 />
               </Form.Group>
-
-              {/* {submited && (
-                <Alert variant={resultAddCreditCard ? "success" : "danger"}>
-                  {resultAddCreditCard
-                    ? "Seu cartão foi registrado com sucesso!"
-                    : "Ops! Ocorreu um erro ao resgistrar seu cartão. Tente novamente."}
-                </Alert>
-              )} */}
             </div>
           </Modal.Body>
 

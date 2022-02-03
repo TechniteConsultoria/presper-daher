@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Perfil.styles.css";
 
@@ -8,20 +8,18 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
+import Alert from "react-bootstrap/Alert";
 
 import MaskedInput from "react-maskedinput";
 
 import { BsPencilFill } from "react-icons/bs";
 
+const axios = require("axios").default;
+
 function Perfil(props) {
-  const user = {
-    name: "Rogério Cardoso de Almeida",
-    email: "roger@gmail.com",
-    phone: "(12) 98877-6655",
-    profession: "Médico Cardiologista",
-    bio: "Mussum Ipsum, cacilds vidis litro abertis. Aenean aliquam molestie leo, vitae iaculis nisl.Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo!Leite de capivaris, leite de mula manquis sem cabeça.Suco de cevadiss deixa as pessoas mais interessantis.",
-    pic: "https://image.freepik.com/fotos-gratis/jovem-em-uma-camisa-trabalhando-no-laptop-roxo_155003-14131.jpg",
-  };
+  const [hasError, setHasError] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [user, setUser] = useState({});
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,6 +41,7 @@ function Perfil(props) {
   };
 
   const handleSubmit = () => {
+    const id = user.id;
     const data = {
       name: name || user.name,
       email: email || user.email,
@@ -53,7 +52,38 @@ function Perfil(props) {
     };
 
     console.log(data);
+    console.log(user);
+
+    try {
+      const url = "https://fake-api-json-server-presper.herokuapp.com/usuarios";
+      axios.get(`${url}/${id}`).then((res) => {
+        if (res.status === 200) {
+          axios.put(`${url}/${id}`, data).then((res) => {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            setShowAlert(true);
+            setTimeout(() => {
+              setShowAlert(false);
+            }, 6000);
+          });
+        } else {
+          setHasError(true);
+        }
+      });
+    } catch (error) {
+      setHasError(true);
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
+
+  useEffect(() => {}, [user]);
 
   return (
     <>
@@ -173,6 +203,15 @@ function Perfil(props) {
                   >
                     SALVAR
                   </Button>
+                </div>
+                <div>
+                  {showAlert && (
+                    <Alert variant={hasError ? "danger" : "success"}>
+                      {hasError
+                        ? "Ops! Ocorreu um erro ao alterar suas informações. Tente novamente."
+                        : "Suas informações foram alteradas com sucesso!"}
+                    </Alert>
+                  )}
                 </div>
               </Form>
             </div>
