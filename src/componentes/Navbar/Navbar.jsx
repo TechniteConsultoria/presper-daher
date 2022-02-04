@@ -71,22 +71,23 @@ function NavbarComponent() {
                     <BsFillCartFill style={{ fontSize: "24px" }} />
                   </Nav.Link>
 
-                  <Nav.Link
-                    href="/signup"
-                    className="nav-link"
-                    id="signup-link"
-                  >
-                    Cadastre-se
-                  </Nav.Link>
-
                   {!user ? (
-                    <Nav.Link
-                      href="/login"
-                      className="nav-link"
-                      id="login-link"
-                    >
-                      Fazer Login
-                    </Nav.Link>
+                    <>
+                      <Nav.Link
+                        href="/signup"
+                        className="nav-link"
+                        id="signup-link"
+                      >
+                        Cadastre-se
+                      </Nav.Link>
+                      <Nav.Link
+                        href="/login"
+                        className="nav-link"
+                        id="login-link"
+                      >
+                        Fazer Login
+                      </Nav.Link>
+                    </>
                   ) : (
                     <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                       <NavDropdown.Item href={`/perfil`} id="minhaconta-items">

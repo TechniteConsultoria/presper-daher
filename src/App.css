@@ -78,18 +78,20 @@
 
 /* footer */
 .footer {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   padding: 1rem;
-  /* background-color: #cdb2cf; */
   background-color: #f0e9f1;
-  /* position: fixed; */
-  bottom: 0;
-  left: 0;
+  bottom: 0px;
+  left: 0px;
   width: 100%;
+
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+
+  height: 100px;
+  right: 0px;
 }
 
 /* course page */

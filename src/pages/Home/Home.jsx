@@ -281,8 +281,6 @@ function Home() {
             </div>
           </div>
         </Container>
-
-        <div className="container-item"></div>
       </div>
     </>
   );
