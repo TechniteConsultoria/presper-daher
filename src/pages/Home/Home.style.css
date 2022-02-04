@@ -64,3 +64,8 @@
 #contact-us {
   margin-bottom: -32px;
 }
+
+#card-link {
+  text-decoration: none;
+  color: inherit;
+}

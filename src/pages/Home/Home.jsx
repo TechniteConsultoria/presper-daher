@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -158,19 +158,27 @@ function Home() {
           <div className="container-item">
             <div className="courses-container">
               {coursesList?.map((item, id) => (
-                <CardComponent
-                  key={item.id}
-                  img={item.img}
-                  title={item.title}
-                  author={item.author}
-                  rating={item.rating}
-                  price={item.price}
-                  sold={item.sold}
-                  // onClick={() => {
-                  //   setCourse(item);
-                  //   showEditCourseModal(true);
-                  // }}
-                />
+                <Link
+                  id="card-link"
+                  to={{
+                    pathname: `/course-details/${item.id}`,
+                    state: { course: item },
+                  }}
+                >
+                  <CardComponent
+                    key={item.id}
+                    img={item.img}
+                    title={item.title}
+                    author={item.author}
+                    rating={item.rating}
+                    price={item.price}
+                    sold={item.sold}
+                    // onClick={() => {
+                    //   setCourse(item);
+                    //   showEditCourseModal(true);
+                    // }}
+                  />
+                </Link>
               ))}
             </div>
           </div>

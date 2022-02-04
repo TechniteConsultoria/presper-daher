@@ -2,11 +2,12 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
 import Home from "./pages/Home/Home.jsx";
-import Course from "./pages/Course.jsx";
+import CourseDetails from "./pages/CourseDetails/CourseDetails.jsx";
 // import Navbar from "./componentes/Navbar/Navbar.jsx";
 import Header from "./componentes/Header/Header.jsx";
 import Footer from "./componentes/Footer/Footer.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
+import CourseInfoComponent from "./componentes/CourseInfo/CourseInfo";
 // import Courses from "./componentes/Courses/Courses.jsx";
 // import AdminNavbar from "./componentes/AdminNavbar/AdminNavbar.jsx";
 
@@ -30,7 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/course/:id" element={<Course />} />
+        <Route path="/course-details/:id" element={<CourseDetails />} />
         <Route path="/perfil" element={<Perfil />}></Route>
         <Route path="/my-courses" element={<MyCourses />}></Route>
         <Route path="/my-certificates" element={<MyCertificates />} />

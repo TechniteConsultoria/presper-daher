@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
 
+const axios = require("axios").default;
+
 function CreateCourseModal(props) {
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
@@ -21,8 +23,9 @@ function CreateCourseModal(props) {
 
   useEffect(() => {}, []);
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const data = {
+      // id: Math.floor(Math.random() * 100),
       img: image,
       title: title,
       author: author,
@@ -30,7 +33,17 @@ function CreateCourseModal(props) {
       category: category,
       description: description,
       videos: videosList,
+      // videos: videos,
     };
+
+    try {
+      const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
+      axios.post(url, data).then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.error(error);
+    }
     setCourse(data);
     setResultCreateCourseModalShow(true);
     setVideosErrors([]);
@@ -43,6 +56,15 @@ function CreateCourseModal(props) {
       if (data[i].type === "video/mp4") files.push(data[i]);
       else errors.push(data[i]);
     }
+
+    //* Apenas para development
+    // let videos = [];
+    // files.map((el) => {
+    //   return videos.push(el.name);
+    // });
+    // setVideosList(videos);
+    //* Apenas para development
+
     setVideosList(files);
     setVideosErrors(errors);
   }
@@ -170,6 +192,7 @@ function CreateCourseModal(props) {
                       <Form.Check
                         type="checkbox"
                         label={video.name}
+                        // label={video}
                         key={id}
                         checked
                         onChange={() => console.log(video.name)}
