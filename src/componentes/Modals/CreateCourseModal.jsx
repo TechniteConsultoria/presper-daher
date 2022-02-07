@@ -60,7 +60,8 @@ function CreateCourseModal(props) {
     //* Apenas para development
     // let videos = [];
     // files.map((el) => {
-    //   return videos.push(el.name);
+    //   let t = String(el.name);
+    //   return videos.push(t);
     // });
     // setVideosList(videos);
     //* Apenas para development
@@ -158,9 +159,6 @@ function CreateCourseModal(props) {
               <Form.Label column sm="2">
                 Imagem
               </Form.Label>
-              {/* <Col sm="10">
-                <Form.Control plaintext readOnly />
-              </Col> */}
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Control
                   type="file"
@@ -192,7 +190,6 @@ function CreateCourseModal(props) {
                       <Form.Check
                         type="checkbox"
                         label={video.name}
-                        // label={video}
                         key={id}
                         checked
                         onChange={() => console.log(video.name)}

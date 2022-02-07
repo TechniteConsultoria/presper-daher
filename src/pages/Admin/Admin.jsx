@@ -7,7 +7,7 @@ import Comunication from "../../componentes/AdminComunication/AdminComunication"
 import "./Admin.style.css";
 
 function Admin() {
-  const [showPage, setShowPage] = useState();
+  const [showPage, setShowPage] = useState(2);
 
   useEffect(() => {
     console.log(showPage);
@@ -34,17 +34,7 @@ function Admin() {
                   {AdminNavbarData.map((val, key) => {
                     return (
                       <Nav.Link
-                        // href={val.link}
                         key={key}
-                        // className="nav-link-sidebar"
-                        // style={{
-                        //   fontSize: "24px",
-                        //   display: "flex",
-                        //   alignItems: "center",
-                        //   marginLeft: "10px",
-                        //   color: "black",
-                        //   textDecoration: "none",
-                        // }}
                         onClick={() => {
                           setShowPage(val.cod);
                         }}

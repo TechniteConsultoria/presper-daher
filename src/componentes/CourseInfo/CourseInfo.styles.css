@@ -2,9 +2,13 @@
   display: flex;
   flex-direction: row;
 
-  /* background-color: #975234; */
-
   justify-content: space-between;
+  flex-wrap: wrap;
+  /* align-items: left; */
+}
+
+#overlay {
+  background-color: rgba(0, 0, 0, 0.11);
 }
 
 #img-btn {
@@ -15,25 +19,31 @@
   align-items: flex-end;
 }
 
-.img-course {
-  width: 70%;
+.image-course {
+  width: 100%;
+  height: 540px;
   border-radius: 0.25rem;
 }
 
 #btn-add-cart {
-  /* width: 240px; */
-  border: none;
+  width: 100%;
+  max-width: 400px;
+
   margin: 0px;
   background-color: #14b8a6;
-  /* transform: translate(0%, -50%);
-  -ms-transform: translate(-50%, -50%); */
+  border: none;
+
+  /* border: 1px solid #14b8a6; */
+  /* background-color: #fff; */
+  /* color: #14b8a6; */
 }
 
 .certificate-container {
   /* margin-top: 12px; */
 }
 
-/* #course-info {
-  transform: translate(-100%, 0%);
-  -ms-transform: translate(-50%, -50%);
-} */
+#list-item {
+  justify-content: space-between;
+  display: flex;
+  text-align: center;
+}

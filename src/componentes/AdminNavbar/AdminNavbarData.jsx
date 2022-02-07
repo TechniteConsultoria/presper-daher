@@ -7,12 +7,12 @@ import {
 } from "react-icons/bs";
 
 export const AdminNavbarData = [
-  {
-    title: "Minha Conta",
-    icon: <BsPersonCircle />,
-    link: "/admin/minha-conta",
-    cod: 1,
-  },
+  // {
+  //   title: "Minha Conta",
+  //   icon: <BsPersonCircle />,
+  //   link: "/admin/minha-conta",
+  //   cod: 1,
+  // },
   {
     title: "Cursos",
     icon: <BsFillCollectionPlayFill />,
@@ -25,10 +25,10 @@ export const AdminNavbarData = [
     link: "/admin/comunicacao",
     cod: 3,
   },
-  {
-    title: "Desempenho",
-    icon: <BsFillBarChartLineFill />,
-    link: "/admin/desenpenho",
-    cod: 4,
-  },
+  // {
+  //   title: "Desempenho",
+  //   icon: <BsFillBarChartLineFill />,
+  //   link: "/admin/desenpenho",
+  //   cod: 4,
+  // },
 ];

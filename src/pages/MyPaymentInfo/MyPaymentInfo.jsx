@@ -64,138 +64,36 @@ function MyPaymentInfo() {
   }, [result]);
 
   return (
-    // <>
-    //   <Container style={{ marginTop: "0px" }}>
-    //     <div className="container-my-certificates">
-    //       <div className="container-item">
-    //         <Row className="row-novo-curso">
-    //           <Col>
-    //             <h2>Minhas Formas de Pagamento</h2>
-    //             <p>Vizualize suas formas de pagamento cadastradas</p>
-    //           </Col>
-    //           <Col>
-    //             <Button
-    //               id="btn-add"
-    //               onClick={() => {
-    //                 setAddCreditCardModalShow(true);
-    //               }}
-    //             >
-    //               ADICIONAR CARTÃO
-    //             </Button>
-    //           </Col>
-    //         </Row>
-    //       </div>
-    //       <hr></hr>
-    //     </div>
-    //     <div className="container-item">
-    //       <Row className="row-novo-curso">
-    //         <Col>
-    //           <h2>Cartões Cadastrados</h2>
-    //           <p>Gerencie seus cartões de crédito cadastrados</p>
-    //         </Col>
-    //       </Row>
-    //     </div>
-
-    //     {result.operation === "add" && (
-    //       <Alert variant={result.status === "201" ? "success" : "danger"}>
-    //         {result.status === "201"
-    //           ? "Seu cartão foi registrado com sucesso!"
-    //           : "Ops! Ocorreu um erro ao resgistrar seu cartão. Tente novamente."}
-    //       </Alert>
-    //     )}
-
-    //     {result.operation === "del" && (
-    //       <Alert variant={result.status === "200" ? "success" : "danger"}>
-    //         {result.status === "200"
-    //           ? "Seu cartão foi removido com sucesso!"
-    //           : "Ops! Ocorreu um erro ao remover seu cartão. Tente novamente."}
-    //       </Alert>
-    //     )}
-
-    //     <div className="credit-cards-container">
-    //       <div>
-    //         {creditCardsList?.map((c, id) => {
-    //           return (
-    //             <div key={id} className="card-box">
-    //               <div
-    //                 onClick={() => {
-    //                   setShowCvc(!showCvc);
-    //                   setCardNumber(c.number);
-    //                 }}
-    //               >
-    //                 <Cards
-    //                   id="credit-card"
-    //                   number={c.number}
-    //                   name={c.name}
-    //                   expiry={c.expiry}
-    //                   cvc={c.cvc}
-    //                   focused={
-    //                     showCvc && cardNumber === c.number ? "cvc" : null
-    //                   }
-    //                 />
-    //               </div>
-
-    //               <div>
-    //                 <button
-    //                   className="btn-del"
-    //                   onClick={() => {
-    //                     setCardId(c.id);
-    //                     setDeleteCreditCardModalShow(true);
-    //                   }}
-    //                 >
-    //                   Excluir
-    //                 </button>
-    //               </div>
-    //             </div>
-    //           );
-    //         })}
-    //       </div>
-    //     </div>
-    //   </Container>
-
-    //   <AddCreditCardModal
-    //     show={addCreditCardModalShow}
-    //     onHide={() => setAddCreditCardModalShow(false)}
-    //     result={getAddResult}
-    //   />
-    //   <DeleteCreditCardModal
-    //     show={deleteCreditCardModalShow}
-    //     onHide={() => setDeleteCreditCardModalShow(false)}
-    //     result={getDeleteResult}
-    //     id={cardId}
-    //   />
-    // </>
-
     <>
-      <Container>
-        <Container fluid>
-          <div className="container-item">
-            <Row className="row-novo-curso">
-              <Col>
-                <h2>Minhas Formas de Pagamento</h2>
-                <p>Vizualize suas formas de pagamento cadastradas</p>
-              </Col>
-              <Col>
-                <Button
-                  id="btn-add"
-                  onClick={() => {
-                    setAddCreditCardModalShow(true);
-                  }}
-                >
-                  ADICIONAR CARTÃO
-                </Button>
-              </Col>
-            </Row>
-          </div>
-          <hr></hr>
-          <div className="container-item" id="cartoes-cadastrados">
-            <Row className="row-novo-curso">
-              <Col>
-                <h2>Cartões Cadastrados</h2>
-                <p>Gerencie seus cartões de crédito cadastrados</p>
-              </Col>
-            </Row>
-          </div>
+      <Container style={{ height: "auto" }}>
+        <div className="container-item">
+          <Row className="row-novo-curso">
+            <Col>
+              <h2>Minhas Formas de Pagamento</h2>
+              <p>Vizualize suas formas de pagamento cadastradas</p>
+            </Col>
+            <Col>
+              <Button
+                id="btn-add"
+                onClick={() => {
+                  setAddCreditCardModalShow(true);
+                }}
+              >
+                ADICIONAR CARTÃO
+              </Button>
+            </Col>
+          </Row>
+        </div>
+        <hr></hr>
+        <div className="container-item" id="cartoes-cadastrados">
+          <Row className="row-novo-curso">
+            <Col>
+              <h2>Cartões Cadastrados</h2>
+              <p>Gerencie seus cartões de crédito cadastrados</p>
+            </Col>
+          </Row>
+        </div>
+        {result.operation && (
           <div className="container-item">
             {result.operation === "add" && (
               <Alert variant={result.status === "201" ? "success" : "danger"}>
@@ -213,46 +111,46 @@ function MyPaymentInfo() {
               </Alert>
             )}
           </div>
-          <div className="credit-card-container">
-            <div>
-              {creditCardsList?.map((c, id) => {
-                return (
-                  <div key={id} className="card-box">
-                    <div
+        )}
+        <div className="credit-card-container">
+          <div>
+            {creditCardsList?.map((c, id) => {
+              return (
+                <div key={id} className="card-box">
+                  <div
+                    onClick={() => {
+                      setShowCvc(!showCvc);
+                      setCardNumber(c.number);
+                    }}
+                  >
+                    <Cards
+                      id="credit-card"
+                      number={c.number}
+                      name={c.name}
+                      expiry={c.expiry}
+                      cvc={c.cvc}
+                      focused={
+                        showCvc && cardNumber === c.number ? "cvc" : null
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <button
+                      className="btn-del"
                       onClick={() => {
-                        setShowCvc(!showCvc);
-                        setCardNumber(c.number);
+                        setCardId(c.id);
+                        setDeleteCreditCardModalShow(true);
                       }}
                     >
-                      <Cards
-                        id="credit-card"
-                        number={c.number}
-                        name={c.name}
-                        expiry={c.expiry}
-                        cvc={c.cvc}
-                        focused={
-                          showCvc && cardNumber === c.number ? "cvc" : null
-                        }
-                      />
-                    </div>
-
-                    <div>
-                      <button
-                        className="btn-del"
-                        onClick={() => {
-                          setCardId(c.id);
-                          setDeleteCreditCardModalShow(true);
-                        }}
-                      >
-                        Excluir
-                      </button>
-                    </div>
+                      Excluir
+                    </button>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-        </Container>
+        </div>
       </Container>
 
       <AddCreditCardModal
