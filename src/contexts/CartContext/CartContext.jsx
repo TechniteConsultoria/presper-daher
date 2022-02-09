@@ -24,6 +24,7 @@ export const CartProvider = ({ children }) => {
       if (prod.id !== _id) formatedList.push(prod);
     });
     localStorage.setItem("cart", JSON.stringify(formatedList));
+    setCart(formatedList);
   }
 
   function getTotalAmount() {
@@ -32,6 +33,12 @@ export const CartProvider = ({ children }) => {
       0
     );
     return amount;
+  }
+
+  function getCart() {
+    let cart = localStorage.getItem("cart");
+    console.log(cart);
+    return cart;
   }
 
   useEffect(() => {
@@ -46,6 +53,7 @@ export const CartProvider = ({ children }) => {
         addItemToCart,
         removeItemFromCart,
         getTotalAmount,
+        getCart,
       }}
     >
       {children}
