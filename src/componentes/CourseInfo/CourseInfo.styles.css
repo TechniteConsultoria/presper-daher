@@ -1,0 +1,49 @@
+.course-info-row {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* align-items: left; */
+}
+
+#overlay {
+  background-color: rgba(0, 0, 0, 0.11);
+}
+
+#img-btn {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  /* height: 100%; */
+  align-items: flex-end;
+}
+
+.image-course {
+  width: 100%;
+  height: 540px;
+  border-radius: 0.25rem;
+}
+
+#btn-add-cart {
+  width: 100%;
+  max-width: 400px;
+
+  margin: 0px;
+  background-color: #14b8a6;
+  border: none;
+
+  /* border: 1px solid #14b8a6; */
+  /* background-color: #fff; */
+  /* color: #14b8a6; */
+}
+
+.certificate-container {
+  /* margin-top: 12px; */
+}
+
+#list-item {
+  justify-content: space-between;
+  display: flex;
+  text-align: center;
+}

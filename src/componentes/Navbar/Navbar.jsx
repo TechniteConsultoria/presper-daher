@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Form, FormControl } from "react-bootstrap";
@@ -5,7 +6,11 @@ import { BsFillCartFill } from "react-icons/bs";
 
 import "../Navbar/Navbar.style.css";
 
+import { CartContext } from "../../contexts/CartContext/CartContext";
+
 function NavbarComponent() {
+  const { cart } = useContext(CartContext);
+
   const categorias = [
     {
       id: 11,
@@ -64,29 +69,33 @@ function NavbarComponent() {
                   </Form>
 
                   <Nav.Link
-                    href="/"
+                    href="/shopping-cart"
                     style={{ justifyContent: "center" }}
                     id="cart-link"
                   >
                     <BsFillCartFill style={{ fontSize: "24px" }} />
-                  </Nav.Link>
-
-                  <Nav.Link
-                    href="/signup"
-                    className="nav-link"
-                    id="signup-link"
-                  >
-                    Cadastre-se
+                    <span id="cart-count">
+                      {cart.length === null ? 0 : cart.length}
+                    </span>
                   </Nav.Link>
 
                   {!user ? (
-                    <Nav.Link
-                      href="/login"
-                      className="nav-link"
-                      id="login-link"
-                    >
-                      Fazer Login
-                    </Nav.Link>
+                    <>
+                      <Nav.Link
+                        href="/signup"
+                        className="nav-link"
+                        id="signup-link"
+                      >
+                        Cadastre-se
+                      </Nav.Link>
+                      <Nav.Link
+                        href="/login"
+                        className="nav-link"
+                        id="login-link"
+                      >
+                        Fazer Login
+                      </Nav.Link>
+                    </>
                   ) : (
                     <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                       <NavDropdown.Item href={`/perfil`} id="minhaconta-items">

@@ -13,11 +13,14 @@
 
 #search-bar {
   /* background-color: #f0e9; */
+  width: 400px;
 }
 
 #cart-link {
   /* background-color: #f0e9; */
   font-size: 16px;
+  position: relative;
+  display: inline-block;
 }
 
 #login-link {
@@ -84,4 +87,14 @@
 
 #minhaconta-items:active {
   background-color: #f0e9f1;
+}
+
+#cart-count {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 18px;
+
+  font-size: 12px;
+  transform: translate(-5px, -5px);
 }

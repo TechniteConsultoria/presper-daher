@@ -76,7 +76,7 @@ function MyCourses() {
   return (
     <>
       <Container>
-        <Container fluid className="container-my-courses">
+        <Container fluid>
           <div className="container-item">
             <Row className="row-novo-curso">
               <Col>
@@ -88,9 +88,10 @@ function MyCourses() {
           <hr></hr>
           <div className="container-filtro">
             <div className="filtro-item">
-              <Form.Label column sm="6">
+              <Form.Label column className="label">
                 Pesquisar
               </Form.Label>
+
               <Form
                 // className="search-bar"
                 onSubmit={(e) => {
@@ -98,10 +99,11 @@ function MyCourses() {
                 }}
               >
                 <FormControl
-                  // size="sm"
+                  size="sm"
                   type="search"
                   placeholder="Pesquisar cursos"
                   className="search-bar"
+                  id="search-bar-my-account"
                   aria-label="Search"
                   onChange={(e) => {
                     setBuscarCurso(e.target.value);
@@ -111,12 +113,12 @@ function MyCourses() {
             </div>
             <div className="filtros-container">
               <div className="filtro-item">
-                <Form.Label column sm="12" className="label">
+                <Form.Label column className="label">
                   Classificar por
                 </Form.Label>
                 <Dropdown>
                   <Dropdown.Toggle
-                    // size="sm"
+                    size="sm"
                     style={{
                       backgroundColor: "#fff",
                       border: "1px solid rgb(108, 117, 125, 0.3)",
@@ -142,12 +144,12 @@ function MyCourses() {
                 </Dropdown>
               </div>
               <div className="filtro-item">
-                <Form.Label column sm="12" className="label">
+                <Form.Label column className="label">
                   Filtrar por categoria
                 </Form.Label>
                 <Dropdown>
                   <Dropdown.Toggle
-                    // size="sm"
+                    size="sm"
                     style={{
                       backgroundColor: "#fff",
                       border: "1px solid rgb(108, 117, 125, 0.3)",

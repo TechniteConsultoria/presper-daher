@@ -93,10 +93,11 @@ function MyCertificates() {
               </Form.Label>
               <Form className="search-bar">
                 <FormControl
-                  // size="sm"
+                  size="sm"
                   type="search"
                   placeholder="Pesquisar cursos"
                   className="search-bar"
+                  id="search-bar-my-account"
                   aria-label="Search"
                   onChange={(e) => {
                     setBuscarCurso(e.target.value);
@@ -113,6 +114,7 @@ function MyCertificates() {
               </Form.Label>
               <Dropdown>
                 <Dropdown.Toggle
+                  size="sm"
                   style={{
                     backgroundColor: "#fff",
                     border: "1px solid rgb(108, 117, 125, 0.3)",

@@ -6,15 +6,18 @@ import reportWebVitals from "./reportWebVitals";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import "./App.css";
-import "./css/login.css";
-import "./css/signup.css";
+// import "./App.css";
+// import "./css/login.css";
+// import "./css/signup.css";
+import { CartProvider } from "./contexts/CartContext/CartContext";
 // import "./css/navbar.css";
 
 function tik() {
   ReactDOM.render(
     <BrowserRouter>
-      <App />
+      <CartProvider>
+        <App />
+      </CartProvider>
     </BrowserRouter>,
     document.getElementById("root")
   );

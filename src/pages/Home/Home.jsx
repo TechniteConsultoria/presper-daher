@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Container,
   Row,
@@ -9,6 +9,8 @@ import {
   Button,
   Alert,
 } from "react-bootstrap";
+
+import MaskedInput from "react-maskedinput";
 
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
@@ -20,6 +22,7 @@ const axios = require("axios").default;
 function Home() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
   const [msgSent, isMsgSent] = useState(false);
@@ -38,6 +41,7 @@ function Home() {
     const data = {
       name: name,
       email: email,
+      phone: phone,
       message: message,
     };
 
@@ -158,19 +162,23 @@ function Home() {
           <div className="container-item">
             <div className="courses-container">
               {coursesList?.map((item, id) => (
-                <CardComponent
+                <Link
                   key={item.id}
-                  img={item.img}
-                  title={item.title}
-                  author={item.author}
-                  rating={item.rating}
-                  price={item.price}
-                  sold={item.sold}
-                  // onClick={() => {
-                  //   setCourse(item);
-                  //   showEditCourseModal(true);
-                  // }}
-                />
+                  id="card-link"
+                  to={{
+                    pathname: `/course-details/${item.id}`,
+                    state: { course: item },
+                  }}
+                >
+                  <CardComponent
+                    img={item.img}
+                    title={item.title}
+                    author={item.author}
+                    rating={item.rating}
+                    price={item.price}
+                    sold={item.sold}
+                  />
+                </Link>
               ))}
             </div>
           </div>
@@ -243,6 +251,20 @@ function Home() {
                     required
                   />
                 </Form.Group>
+                <Form.Group>
+                  <Form.Label column sm="2">
+                    Telefone
+                  </Form.Label>
+                  <MaskedInput
+                    className="masked-input"
+                    type="text"
+                    name="phoneNumber"
+                    mask="(11) 11111-1111"
+                    placeholder="(xx) xxxxx-xxxx"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </Form.Group>
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlTextarea1"
@@ -281,8 +303,6 @@ function Home() {
             </div>
           </div>
         </Container>
-
-        <div className="container-item"></div>
       </div>
     </>
   );

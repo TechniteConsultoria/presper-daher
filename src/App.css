@@ -1,7 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: #fff;
+  margin: 0;
+  height: 100%;
+
+  /* background-color: #f0e9f1; */
 }
 
 .header {
@@ -9,14 +24,11 @@
 }
 
 .bg-login {
-  height: 100vh;
-  display: flex;
+  /* height: 100vh; */
+  height: 100%;
+  /* display: flex; */
   justify-content: space-between;
   flex-direction: column;
-
-  background-color: #fff;
-  /* background: #cdb2cf; */
-  /* background-color: #f0e9f1; */
 
   background-size: cover;
   background-position: center;
@@ -78,18 +90,23 @@
 
 /* footer */
 .footer {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   padding: 1rem;
-  /* background-color: #cdb2cf; */
   background-color: #f0e9f1;
-  /* position: fixed; */
-  bottom: 0;
-  left: 0;
+  /* bottom: 0px; */
+  /* left: 0px; */
   width: 100%;
+
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+
+  height: 100px;
+  right: 0px;
+
+  position: relative;
+  bottom: 0;
 }
 
 /* course page */

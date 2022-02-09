@@ -13,6 +13,9 @@
 .carousel-container {
   /* margin-bottom: 10px; */
   max-width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: none;
 }
 
 /* .courses-container {
@@ -60,4 +63,9 @@
 
 #contact-us {
   margin-bottom: -32px;
+}
+
+#card-link {
+  text-decoration: none;
+  color: inherit;
 }
