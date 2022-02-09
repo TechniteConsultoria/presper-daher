@@ -3,9 +3,9 @@ import React from "react";
 import "./CourseInfo.styles.css";
 
 import ReactStars from "react-rating-stars-component";
+import RatingCard from "../RatingCard/RatingCard";
 import { Button, Container, Row, Col, ListGroup } from "react-bootstrap";
 import { BsFillAwardFill, BsFillCameraVideoFill } from "react-icons/bs";
-import RatingCard from "../RatingCard/RatingCard";
 
 function CourseInfoComponent(props) {
   return (
@@ -28,7 +28,9 @@ function CourseInfoComponent(props) {
             <h6 style={{ fontSize: "24px", color: "#6CB1CF" }}>
               R$ {props.price}
             </h6>
-            <Button id="btn-add-cart">Comprar</Button>
+            <Button id="btn-add-cart" onClick={() => {}}>
+              Comprar
+            </Button>
           </Col>
         </div>
 

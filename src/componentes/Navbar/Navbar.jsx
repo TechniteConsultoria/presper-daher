@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Form, FormControl } from "react-bootstrap";
@@ -5,7 +6,11 @@ import { BsFillCartFill } from "react-icons/bs";
 
 import "../Navbar/Navbar.style.css";
 
+import { CartContext } from "../../contexts/CartContext/CartContext";
+
 function NavbarComponent() {
+  const { cart } = useContext(CartContext);
+
   const categorias = [
     {
       id: 11,
@@ -64,11 +69,14 @@ function NavbarComponent() {
                   </Form>
 
                   <Nav.Link
-                    href="/"
+                    href="/shopping-cart"
                     style={{ justifyContent: "center" }}
                     id="cart-link"
                   >
                     <BsFillCartFill style={{ fontSize: "24px" }} />
+                    <span id="cart-count">
+                      {cart.length === null ? 0 : cart.length}
+                    </span>
                   </Nav.Link>
 
                   {!user ? (

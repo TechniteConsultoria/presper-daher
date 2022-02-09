@@ -1,0 +1,51 @@
+.prod-card {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #c6c7c8;
+  border-radius: 8px;
+  box-shadow: 0px 3px 14px -8px rgba(98, 63, 101, 0.53);
+
+  padding: 8px;
+  padding-left: 16px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 8px;
+  padding-right: 16px;
+}
+
+.prod-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.prod-autor {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.prod-category {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.prod-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: #6cb1cf;
+}
+
+.cart-remove-icon {
+  font-size: 24px;
+  color: rgb(191, 46, 60);
+  cursor: pointer;
+}
