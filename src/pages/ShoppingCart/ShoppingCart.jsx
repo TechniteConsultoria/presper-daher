@@ -89,7 +89,11 @@ function ShoppingCart() {
         ) : (
           <div className="container-empty-card">
             <div className="empty-cart-card">
-              <Image src={emptyCart} alt="carrinho vazio" id="card-img" />
+              <Image
+                src={emptyCart}
+                alt="carrinho vazio"
+                id="empty-cart-card-img"
+              />
               <div className="card-title">Seu carrinho está vazio!</div>
               <div className="card-text">
                 Você não possui nenhum produto adicionado ao seu carrinho.
