@@ -1,3 +1,4 @@
+
 #navbar {
 }
 
@@ -13,7 +14,7 @@
 
 #search-bar {
   /* background-color: #f0e9; */
-  width: 400px;
+ width:20em;
 }
 
 #cart-link {
@@ -98,3 +99,33 @@
   font-size: 12px;
   transform: translate(-5px, -5px);
 }
+@media screen and (min-device-width: 300px) and (max-device-width: 767px){
+  #search-bar {
+   width:100%;
+   margin-top:.5em;
+   
+  }
+}
+
+
+@media only screen and (min-width: 768px){
+  #search-bar {
+    width:30em;
+    margin-left: 8em;
+  
+  }
+}
+@media only screen and (min-width: 992px){
+  #search-bar {
+    width: 20em;
+    margin:0;
+  }
+}
+
+@media only screen and (min-width: 1200px){
+  #search-bar {
+     width:30em;
+  
+  }
+}
+  
