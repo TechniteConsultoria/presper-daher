@@ -21,37 +21,14 @@ function Login() {
   const [showAlert, setShowAlert] = useState(false);
 
   async function handleSubmit() {
-    const data = {
+    const body = {
       email,
       senha,
       lembrarSenha,
     };
-    try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-      axios.get(url).then((res) => {
-        // TODO: apenas para development
-        const user = res.data.find(({ email }) => email === data.email);
-        if (user !== undefined) {
-          if (user.password === data.senha) {
-            localStorage.setItem("user", JSON.stringify(user));
-            navigate("/");
-          } else {
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          }
-        } else {
-          setShowAlert(true);
-          setTimeout(() => {
-            setShowAlert(false);
-          }, 6000);
-        }
-        // TODO: apenas para development
-      });
-    } catch (error) {
-      console.error(error);
-    }
+
+    // const url = "http://localhost:3333/user";
+    // await axios.get(url);
   }
 
   async function googleLogin() {

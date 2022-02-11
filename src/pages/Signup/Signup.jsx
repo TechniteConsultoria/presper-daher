@@ -20,38 +20,30 @@ function Signup() {
 
   async function handleSubmit() {
     if (submit && senha === confirmaSenha) {
-      const data = {
-        name: nome,
+      const body = {
+        fullName: nome,
         email: email,
         password: senha,
-        subscribe: inscricao,
-        role: "user",
+        subscribed: inscricao,
+        role: "USER",
       };
-      try {
-        const urlGET =
-          "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-        axios.get(urlGET).then((res) => {
-          // TODO: apenas para development
-          const user = res.data.find(({ email }) => email === data.email);
-          if (user !== undefined) {
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          } else {
-            const url =
-              "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-            axios.post(url, data).then((res) => {
-              if (res.status === 201) {
-                navigate("/");
-              }
-            });
+
+      const url = "http://localhost:3333/user";
+      await axios
+        .post(url, body)
+        .then((res) => {
+          if (res.status === 201) {
+            // TODO - setar usuário no localstorage com token de autenticação
+            navigate("/");
           }
-          // TODO: apenas para development
+        })
+        .catch((error) => {
+          setShowAlert(true);
+          setTimeout(() => {
+            setShowAlert(false);
+          }, 6000);
         });
-      } catch (error) {
-        console.error(error);
-      }
+
       isSubmit(false);
     }
   }
@@ -66,24 +58,23 @@ function Signup() {
         <section>
           <div className="card p-5">
             <h2 className="title-card">Sign up</h2>
-            {/* <p className="subtitle">Dados para realizar o cadastro:</p> */}
             {submit && senha !== confirmaSenha && (
               <Alert variant="danger">As senhas são inválidas!</Alert>
             )}
             {showAlert && (
               <Alert variant="danger">
-                Ops! Parece que vc já está cadastrado em nossa plataforma. Faça
-                o login para acessar sua conta.
+                Ops! Parece que você já está cadastrado em nossa plataforma.
+                Faça o login para acessar sua conta.
               </Alert>
             )}
             <form
               // action="submit"
               className="row g-3 d-flex flex-column"
-              onSubmit={(e) => {
-                e.preventDefault();
-                isSubmit(true);
-                handleSubmit();
-              }}
+              // onSubmit={(e) => {
+              //   e.preventDefault();
+              //   isSubmit(true);
+              //   handleSubmit();
+              // }}
             >
               <input
                 type="text"
@@ -135,7 +126,6 @@ function Signup() {
                   onChange={() => setInscricao(!inscricao)}
                   style={{
                     border: "1px solid #14B8A6",
-                    // backgroundColor: "#14B8A6",
                     backgroundColor: `${inscricao ? "#14B8A6" : ""}`,
                   }}
                 ></input>
@@ -150,8 +140,14 @@ function Signup() {
                 type="submit"
                 className="btn btn-primary btn-lg"
                 style={{ background: "#14B8A6", border: "none" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.persist();
+                  isSubmit(true);
+                  handleSubmit();
+                }}
               >
-                Acessar
+                Cadastrar
               </button>
 
               <a href="/login" style={{ color: "#14B8A6" }}>
