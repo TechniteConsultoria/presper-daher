@@ -1,56 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useSignupPage } from "../../services/Hooks/SignupPageHook";
 import Alert from "react-bootstrap/Alert";
 
 import "./Signup.styles.css";
 
-const axios = require("axios").default;
-
 function Signup() {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmaSenha, setConfirmaSenha] = useState("");
-  const [inscricao, setInscricao] = useState(false);
-  const [submit, isSubmit] = useState(false);
-
-  const [showAlert, setShowAlert] = useState(false);
-
-  const navigate = useNavigate();
-
-  async function handleSubmit() {
-    if (submit && senha === confirmaSenha) {
-      const body = {
-        fullName: nome,
-        email: email,
-        password: senha,
-        subscribed: inscricao,
-        role: "USER",
-      };
-
-      const url = "http://localhost:3333/user";
-      await axios
-        .post(url, body)
-        .then((res) => {
-          if (res.status === 201) {
-            // TODO - setar usuário no localstorage com token de autenticação
-            navigate("/");
-          }
-        })
-        .catch((error) => {
-          setShowAlert(true);
-          setTimeout(() => {
-            setShowAlert(false);
-          }, 6000);
-        });
-
-      isSubmit(false);
-    }
-  }
-
-  useEffect(() => {
-    setShowAlert(false);
-  }, []);
+  const {
+    signUp,
+    setName,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    subscribed,
+    isSubscribed,
+    submited,
+    isSubmited,
+    showAlert,
+  } = useSignupPage();
 
   return (
     <>
@@ -58,7 +26,7 @@ function Signup() {
         <section>
           <div className="card p-5">
             <h2 className="title-card">Sign up</h2>
-            {submit && senha !== confirmaSenha && (
+            {submited && password !== confirmPassword && (
               <Alert variant="danger">As senhas são inválidas!</Alert>
             )}
             {showAlert && (
@@ -67,15 +35,7 @@ function Signup() {
                 Faça o login para acessar sua conta.
               </Alert>
             )}
-            <form
-              // action="submit"
-              className="row g-3 d-flex flex-column"
-              // onSubmit={(e) => {
-              //   e.preventDefault();
-              //   isSubmit(true);
-              //   handleSubmit();
-              // }}
-            >
+            <form className="row g-3 d-flex flex-column">
               <input
                 type="text"
                 className="form"
@@ -83,7 +43,7 @@ function Signup() {
                 required
                 name="nome"
                 onChange={(e) => {
-                  setNome(e.target.value);
+                  setName(e.target.value);
                 }}
               />
               <input
@@ -103,7 +63,7 @@ function Signup() {
                 required
                 name="senha"
                 onChange={(e) => {
-                  setSenha(e.target.value);
+                  setPassword(e.target.value);
                 }}
               />
               <input
@@ -113,7 +73,7 @@ function Signup() {
                 required
                 name="confirmar-senha"
                 onChange={(e) => {
-                  setConfirmaSenha(e.target.value);
+                  setConfirmPassword(e.target.value);
                 }}
               />
 
@@ -123,10 +83,10 @@ function Signup() {
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
-                  onChange={() => setInscricao(!inscricao)}
+                  onChange={() => isSubscribed(!subscribed)}
                   style={{
                     border: "1px solid #14B8A6",
-                    backgroundColor: `${inscricao ? "#14B8A6" : ""}`,
+                    backgroundColor: `${subscribed ? "#14B8A6" : ""}`,
                   }}
                 ></input>
 
@@ -143,8 +103,8 @@ function Signup() {
                 onClick={(e) => {
                   e.preventDefault();
                   e.persist();
-                  isSubmit(true);
-                  handleSubmit();
+                  isSubmited(true);
+                  signUp();
                 }}
               >
                 Cadastrar

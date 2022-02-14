@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -12,36 +12,41 @@ import facebook from "../../assets/facebook-logo.png";
 const axios = require("axios").default;
 
 function Login() {
-  const navigate = useNavigate();
+  const {
+    setEmail,
+    setPassword,
+    isRememberPassword,
+    rememberPassword,
+    showAlert,
+    facebookLogin,
+    googleLogin,
+    login,
+  } = useLoginPage();
 
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [lembrarSenha, setLembrarSenha] = useState(false);
+  // async function handleSubmit() {
+  //   const body = {
+  //     email,
+  //     password,
+  //     // lembrarSenha,
+  //   };
 
-  const [showAlert, setShowAlert] = useState(false);
-
-  async function handleSubmit() {
-    const body = {
-      email,
-      senha,
-      lembrarSenha,
-    };
-
-    // const url = "http://localhost:3333/user";
-    // await axios.get(url);
-  }
-
-  async function googleLogin() {
-    console.log("Google Login function!");
-  }
-
-  async function facebookLogin() {
-    console.log("Facebook Login function!");
-  }
-
-  useEffect(() => {
-    setShowAlert(false);
-  }, []);
+  //   const url = "http://localhost:3333/auth/authenticate";
+  //   await axios
+  //     .post(url, body)
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         // TODO - setar usuário no localstorage com token de autenticação
+  //         navigate("/");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       setShowAlert(true);
+  //       setTimeout(() => {
+  //         setShowAlert(false);
+  //       }, 6000);
+  //       console.log(error);
+  //     });
+  // }
 
   return (
     <div className="container-login">
@@ -59,11 +64,10 @@ function Login() {
           </div>
 
           <form
-            // action="submit"
             className="row g-3 d-flex flex-column"
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              login();
             }}
           >
             <br />
@@ -101,7 +105,7 @@ function Login() {
               required
               name="senha"
               onChange={(e) => {
-                setSenha(e.target.value);
+                setPassword(e.target.value);
               }}
             />
 
@@ -111,7 +115,7 @@ function Login() {
                 type="checkbox"
                 value=""
                 id="flexCheckDefault"
-                onChange={() => setLembrarSenha(!lembrarSenha)}
+                onChange={() => isRememberPassword(!rememberPassword)}
               ></input>
 
               <label className="form-check-label" htmlFor="flexCheckDefault">
