@@ -1,5 +1,4 @@
-import "./CourseDetails.styles.css";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import ReactStars from "react-rating-stars-component";
@@ -7,7 +6,9 @@ import RatingCard from "../../componentes/RatingCard/RatingCard";
 import { Button, Container, Row, Col, ListGroup, Image } from "react-bootstrap";
 import { BsFillAwardFill, BsFillCameraVideoFill } from "react-icons/bs";
 
-import { CartContext } from "../../contexts/CartContext/CartContext";
+import { useCart } from "../../contexts/CartContext/CartContext";
+
+import "./CourseDetails.styles.css";
 
 const axios = require("axios").default;
 
@@ -16,7 +17,7 @@ function CourseDetails() {
 
   const [course, setCourse] = useState({});
 
-  const { addItemToCart } = useContext(CartContext);
+  const { addItemToCart } = useCart();
 
   async function getCourse() {
     const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";

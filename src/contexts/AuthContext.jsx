@@ -1,12 +1,19 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 // import { useCookies } from "react-cookie";
 
-export const AuthContext = createContext({});
+export const userFromLocalStorage = JSON.parse(
+  localStorage.getItem("user") || "[]"
+);
 
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+const AuthContext = createContext();
+
+export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [loged, setLoged] = useState(false);
+  const [role, setRole] = useState("USER");
+
+  // const [user, setUser] = useState(null);
   //   const [, setCookie] = useCookies(["@target:user", "@target:token"]);
 
   //   useEffect(() => {
@@ -26,7 +33,10 @@ export const AuthProvider = ({ children }) => {
 
   function signIn(myToken, myUser) {
     setToken(myToken);
+    setUser(myUser);
     setLoged(true);
+    // setRole(myRole);
+
     // setCookie("@target:user", myUser, {
     //   path: "/",
     //   maxAge: 60 * 60 * 24, //expira em 24horas
@@ -40,14 +50,27 @@ export const AuthProvider = ({ children }) => {
     // });
 
     localStorage.setItem("user", JSON.stringify(myUser));
-    localStorage.setItem("@taget:token", myToken);
+    localStorage.setItem("@presper-daher:token", myToken);
   }
 
-  function signOut() {
+  function logout() {
     setToken(null);
-    localStorage.removeItem("@taget:token");
+    setUser(null);
+    setLoged(false);
+    setRole("USER");
+    localStorage.removeItem("@presper-daher:token");
     localStorage.removeItem("user");
   }
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user") || null));
+  }, []);
+
+  useEffect(() => {
+    console.log("User:", user);
+    console.log("Token:", token);
+    console.log("Role:", role);
+  }, [user, token, role]);
 
   return (
     <AuthContext.Provider
@@ -55,16 +78,24 @@ export const AuthProvider = ({ children }) => {
         signed: token,
         token,
         signIn,
-        signOut,
+        logout,
         setToken,
+        loged,
+        // ------->
         user,
         setUser,
-        loged,
+        role,
+        setRole,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export default AuthContext;
+export function useAuth() {
+  const context = useContext(AuthContext);
+  const { user, setUser, logout, signIn, setToken, role, setRole } = context;
+
+  return { user, setUser, logout, signIn, setToken, role, setRole };
+}

@@ -18,6 +18,15 @@ class UserService {
       return error;
     }
   }
+
+  async authenticateGoogleUser() {
+    try {
+      const response = await ApiService.get("auth/google");
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default new UserService();

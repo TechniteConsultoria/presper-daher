@@ -1,3 +1,4 @@
+import React, { useContext, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Signup from "./pages/Signup/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
@@ -17,40 +18,53 @@ import MyCertificates from "./pages/MyCertificates/MyCertificates.jsx";
 import MyPaymentInfo from "./pages/MyPaymentInfo/MyPaymentInfo.jsx";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart.jsx";
 
+import { AuthContext, userFromLocalStorage } from "./contexts/AuthContext";
+
+// import { AuthProvider } from "./contexts/AuthContext";
+
+import AdminPrivateRoute from "./routes/AdminPrivateRoute";
+
+import AuthProvider from "./contexts/AuthContext";
+
 function App() {
   const location = useLocation();
+
   return (
     <div>
-      <div>
-        {location.pathname === "/login" ||
-        location.pathname === "/signup" ||
-        location.pathname === "/admin" ? null : (
-          <Header />
-        )}
-      </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/course-details/:id" element={<CourseDetails />} />
-        <Route path="/shopping-cart" element={<ShoppingCart />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/my-courses" element={<MyCourses />} />
-        <Route path="/my-certificates" element={<MyCertificates />} />
-        <Route path="/my-payment-info" element={<MyPaymentInfo />} />
-        <Route path="/admin" element={<Admin />} />
-        {/* 8 */}
-      </Routes>
+      <AuthProvider>
+        <div>
+          {location.pathname === "/login" ||
+          location.pathname === "/signup" ||
+          location.pathname === "/admin" ? null : (
+            <Header />
+          )}
+        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/course-details/:id" element={<CourseDetails />} />
+          <Route path="/shopping-cart" element={<ShoppingCart />} />
+          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/my-courses" element={<MyCourses />} />
+          <Route path="/my-certificates" element={<MyCertificates />} />
+          <Route path="/my-payment-info" element={<MyPaymentInfo />} />
+          <Route path="/admin" element={<Admin />} />
+          {/* <AdminPrivateRoute path="/admin" element={<Admin />} /> */}
 
-      <div>
-        {location.pathname === "/login" ||
-        location.pathname === "/signup" ||
-        location.pathname === "/admin" ? null : (
-          <Footer />
-        )}
-      </div>
+          {/* 8 */}
+        </Routes>
 
-      <div></div>
+        <div>
+          {location.pathname === "/login" ||
+          location.pathname === "/signup" ||
+          location.pathname === "/admin" ? null : (
+            <Footer />
+          )}
+        </div>
+
+        <div></div>
+      </AuthProvider>
     </div>
   );
 }

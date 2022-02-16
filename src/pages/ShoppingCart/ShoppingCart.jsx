@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CartContext } from "../../contexts/CartContext/CartContext";
+// import { CartContext } from "../../contexts/CartContext/CartContext";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,17 +13,15 @@ import ProductCard from "../../componentes/ProductCard/ProductCard";
 
 import emptyCart from "../../assets/empty-cart.svg";
 
+import { useCart } from "../../contexts/CartContext/CartContext";
+
 import "./ShoppingCart.styles.css";
 
 function ShoppingCart() {
   const [prodRemoved, isProdRemoved] = useState(false);
-  const { cart, removeItemFromCart, getCart, getTotalAmount } =
-    useContext(CartContext);
-
-  const [prods, setProds] = useState(cart);
+  const { cart, removeItemFromCart, getTotalAmount } = useCart();
 
   useEffect(() => {
-    setProds(cart);
     setTimeout(() => {
       isProdRemoved(false);
     }, 6000);
@@ -46,10 +44,10 @@ function ShoppingCart() {
           )}
         </div>
         <hr />
-        {prods.length > 0 ? (
+        {cart.length > 0 ? (
           <div className="container-content">
             <div className="container-prods">
-              {prods?.map((prod, id) => {
+              {cart?.map((prod, id) => {
                 return (
                   <ProductCard
                     key={id}
@@ -68,7 +66,7 @@ function ShoppingCart() {
             <div className="container-checkout">
               <div className="checkout-card">
                 <div className="card-title">Checkout</div>
-                {prods?.map((prod, idx) => {
+                {cart?.map((prod, idx) => {
                   return (
                     <div className="card-prod-list" key={idx}>
                       <div id="prod-title">{prod.title}</div>

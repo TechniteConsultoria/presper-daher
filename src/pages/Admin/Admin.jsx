@@ -1,17 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import { AdminNavbarData } from "../../componentes/AdminNavbar/AdminNavbarData";
 import Courses from "../../componentes/AdminCourses/AdminCourses";
 import Comunication from "../../componentes/AdminComunication/AdminComunication";
 
+import { BsFillArrowRightSquareFill } from "react-icons/bs";
+
+import { useAuth } from "../../contexts/AuthContext";
+
 import "./Admin.style.css";
 
 function Admin() {
+  const navigate = useNavigate();
+
   const [showPage, setShowPage] = useState(2);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
-    console.log(showPage);
-  }, [showPage]);
+    if (user === null || user.role !== "ADMIN") navigate("/");
+  }, [showPage, user]);
 
   return (
     <>
@@ -45,6 +53,19 @@ function Admin() {
                       </Nav.Link>
                     );
                   })}
+
+                  <Nav.Link
+                    onClick={() => {
+                      logout();
+                    }}
+                  >
+                    <div id="link">
+                      <span>
+                        <BsFillArrowRightSquareFill />
+                      </span>{" "}
+                      <span>Sair</span>
+                    </div>
+                  </Nav.Link>
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

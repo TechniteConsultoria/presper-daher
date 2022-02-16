@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
@@ -8,8 +8,6 @@ import "./Login.styles.css";
 
 import google from "../../assets/google-logo.png";
 import facebook from "../../assets/facebook-logo.png";
-
-const axios = require("axios").default;
 
 function Login() {
   const {
@@ -22,31 +20,6 @@ function Login() {
     googleLogin,
     login,
   } = useLoginPage();
-
-  // async function handleSubmit() {
-  //   const body = {
-  //     email,
-  //     password,
-  //     // lembrarSenha,
-  //   };
-
-  //   const url = "http://localhost:3333/auth/authenticate";
-  //   await axios
-  //     .post(url, body)
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         // TODO - setar usuário no localstorage com token de autenticação
-  //         navigate("/");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       setShowAlert(true);
-  //       setTimeout(() => {
-  //         setShowAlert(false);
-  //       }, 6000);
-  //       console.log(error);
-  //     });
-  // }
 
   return (
     <div className="container-login">
@@ -74,7 +47,10 @@ function Login() {
             <button
               className="btn btn-lg"
               id="social-login"
-              onClick={googleLogin}
+              onClick={(e) => {
+                e.preventDefault();
+                googleLogin();
+              }}
             >
               <Image src={google} alt="google-log" className="logo" /> Continuar
               com Google
@@ -123,11 +99,7 @@ function Login() {
               </label>
             </div>
 
-            <Button
-              type="submit"
-              id="btn-login"
-              // style={{ background: "#14b8a6", border: "none" }}
-            >
+            <Button type="submit" id="btn-login">
               Acessar
             </Button>
 
