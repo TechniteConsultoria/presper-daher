@@ -2,14 +2,15 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 // import { useCookies } from "react-cookie";
 
 export const userFromLocalStorage = JSON.parse(
-  localStorage.getItem("user") || "[]"
+  localStorage.getItem("user") || null
 );
-
+const tokenFromLocalStorage =
+  localStorage.getItem("@presper-daher:token") || null;
 const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(userFromLocalStorage);
+  const [token, setToken] = useState(tokenFromLocalStorage);
   const [loged, setLoged] = useState(false);
   const [role, setRole] = useState("USER");
 
@@ -35,8 +36,8 @@ export default function AuthProvider({ children }) {
     setToken(myToken);
     setUser(myUser);
     setLoged(true);
-    // setRole(myRole);
 
+    // setRole(myRole);
     // setCookie("@target:user", myUser, {
     //   path: "/",
     //   maxAge: 60 * 60 * 24, //expira em 24horas

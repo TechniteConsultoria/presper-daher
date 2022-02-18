@@ -24,6 +24,7 @@ export const useLoginPage = () => {
       //* console.log(response);
       if (response.status === 200) {
         const token = response.data.token;
+        console.log(token);
         const role = response.data.role;
 
         const user = {
@@ -36,9 +37,6 @@ export const useLoginPage = () => {
         setToken(token);
         setRole(role);
         signIn(token, user);
-
-        // localStorage.setItem("user", JSON.stringify(user));
-        // localStorage.setItem("@presper-daher:token", token);
 
         if (response.data.role === "ADMIN") navigate("/admin");
         else navigate("/");

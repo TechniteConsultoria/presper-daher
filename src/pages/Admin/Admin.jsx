@@ -18,7 +18,7 @@ function Admin() {
   const { user, logout } = useAuth();
 
   useEffect(() => {
-    if (user === null || user.role !== "ADMIN") navigate("/");
+    if (user === null || user.role !== "ADMIN") navigate("/login");
   }, [showPage, user]);
 
   return (

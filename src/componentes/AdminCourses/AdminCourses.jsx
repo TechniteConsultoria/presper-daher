@@ -10,6 +10,8 @@ import {
   FormControl,
 } from "react-bootstrap";
 
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
+
 import CardComponent from "../Card/Card";
 import EditCourseModal from "../Modals/EditCourseModal";
 import CreateCourseModal from "../Modals/CreateCourseModal";
@@ -19,13 +21,12 @@ import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
 
-const axios = require("axios").default;
-
 function Courses() {
+  const { allCourses, getCourses } = useCoursePage();
+
   const [classificar, setClassificar] = useState("Mais vendidos");
   const [filtro, setFiltro] = useState("Sem filtro");
   const [buscarCurso, setBuscarCurso] = useState("");
-
   const [editCourseModal, showEditCourseModal] = useState(false);
   const [createCourseModal, showCreateCourseModal] = useState(false);
   const [course, setCourse] = useState({});
@@ -44,8 +45,10 @@ function Courses() {
   // TODO - esse useEffect esstá causando essa mensagem no browser:
   //* Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
   useEffect(() => {
+    // getCourses();
     getCourses();
-  }, []);
+    setCourseList(allCourses);
+  }, [allCourses]);
 
   function classificarPor(classificar) {
     switch (classificar) {
@@ -106,20 +109,6 @@ function Courses() {
         }
       })
     );
-  }
-
-  async function getCourses() {
-    try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-      axios.get(url).then((res) => {
-        if (res.status === 200) {
-          setCourseList(res.data);
-          console.log(res.data);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   return (
@@ -267,6 +256,22 @@ function Courses() {
                 }}
               />
             ))}
+
+            {/* {allCourses?.map((item) => (
+              <CardComponent
+                key={item.id}
+                img={item.img}
+                title={item.title}
+                author={item.author}
+                rating={item.rating}
+                price={item.price}
+                sold={item.sold}
+                onClick={() => {
+                  setCourse(item);
+                  showEditCourseModal(true);
+                }}
+              />
+            ))} */}
           </div>
         </div>
       </Container>

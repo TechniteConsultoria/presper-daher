@@ -1,53 +1,30 @@
-import { useState, useEffect } from "react";
-import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
+import { useEffect } from "react";
+import { Modal, Button, Form, Row } from "react-bootstrap";
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
 
-const axios = require("axios").default;
-
 function CreateCourseModal(props) {
-  const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
-    useState(false);
-
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [videos, setVideos] = useState([]);
-  const [videosErrors, setVideosErrors] = useState([]);
-
-  const [videosList, setVideosList] = useState([]);
-
-  const [course, setCourse] = useState({});
+  const {
+    createCourse,
+    created,
+    setCreated,
+    setImage,
+    image,
+    setTitle,
+    setAuthor,
+    setPrice,
+    setCategory,
+    setDescription,
+    setVideos,
+    setVideosErrors,
+    setVideosList,
+    course,
+    setCourse,
+    resultCreateCourseModalShow,
+    setResultCreateCourseModalShow,
+  } = useCoursePage();
 
   useEffect(() => {}, []);
-
-  async function handleSubmit() {
-    const data = {
-      // id: Math.floor(Math.random() * 100),
-      img: image,
-      title: title,
-      author: author,
-      price: price,
-      category: category,
-      description: description,
-      videos: videosList,
-      // videos: videos,
-    };
-
-    try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-      axios.post(url, data).then((res) => {
-        console.log(res);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    setCourse(data);
-    setResultCreateCourseModalShow(true);
-    setVideosErrors([]);
-  }
 
   function handleAddVideos(data) {
     let errors = [];
@@ -56,15 +33,6 @@ function CreateCourseModal(props) {
       if (data[i].type === "video/mp4") files.push(data[i]);
       else errors.push(data[i]);
     }
-
-    //* Apenas para development
-    // let videos = [];
-    // files.map((el) => {
-    //   let t = String(el.name);
-    //   return videos.push(t);
-    // });
-    // setVideosList(videos);
-    //* Apenas para development
 
     setVideosList(files);
     setVideosErrors(errors);
@@ -85,9 +53,10 @@ function CreateCourseModal(props) {
         <Form
           action="submit"
           onSubmit={() => {
-            handleSubmit();
             props.onHide();
+            setCreated(null);
             setVideosList();
+            createCourse();
           }}
         >
           <Modal.Body>
@@ -162,12 +131,14 @@ function CreateCourseModal(props) {
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Control
                   type="file"
-                  required
-                  onChange={(e) => setImage(e.target.file)}
+                  // required
+                  onChange={(e) => {
+                    setImage(e.target.file);
+                    // console.log(e.target.file);
+                  }}
                 />
               </Form.Group>
             </Form.Group>
-
             <Form.Group controlId="formFileMultiple" className="mb-3">
               <Form.Label column sm="4">
                 Adicionar vídeo
@@ -175,7 +146,7 @@ function CreateCourseModal(props) {
               <Form.Control
                 type="file"
                 multiple
-                required
+                // required
                 onChange={(e) => {
                   handleAddVideos(e.target.files);
                 }}
@@ -184,7 +155,7 @@ function CreateCourseModal(props) {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Vídeos selecionados:</Form.Label>
 
-              {videosList?.length > 0
+              {/* {videosList?.length > 0
                 ? videosList.map((video, id) => {
                     return (
                       <Form.Check
@@ -196,9 +167,10 @@ function CreateCourseModal(props) {
                       />
                     );
                   })
-                : ""}
+                : ""} */}
             </Form.Group>
-            {videosErrors?.length ? (
+
+            {/* {videosErrors?.length ? (
               <Alert variant="danger">
                 Os seguintes arquivos não puderam ser carregados pois não
                 possuem a extensão <strong>mp4</strong>
@@ -212,7 +184,7 @@ function CreateCourseModal(props) {
               </Alert>
             ) : (
               ""
-            )}
+            )} */}
           </Modal.Body>
 
           <Modal.Footer>
@@ -248,7 +220,7 @@ function CreateCourseModal(props) {
         show={resultCreateCourseModalShow}
         onHide={() => setResultCreateCourseModalShow(false)}
         course={course}
-        result={"okay"}
+        result={created}
       />
     </>
   );
