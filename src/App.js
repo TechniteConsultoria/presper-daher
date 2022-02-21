@@ -17,6 +17,7 @@ import MyCourses from "./pages/MyCourses/MyCourses.jsx";
 import MyCertificates from "./pages/MyCertificates/MyCertificates.jsx";
 import MyPaymentInfo from "./pages/MyPaymentInfo/MyPaymentInfo.jsx";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart.jsx";
+import CartCheckOut from "./pages/CheckOut/CheckOut.jsx";
 
 import { AuthContext, userFromLocalStorage } from "./contexts/AuthContext";
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/my-courses" element={<MyCourses />} />
           <Route path="/my-certificates" element={<MyCertificates />} />
           <Route path="/my-payment-info" element={<MyPaymentInfo />} />
+          <Route path="/check-out" element={<CartCheckOut/>} />
           <Route path="/admin" element={<Admin />} />
           {/* <AdminPrivateRoute path="/admin" element={<Admin />} /> */}
 
