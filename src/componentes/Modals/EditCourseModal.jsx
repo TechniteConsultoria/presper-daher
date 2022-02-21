@@ -1,51 +1,67 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Alert } from "react-bootstrap";
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
+import { BsFillTrashFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
-
-import { BsFillTrashFill } from "react-icons/bs";
+import DeleteCourseModal from "./DeleteCourseModal";
 
 // TODO - formatar data.videos antes de submeter
 
 function EditCourseModal(props) {
-  const [resultEditCourseModalShow, setResultEditCourseModalShow] =
-    useState(false);
-
   const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
 
   const oldVideos = props.course.videos;
 
-  const [image, setImage] = useState(props.course.img);
-  const [title, setTitle] = useState(props.course.title);
-  const [author, setAuthor] = useState(props.course.author);
-  const [price, setPrice] = useState(props.course.price);
-  const [category, setCategory] = useState(props.course.category);
-  const [description, setDescription] = useState(props.course.description);
+  const {
+    image,
+    setImage,
+    title,
+    setTitle,
+    author,
+    setAuthor,
+    price,
+    setPrice,
+    category,
+    setCategory,
+    description,
+    setDescription,
+    videos,
+    setVideos,
+    videosErrors,
+    setVideosErrors,
+    updateCourse,
+    resultEditCourseModalShow,
+    setResultEditCourseModalShow,
+    resultDeleteCourseModalShow,
+    setResultDeleteCourseModalShow,
+    result,
+  } = useCoursePage();
 
   const [videosList, setVideosList] = useState(props.course.videos);
-
   const [newVideos, setNewVideos] = useState([]);
   const [videoToDelete, setVideoToDelete] = useState("");
-  const [videosErrors, setVideosErrors] = useState([]);
+  // const [videosErrors, setVideosErrors] = useState([]);
 
   useEffect(() => {
     setVideosList(oldVideos);
   }, [oldVideos]);
 
   function handleSubmit() {
+    const id = props.course.id;
     const data = {
-      id: props.course.id,
       img: image || props.course.img,
       title: title || props.course.title,
       author: author || props.course.author,
       price: price || props.course.price,
-      category: category || props.course.category,
+      category: category || props.course.category.name,
       description: description || props.course.description,
-      videos: newVideos,
+      // videos: newVideos,
     };
-    console.log(data);
-    setResultEditCourseModalShow(true);
+    updateCourse(id, data);
+
+    // setResultEditCourseModalShow(true);
   }
 
   function handleAddNewVideos(data) {
@@ -91,7 +107,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.category}
+                defaultValue={props.course.category?.name}
                 onChange={(e) => setCategory(e.target.value)}
                 required
               />
@@ -252,9 +268,12 @@ function EditCourseModal(props) {
                 border: "1px solid rgb(108, 117, 125, 0.3)",
                 color: "#000",
               }}
-              onClick={props.onHide}
+              onClick={() => {
+                setResultDeleteCourseModalShow(true);
+                props.onHide();
+              }}
             >
-              Ocultar curso
+              Remover curso
             </Button>
 
             <Button
@@ -290,7 +309,13 @@ function EditCourseModal(props) {
         show={resultEditCourseModalShow}
         onHide={() => setResultEditCourseModalShow(false)}
         course={props.course}
-        result={"not-okay"}
+        result={result}
+      />
+
+      <DeleteCourseModal
+        show={resultDeleteCourseModalShow}
+        onHide={() => setResultDeleteCourseModalShow(false)}
+        course={props.course}
       />
 
       <DeleteVideoModal

@@ -46,9 +46,8 @@ function Courses() {
   //* Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
   useEffect(() => {
     // getCourses();
-    getCourses();
-    setCourseList(allCourses);
-  }, [allCourses]);
+    // setCourseList(allCourses);
+  }, []);
 
   function classificarPor(classificar) {
     switch (classificar) {
@@ -241,23 +240,7 @@ function Courses() {
 
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
-            {courseList?.map((item) => (
-              <CardComponent
-                key={item.id}
-                img={item.img}
-                title={item.title}
-                author={item.author}
-                rating={item.rating}
-                price={item.price}
-                sold={item.sold}
-                onClick={() => {
-                  setCourse(item);
-                  showEditCourseModal(true);
-                }}
-              />
-            ))}
-
-            {/* {allCourses?.map((item) => (
+            {/* {courseList?.map((item) => (
               <CardComponent
                 key={item.id}
                 img={item.img}
@@ -272,6 +255,22 @@ function Courses() {
                 }}
               />
             ))} */}
+
+            {allCourses?.map((item) => (
+              <CardComponent
+                key={item.id}
+                img={item.img}
+                title={item.title}
+                author={item.author}
+                rating={item.rating}
+                price={item.price}
+                sold={item.sold}
+                onClick={() => {
+                  setCourse(item);
+                  showEditCourseModal(true);
+                }}
+              />
+            ))}
           </div>
         </div>
       </Container>

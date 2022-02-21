@@ -6,8 +6,8 @@ import ResultCreateCourseModal from "./ResultCreateCourseModal";
 function CreateCourseModal(props) {
   const {
     createCourse,
-    created,
-    setCreated,
+    result,
+    setResult,
     setImage,
     image,
     setTitle,
@@ -24,7 +24,9 @@ function CreateCourseModal(props) {
     setResultCreateCourseModalShow,
   } = useCoursePage();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(image);
+  }, [setImage]);
 
   function handleAddVideos(data) {
     let errors = [];
@@ -51,10 +53,11 @@ function CreateCourseModal(props) {
           <Modal.Title>Adicionar curso</Modal.Title>
         </Modal.Header>
         <Form
+          encType="nultipart/form-data"
           action="submit"
           onSubmit={() => {
             props.onHide();
-            setCreated(null);
+            setResult(null);
             setVideosList();
             createCourse();
           }}
@@ -130,11 +133,11 @@ function CreateCourseModal(props) {
               </Form.Label>
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Control
+                  name="courseImage"
                   type="file"
                   // required
                   onChange={(e) => {
-                    setImage(e.target.file);
-                    // console.log(e.target.file);
+                    setImage(e.target.files[0]);
                   }}
                 />
               </Form.Group>
@@ -220,7 +223,7 @@ function CreateCourseModal(props) {
         show={resultCreateCourseModalShow}
         onHide={() => setResultCreateCourseModalShow(false)}
         course={course}
-        result={created}
+        result={result}
       />
     </>
   );

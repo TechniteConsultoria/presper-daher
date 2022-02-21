@@ -5,6 +5,10 @@ import CourseService from "../CourseService";
 export const useCoursePage = () => {
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
+  const [resultEditCourseModalShow, setResultEditCourseModalShow] =
+    useState(false);
+  const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] =
+    useState(false);
 
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -17,7 +21,8 @@ export const useCoursePage = () => {
 
   const [videosList, setVideosList] = useState([]);
   const [course, setCourse] = useState({});
-  const [created, setCreated] = useState(null);
+
+  const [result, setResult] = useState(null);
 
   const [allCourses, setAllCourses] = useState([]);
 
@@ -37,14 +42,14 @@ export const useCoursePage = () => {
 
     try {
       const response = await CourseService.createCourse(body);
-      setCreated(response.status);
-      console.log(response);
+      setResult(response.status);
     } catch (error) {
       console.error(error);
     }
     setCourse(body);
     setResultCreateCourseModalShow(true);
     setVideosErrors([]);
+    getCourses();
   };
 
   const getCourses = async () => {
@@ -56,29 +61,77 @@ export const useCoursePage = () => {
     }
   };
 
+  const updateCourse = async (id, data) => {
+    const body = data;
+    try {
+      const response = await CourseService.updateCourse(id, body);
+      setResult(response.status);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setResultEditCourseModalShow(true);
+    getCourses();
+  };
+
+  const deleteCourse = async (id) => {
+    try {
+      const response = await CourseService.deleteCourse(id);
+      setResult(response.status);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setResultDeleteCourseModalShow(true);
+    getCourses();
+  };
+
   useEffect(() => {
     setResultCreateCourseModalShow(false);
+    setResultEditCourseModalShow(false);
+    setResultDeleteCourseModalShow(false);
     getCourses();
   }, []);
+
+  useEffect(() => {
+    getCourses();
+  }, [result]);
 
   return {
     createCourse,
     getCourses,
+    updateCourse,
+    deleteCourse,
     allCourses,
-    created,
-    setCreated,
+    result,
+    setResult,
+    image,
     setImage,
+    title,
     setTitle,
+    author,
     setAuthor,
+    price,
     setPrice,
+    category,
     setCategory,
+    description,
     setDescription,
+    videos,
     setVideos,
+    videosErrors,
     setVideosErrors,
+    videosList,
     setVideosList,
     course,
     setCourse,
     resultCreateCourseModalShow,
     setResultCreateCourseModalShow,
+    resultEditCourseModalShow,
+    setResultEditCourseModalShow,
+    resultDeleteCourseModalShow,
+    setResultDeleteCourseModalShow,
   };
 };
