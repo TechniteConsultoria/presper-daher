@@ -87,7 +87,9 @@ function ShoppingCart() {
                   <div id="total-amount">R$ {getTotalAmount()}</div>
                 </div>
 
-                <button className="buy-btn">COMPRAR</button>
+                <button  className="buy-btn"
+                onClick={GoToCheckOut}
+                 >COMPRAR</button>
               </div>
             </div>
           </div>
