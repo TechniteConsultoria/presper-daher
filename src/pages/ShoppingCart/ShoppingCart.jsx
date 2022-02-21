@@ -26,6 +26,11 @@ function ShoppingCart() {
       isProdRemoved(false);
     }, 6000);
   }, [cart]);
+  const navigate = useNavigate();
+  const GoToCheckOut = () => {
+    // eslint-disable-next-line no-undef
+    navigate("/check-out");
+}
 
   return (
     <>
@@ -96,9 +101,10 @@ function ShoppingCart() {
               <div className="card-text">
                 Você não possui nenhum produto adicionado ao seu carrinho.
               </div>
-              <Link to="/">
-                <Button id="card-button">Comprar agora</Button>
-              </Link>
+                <button 
+                className="buy-btn"
+                onClick={GoToCheckOut}>
+                   Comprar Agora </button>
             </div>
           </div>
         )}
