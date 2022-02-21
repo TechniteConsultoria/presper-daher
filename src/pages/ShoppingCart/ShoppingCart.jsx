@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 // import { CartContext } from "../../contexts/CartContext/CartContext";
 
 import Container from "react-bootstrap/Container";
@@ -26,6 +26,8 @@ function ShoppingCart() {
       isProdRemoved(false);
     }, 6000);
   }, [cart]);
+  
+  
   const navigate = useNavigate();
   const GoToCheckOut = () => {
     // eslint-disable-next-line no-undef
@@ -101,10 +103,10 @@ function ShoppingCart() {
               <div className="card-text">
                 Você não possui nenhum produto adicionado ao seu carrinho.
               </div>
-                <button 
-                className="buy-btn"
-                onClick={GoToCheckOut}>
-                   Comprar Agora </button>
+                 <Link to="/">
+                <Button id="card-button"
+                  >Comprar agora</Button>
+              </Link>
             </div>
           </div>
         )}
