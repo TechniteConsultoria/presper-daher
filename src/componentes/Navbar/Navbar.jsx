@@ -6,6 +6,8 @@ import { BsFillCartFill } from "react-icons/bs";
 
 import "../Navbar/Navbar.style.css";
 
+import  logo  from "../../assets/project-logo.png"
+
 import { useCart } from "../../contexts/CartContext/CartContext";
 
 import { useAuth } from "../../contexts/AuthContext";
@@ -44,8 +46,9 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-            <Navbar.Brand href="/" id="nav-brand">
-              Presper Daher
+             <Navbar.Brand href="/" id="nav-brand">
+            <img src={logo} alt="logo"
+            id="navbar-logo"/>
             </Navbar.Brand>
 
             <Navbar.Collapse id="basic-navbar-nav">
