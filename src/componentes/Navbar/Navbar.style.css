@@ -6,6 +6,11 @@
   /* background-color: #f0e9; */
 }
 
+#navbar-logo{
+  width: 2.5em;
+  height: 2.5em;
+}
+
 #basic-nav-dropdown {
   font-size: 16px;
 
