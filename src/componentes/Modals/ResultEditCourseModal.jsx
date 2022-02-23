@@ -7,27 +7,12 @@ function ResultEditCourseModal(props) {
         <Modal.Header closeButton={false}>
           <Modal.Title>Editar curso</Modal.Title>
         </Modal.Header>
-        {/* {props.result === "okay" ? (
-          <Modal.Body>
-            O curso <strong>{props.course.title}</strong> foi editado com
-            sucesso!
-          </Modal.Body>
-        ) : (
-          <Modal.Body>
-            Ops! Ocorreu um problema ao editar o curso{" "}
-            <strong>{props.course.title}</strong>. Tente novamente.
-          </Modal.Body>
-        )} */}
 
         {props.result !== null && props.result === 200 ? (
-          <Modal.Body>
-            O curso <strong>{props.course.title}</strong> foi editado com
-            sucesso!
-          </Modal.Body>
+          <Modal.Body>O curso foi editado com sucesso!</Modal.Body>
         ) : (
           <Modal.Body>
-            Ops! Ocorreu um problema ao editar o curso{" "}
-            <strong>{props.course.title}</strong>. Tente novamente.
+            Ops! Ocorreu um problema ao editar o curso. Tente novamente.
           </Modal.Body>
         )}
 

@@ -6,7 +6,7 @@ import { BsFillCartFill } from "react-icons/bs";
 
 import "../Navbar/Navbar.style.css";
 
-import  logo  from "../../assets/project-logo.png"
+import logo from "../../assets/project-logo.png";
 
 import { useCart } from "../../contexts/CartContext/CartContext";
 
@@ -35,9 +35,9 @@ function NavbarComponent() {
     },
   ];
 
-  useEffect(() => {
-    console.log(role);
-  }, [user, logout, role]);
+  // useEffect(() => {
+  //   console.log(role);
+  // }, [user, logout, role]);
 
   return (
     <>
@@ -46,9 +46,8 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-             <Navbar.Brand href="/" id="nav-brand">
-            <img src={logo} alt="logo"
-            id="navbar-logo"/>
+            <Navbar.Brand href="/" id="nav-brand">
+              <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
 
             <Navbar.Collapse id="basic-navbar-nav">

@@ -1,8 +1,11 @@
-// import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CourseService from "../CourseService";
 
+import { useCourse } from "../../contexts/CourseContext/CourseContext";
+
 export const useCoursePage = () => {
+  const { allCourses, setAllCourses, getCourses } = useCourse();
+
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
   const [resultEditCourseModalShow, setResultEditCourseModalShow] =
@@ -24,8 +27,6 @@ export const useCoursePage = () => {
 
   const [result, setResult] = useState(null);
 
-  const [allCourses, setAllCourses] = useState([]);
-
   const createCourse = async () => {
     const body = {
       // courseImage: image,
@@ -38,7 +39,6 @@ export const useCoursePage = () => {
       // videos: videos,
     };
     // const courseImage = image;
-    // console.log(courseImage);
 
     try {
       const response = await CourseService.createCourse(body);
@@ -52,25 +52,23 @@ export const useCoursePage = () => {
     getCourses();
   };
 
-  const getCourses = async () => {
-    try {
-      const response = await CourseService.getAllCourses();
-      setAllCourses(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getCourses = async () => {
+  //   try {
+  //     const response = await CourseService.getAllCourses();
+  //     setAllCourses(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const updateCourse = async (id, data) => {
     const body = data;
     try {
       const response = await CourseService.updateCourse(id, body);
       setResult(response.status);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
-
     setResultEditCourseModalShow(true);
     getCourses();
   };
@@ -83,7 +81,6 @@ export const useCoursePage = () => {
     } catch (error) {
       console.error(error);
     }
-
     setResultDeleteCourseModalShow(true);
     getCourses();
   };
@@ -95,16 +92,16 @@ export const useCoursePage = () => {
     getCourses();
   }, []);
 
-  useEffect(() => {
-    getCourses();
-  }, [result]);
+  // useEffect(() => {
+  //   getCourses();
+  // }, [result]);
 
   return {
     createCourse,
-    getCourses,
+    // getCourses,
     updateCourse,
     deleteCourse,
-    allCourses,
+    // allCourses,
     result,
     setResult,
     image,

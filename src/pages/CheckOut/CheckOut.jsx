@@ -4,7 +4,7 @@ import { CartContext } from "../../contexts/CartContext/CartContext";
 import "react-credit-cards/es/styles-compiled.css";
 import "./CheckOut.style.css";
 
-import AddNewCardModal from "../../componentes/Modals/CardFormModal";
+import AddCardForm from "../../componentes/AddCardForm/AddCardForm";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -14,7 +14,9 @@ import Button from "react-bootstrap/Button";
 const axios = require("axios").default;
 
 function CartCheckOut() {
-  const [addNewCardModal, setAddNewCardModal] = useState(false);
+  // TODO - buscar lista de cartoes do context
+
+  const [showAddCardForm, setShowAddCardForm] = useState(false);
   const [cardsList, setCardsList] = useState([]);
 
   const [result, setResult] = useState({
@@ -71,7 +73,7 @@ function CartCheckOut() {
             <Button
               id="btn-add-new-card"
               onClick={() => {
-                setAddNewCardModal(!addNewCardModal);
+                setShowAddCardForm(!showAddCardForm);
               }}
             >
               {" "}
@@ -79,7 +81,7 @@ function CartCheckOut() {
             </Button>
           </div>
 
-          <div>{addNewCardModal && <AddNewCardModal />}</div>
+          <div>{showAddCardForm && <AddCardForm />}</div>
           <div>
             {cardsList?.map((card) => {
               <p>{card.name}</p>;

@@ -30,14 +30,14 @@ function MyPaymentInfo() {
     status: "",
   });
 
-  async function getCreditCards() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setCerditCardsList(res.data);
-      }
-    });
-  }
+  // async function getCreditCards() {
+  //   const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
+  //   axios.get(url).then((res) => {
+  //     if (res.status === 200) {
+  //       setCerditCardsList(res.data);
+  //     }
+  //   });
+  // }
 
   const getDeleteResult = (result) => {
     return setResult({
@@ -54,7 +54,7 @@ function MyPaymentInfo() {
   };
 
   useEffect(() => {
-    getCreditCards();
+    // getCreditCards();
     setTimeout(() => {
       setResult({
         operation: "",

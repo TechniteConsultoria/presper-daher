@@ -24,9 +24,9 @@ function CreateCourseModal(props) {
     setResultCreateCourseModalShow,
   } = useCoursePage();
 
-  useEffect(() => {
-    console.log(image);
-  }, [setImage]);
+  // useEffect(() => {
+  //   console.log(image);
+  // }, [setImage]);
 
   function handleAddVideos(data) {
     let errors = [];

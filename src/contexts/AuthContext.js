@@ -67,11 +67,11 @@ export default function AuthProvider({ children }) {
     setUser(JSON.parse(localStorage.getItem("user") || null));
   }, []);
 
-  useEffect(() => {
-    console.log("User:", user);
-    console.log("Token:", token);
-    console.log("Role:", role);
-  }, [user, token, role]);
+  // useEffect(() => {
+  //   console.log("User:", user);
+  //   console.log("Token:", token);
+  //   console.log("Role:", role);
+  // }, [user, token, role]);
 
   return (
     <AuthContext.Provider

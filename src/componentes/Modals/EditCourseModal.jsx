@@ -60,8 +60,6 @@ function EditCourseModal(props) {
       // videos: newVideos,
     };
     updateCourse(id, data);
-
-    // setResultEditCourseModalShow(true);
   }
 
   function handleAddNewVideos(data) {

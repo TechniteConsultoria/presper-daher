@@ -10,7 +10,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 
-import { useCoursePage } from "../../services/Hooks/CoursePageHook";
+import { useCourse } from "../../contexts/CourseContext/CourseContext";
 
 import CardComponent from "../Card/Card";
 import EditCourseModal from "../Modals/EditCourseModal";
@@ -22,7 +22,7 @@ import categorias from "../../data/categorias";
 import "./AdminCourses.style.css";
 
 function Courses() {
-  const { allCourses, getCourses } = useCoursePage();
+  const { allCourses, setAllCourses } = useCourse();
 
   const [classificar, setClassificar] = useState("Mais vendidos");
   const [filtro, setFiltro] = useState("Sem filtro");
@@ -42,12 +42,10 @@ function Courses() {
     buscarPor(buscarCurso);
   }, [buscarCurso]);
 
-  // TODO - esse useEffect esstá causando essa mensagem no browser:
-  //* Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-  useEffect(() => {
-    // getCourses();
-    // setCourseList(allCourses);
-  }, []);
+  // useEffect(() => {
+  //   console.log("Alterado!");
+  //   setCourseList(allCourses);
+  // }, [allCourses]);
 
   function classificarPor(classificar) {
     switch (classificar) {
