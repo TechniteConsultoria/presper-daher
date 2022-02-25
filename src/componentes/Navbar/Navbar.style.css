@@ -1,5 +1,4 @@
-
- #navbar {
+#navbar {
 }
 
 #nav-brand {
@@ -13,45 +12,32 @@
 
 #basic-nav-dropdown {
   font-size: 16px;
-
-  /* background-color: #f0e9; */
 }
 
 #search-bar {
-  /* background-color: #f0e9; */
   width: 20em;
 }
 
 #cart-link {
-  /* background-color: #f0e9; */
-  font-size: 1em;
   position: relative;
-  display: inline-block;
+  display: flex;
 }
 
 #login-link {
-  /* background-color: #f0e9; */
-  font-size: 16px;
+  font-size: 1em;
 }
 
 #signup-link {
-  /* background-color: #f0e9; */
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .navbar-items {
-  /* background-color: #fff !important; */
-  /* margin: 0; */
-  /* padding: 0; */
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  /* background-color: #000; */
   width: 100%;
 }
-
 
 
 #teste {
@@ -88,33 +74,32 @@
 }
 
 #cart-count {
-  position:static;
-  display:inline-block;
+  position: static;
+  display:flex;
   background-color: #fff;
   border-radius: 50%;
-  width: 1.3em;
-  margin-left:.3em;
-  margin-top: .1em;
-
+  width:1.3em;
   font-size: 12px;
+  margin-left: .1em;
+  margin-bottom: .5em;
   transform: translate(-5px, -5px);
 }
 
 @media only screen and (min-width: 200px) and (max-width: 768px) {
  
   #search-bar {
-    width: 85%;
-
+    width: 75%;
+    margin-left: 15%;
     margin-top: 0.5em;
   }
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: 600px) {
 
   #search-bar {
     width: 85%;
-    margin: 10%;
+    margin-left: 10%;
     margin-top: 0.5em;
   }
 }
