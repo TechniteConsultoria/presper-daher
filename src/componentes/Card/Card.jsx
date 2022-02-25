@@ -55,7 +55,7 @@ export default class CardComponent extends React.Component {
                 alignItems: "center",
               }}
             >
-              <ReactStars value={this.state.rating} edit={false} size={16} />
+              <ReactStars value={this.state.rating} edit={false} size={18} />
               <Card.Text
                 style={{
                   fontSize: "16px",

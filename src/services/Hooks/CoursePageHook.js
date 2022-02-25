@@ -4,7 +4,7 @@ import CourseService from "../CourseService";
 import { useCourse } from "../../contexts/CourseContext/CourseContext";
 
 export const useCoursePage = () => {
-  const { allCourses, setAllCourses, getCourses } = useCourse();
+  const { getCourses, isUpdated } = useCourse();
 
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
@@ -52,20 +52,12 @@ export const useCoursePage = () => {
     getCourses();
   };
 
-  // const getCourses = async () => {
-  //   try {
-  //     const response = await CourseService.getAllCourses();
-  //     setAllCourses(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const updateCourse = async (id, data) => {
     const body = data;
     try {
       const response = await CourseService.updateCourse(id, body);
       setResult(response.status);
+      isUpdated(true);
     } catch (error) {
       console.error(error);
     }
@@ -77,7 +69,6 @@ export const useCoursePage = () => {
     try {
       const response = await CourseService.deleteCourse(id);
       setResult(response.status);
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -98,10 +89,8 @@ export const useCoursePage = () => {
 
   return {
     createCourse,
-    // getCourses,
     updateCourse,
     deleteCourse,
-    // allCourses,
     result,
     setResult,
     image,

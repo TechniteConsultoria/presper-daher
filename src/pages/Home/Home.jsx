@@ -15,6 +15,8 @@ import MaskedInput from "react-maskedinput";
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
+import { useCourse } from "../../contexts/CourseContext/CourseContext";
+
 import "./Home.style.css";
 
 const axios = require("axios").default;
@@ -30,6 +32,8 @@ function Home() {
 
   const [coursesList, setCoursesList] = useState([]);
   const [testimonialsList, setTestimonialsList] = useState([]);
+
+  const { allCourses } = useCourse();
 
   const navigate = useNavigate();
 
@@ -92,7 +96,6 @@ function Home() {
     setMessage("");
     isMsgSent(false);
 
-    getCourses();
     getComments();
   }, []);
 
@@ -161,7 +164,7 @@ function Home() {
 
           <div className="container-item">
             <div className="courses-container">
-              {coursesList?.map((item, id) => (
+              {allCourses?.map((item, id) => (
                 <Link
                   key={item.id}
                   id="card-link"
@@ -174,9 +177,9 @@ function Home() {
                     img={item.img}
                     title={item.title}
                     author={item.author}
-                    rating={item.rating}
+                    rating={5}
                     price={item.price}
-                    sold={item.sold}
+                    sold={99}
                   />
                 </Link>
               ))}
@@ -251,7 +254,7 @@ function Home() {
                     required
                   />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label column sm="2">
                     Telefone
                   </Form.Label>
@@ -263,6 +266,7 @@ function Home() {
                     placeholder="(xx) xxxxx-xxxx"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
+                    required
                   />
                 </Form.Group>
                 <Form.Group

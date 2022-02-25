@@ -28,6 +28,15 @@ class CourseService {
     }
   }
 
+  async getCourse(id) {
+    try {
+      const response = await ApiService.get(`/course/${id}`);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async deleteCourse(id) {
     try {
       const response = await ApiService.delete(`/course/${id}`);

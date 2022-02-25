@@ -10,7 +10,15 @@ export default function CourseProvider({ children }) {
     try {
       const response = await CourseService.getAllCourses();
       setAllCourses(response.data);
-      // console.log("From Provider", allCourses);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCourseById = async (id) => {
+    try {
+      const response = await CourseService.getCourse(id);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -26,6 +34,7 @@ export default function CourseProvider({ children }) {
         allCourses,
         setAllCourses,
         getCourses,
+        getCourseById,
       }}
     >
       {children}
@@ -35,11 +44,12 @@ export default function CourseProvider({ children }) {
 
 export function useCourse() {
   const context = useContext(CourseContext);
-  const { allCourses, setAllCourses, getCourses } = context;
+  const { allCourses, setAllCourses, getCourses, getCourseById } = context;
 
   return {
     allCourses,
     setAllCourses,
     getCourses,
+    getCourseById,
   };
 }

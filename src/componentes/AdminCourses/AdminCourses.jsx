@@ -22,7 +22,7 @@ import categorias from "../../data/categorias";
 import "./AdminCourses.style.css";
 
 function Courses() {
-  const { allCourses, setAllCourses } = useCourse();
+  const { allCourses } = useCourse();
 
   const [classificar, setClassificar] = useState("Mais vendidos");
   const [filtro, setFiltro] = useState("Sem filtro");
