@@ -9,6 +9,15 @@ class CreditCardService {
       return error;
     }
   }
+
+  async getAllCreditCards(userId) {
+    try {
+      const response = await ApiService.get(`/credit-card/${userId}`);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 export default new CreditCardService();

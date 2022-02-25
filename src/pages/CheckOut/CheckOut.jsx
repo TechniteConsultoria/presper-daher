@@ -11,30 +11,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-const axios = require("axios").default;
+import { useCreditCard } from "../../contexts/CreditCardContext/CreditCardContext";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
-
+  const { getCreditCards, creditCardList } = useCreditCard();
   const [showAddCardForm, setShowAddCardForm] = useState(false);
-  const [cardsList, setCardsList] = useState([]);
 
   const [result, setResult] = useState({
     operation: "",
     status: "",
   });
 
-  async function getCreditCards() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setCardsList(res.data);
-      }
-    });
-  }
   useEffect(() => {
     getCreditCards();
-    console.log(cardsList);
   }, []);
 
   const getAddCards = (result) => {
@@ -83,8 +73,12 @@ function CartCheckOut() {
 
           <div>{showAddCardForm && <AddCardForm />}</div>
           <div>
-            {cardsList?.map((card) => {
-              <p>{card.name}</p>;
+            {creditCardList?.map((card) => {
+              return (
+                <div key={card.id}>
+                  <p>{card.name}</p>
+                </div>
+              );
             })}
           </div>
         </div>

@@ -4,6 +4,8 @@ import MaskedInput from "react-maskedinput";
 
 import { useCreditCardPage } from "../../services/Hooks/CreditCardPageHook";
 
+import { useCreditCard } from "../../contexts/CreditCardContext/CreditCardContext";
+
 function AddCardForm() {
   const {
     cardNumber,
@@ -14,8 +16,19 @@ function AddCardForm() {
     setCardExpiry,
     cardCvc,
     setCardCvc,
-    addCreditCard,
   } = useCreditCardPage();
+
+  const { addCreditCard } = useCreditCard();
+
+  async function handleSubmit() {
+    const data = {
+      name: cardName,
+      number: cardNumber,
+      expiry: cardExpiry,
+      cvc: cardCvc,
+    };
+    addCreditCard(data);
+  }
 
   useEffect(() => {
     setCardNumber("");
@@ -29,7 +42,7 @@ function AddCardForm() {
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          addCreditCard();
+          handleSubmit();
         }}
       >
         <div>
