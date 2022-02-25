@@ -7,15 +7,66 @@ html, body {
 }
 
 span{
-	position:relative;
-	display:inline;
-	justify-content: center;
-}
-.footer, span {
-    bottom: 0;
-	left: 0;
+position:relative;
+display:inline;
+justify-content: center;
+top: 35%;
 }
 
-.span{
-	position: relative;
+.footer {
+left: 0%;
+right: 0%;
+bottom: 0%;
+height: 15em;
+width: 100%;
+}
+
+
+.text-footer{
+position: absolute;
+left: 44.58%;
+right: 43.82%;
+top: 60%;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.15px;
+}
+
+.footer-home{
+position: absolute;
+left: 27.85%;
+right: 68.68%;
+bottom:55%;
+display: inline-block;
+align-items: center;
+letter-spacing: 0.15px;
+
+}
+
+.footer-about-us{
+position: absolute;
+left: 46.81%;
+right: 46.81%;
+bottom:47%;
+display: inline-block;
+align-items: center;
+letter-spacing: 0.15px;
+}
+
+.footer-support{
+position: absolute;
+left: 67.29%;
+right: 27.71%;
+bottom:47%;
+display: inline-block;
+align-items: center;
+letter-spacing: 0.15px;
+}
+
+.link{
+color: rgb(0, 0, 0);
+display: flex;
+align-items: center;
+letter-spacing: 0.15px;
 }
