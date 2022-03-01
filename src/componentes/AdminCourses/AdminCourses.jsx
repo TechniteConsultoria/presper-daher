@@ -10,7 +10,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 
-import { useCourse } from "../../contexts/CourseContext/CourseContext";
+import { useCourse } from "../../contexts/CourseContext";
 
 import CardComponent from "../Card/Card";
 import EditCourseModal from "../Modals/EditCourseModal";

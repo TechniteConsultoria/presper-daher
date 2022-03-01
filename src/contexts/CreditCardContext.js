@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import CreditCardService from "../../services/CreditCardService";
+import CreditCardService from "../services/CreditCardService";
 
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "./AuthContext";
 
 export const CreditCardContext = createContext({});
 

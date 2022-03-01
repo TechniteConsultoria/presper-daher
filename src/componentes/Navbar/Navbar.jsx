@@ -8,7 +8,7 @@ import "../Navbar/Navbar.style.css";
 
 import logo from "../../assets/project-logo.png";
 
-import { useCart } from "../../contexts/CartContext/CartContext";
+import { useCart } from "../../contexts/CartContext";
 
 import { useAuth } from "../../contexts/AuthContext";
 

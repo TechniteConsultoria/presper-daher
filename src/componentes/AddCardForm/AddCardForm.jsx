@@ -4,7 +4,7 @@ import MaskedInput from "react-maskedinput";
 
 import { useCreditCardPage } from "../../services/Hooks/CreditCardPageHook";
 
-import { useCreditCard } from "../../contexts/CreditCardContext/CreditCardContext";
+import { useCreditCard } from "../../contexts/CreditCardContext";
 
 function AddCardForm() {
   const {

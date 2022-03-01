@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { CartContext } from "../../contexts/CartContext/CartContext";
 
 import Container from "react-bootstrap/Container";
@@ -13,7 +13,7 @@ import ProductCard from "../../componentes/ProductCard/ProductCard";
 
 import emptyCart from "../../assets/empty-cart.svg";
 
-import { useCart } from "../../contexts/CartContext/CartContext";
+import { useCart } from "../../contexts/CartContext";
 
 import "./ShoppingCart.styles.css";
 
@@ -26,13 +26,12 @@ function ShoppingCart() {
       isProdRemoved(false);
     }, 6000);
   }, [cart]);
-  
-  
+
   const navigate = useNavigate();
   const GoToCheckOut = () => {
     // eslint-disable-next-line no-undef
     navigate("/check-out");
-}
+  };
 
   return (
     <>
@@ -87,9 +86,9 @@ function ShoppingCart() {
                   <div id="total-amount">R$ {getTotalAmount()}</div>
                 </div>
 
-                <button  className="buy-btn"
-                onClick={GoToCheckOut}
-                 >COMPRAR</button>
+                <button className="buy-btn" onClick={GoToCheckOut}>
+                  COMPRAR
+                </button>
               </div>
             </div>
           </div>
@@ -105,9 +104,8 @@ function ShoppingCart() {
               <div className="card-text">
                 Você não possui nenhum produto adicionado ao seu carrinho.
               </div>
-                 <Link to="/">
-                <Button id="card-button"
-                  >Comprar agora</Button>
+              <Link to="/">
+                <Button id="card-button">Comprar agora</Button>
               </Link>
             </div>
           </div>

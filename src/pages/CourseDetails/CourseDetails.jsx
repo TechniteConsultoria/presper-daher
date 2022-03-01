@@ -6,8 +6,8 @@ import RatingCard from "../../componentes/RatingCard/RatingCard";
 import { Button, Container, Row, Col, ListGroup, Image } from "react-bootstrap";
 import { BsFillAwardFill, BsFillCameraVideoFill } from "react-icons/bs";
 
-import { useCart } from "../../contexts/CartContext/CartContext";
-import { useCourse } from "../../contexts/CourseContext/CourseContext";
+import { useCart } from "../../contexts/CartContext";
+import { useCourse } from "../../contexts/CourseContext";
 
 import "./CourseDetails.styles.css";
 

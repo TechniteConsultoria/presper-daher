@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import CourseService from "../../services/CourseService";
+import CourseService from "../services/CourseService";
 
 export const CourseContext = createContext({});
 

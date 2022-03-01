@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CartContext } from "../../contexts/CartContext/CartContext";
+import { CartContext } from "../../contexts/CartContext";
 import "react-credit-cards/es/styles-compiled.css";
 import "./CheckOut.style.css";
 
@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-import { useCreditCard } from "../../contexts/CreditCardContext/CreditCardContext";
+import { useCreditCard } from "../../contexts/CreditCardContext";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context

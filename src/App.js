@@ -20,8 +20,8 @@ import ShoppingCart from "./pages/ShoppingCart/ShoppingCart.jsx";
 import CartCheckOut from "./pages/CheckOut/CheckOut.jsx";
 
 import AuthProvider from "./contexts/AuthContext";
-import CourseProvider from "./contexts/CourseContext/CourseContext";
-import CreditCardProvider from "./contexts/CreditCardContext/CreditCardContext.js";
+import CourseProvider from "./contexts/CourseContext";
+import CreditCardProvider from "./contexts/CreditCardContext.js";
 
 function App() {
   const location = useLocation();

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CourseService from "../CourseService";
 
-import { useCourse } from "../../contexts/CourseContext/CourseContext";
+import { useCourse } from "../../contexts/CourseContext";
 
 export const useCoursePage = () => {
   const { getCourses, isUpdated } = useCourse();

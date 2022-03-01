@@ -11,17 +11,23 @@ import {
 } from "react-bootstrap";
 
 import MaskedInput from "react-maskedinput";
-
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
-import { useCourse } from "../../contexts/CourseContext/CourseContext";
+import { useCourse } from "../../contexts/CourseContext";
+import { useAuth } from "../../contexts/AuthContext";
+import MessageService from "../../services/MessageService";
 
 import "./Home.style.css";
 
 const axios = require("axios").default;
 
 function Home() {
+  const { allCourses } = useCourse();
+  const { user } = useAuth();
+
+  const [testimonialsList, setTestimonialsList] = useState([]);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,56 +36,40 @@ function Home() {
   const [msgSent, isMsgSent] = useState(false);
   const [msgResult, isMsgResult] = useState(false);
 
-  const [coursesList, setCoursesList] = useState([]);
-  const [testimonialsList, setTestimonialsList] = useState([]);
-
-  const { allCourses } = useCourse();
-
-  const navigate = useNavigate();
-
-  function handleClick(id) {
-    navigate(`/course/${id}`);
-  }
-
-  async function handleSubmit() {
-    const data = {
-      name: name,
-      email: email,
-      phone: phone,
-      message: message,
+  const createMessage = async () => {
+    let userId = null;
+    if (user) userId = user.id;
+    const body = {
+      userId,
+      userName: name,
+      userEmail: email,
+      userPhone: phone,
+      messageContent: message,
     };
 
-    const url =
-      "https://fake-api-json-server-presper.herokuapp.com/fale-conosco-mensagens";
-
     try {
-      axios.post(url, data).then((res) => {
-        isMsgSent(true);
-        if (res.status === 201) {
-          isMsgResult(true);
-        } else {
-          isMsgResult(false);
-        }
-      });
+      const response = await MessageService.createMessage(body);
+      isMsgSent(true);
+      if (response.status === 201) {
+        isMsgResult(true);
+      } else {
+        isMsgResult(false);
+      }
     } catch (error) {
       console.error(error);
     }
 
     setName("");
     setEmail("");
+    setPhone("");
     setMessage("");
-    isMsgSent(false);
-  }
 
-  async function getCourses() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setCoursesList(res.data);
-      }
-    });
-  }
+    setTimeout(() => {
+      isMsgSent(false);
+    }, 6000);
+  };
 
+  //todo -> pegando da FAKE API, precisa mudar!
   async function getComments() {
     const url =
       "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
@@ -224,10 +214,9 @@ function Home() {
           <div className="contact-us-container">
             <div id="form">
               <Form
-                // action="submit"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleSubmit();
+                  createMessage();
                 }}
               >
                 <Form.Group className="mb-3">
