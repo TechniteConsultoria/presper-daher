@@ -18,7 +18,9 @@ function MessageModal(props) {
         messageId: props.message.id,
         messageStatus: props.message.status,
         answerContent: messageAnswer,
+        userEmail: props.message.userEmail,
       };
+
       const response = await MessageService.updateMessageStatus(body);
       setMessageResultStatus(response.status === 201 ? true : false);
       isMsgAnswered(false);
