@@ -65,30 +65,31 @@ function MessageModal(props) {
               className="mb-3"
               controlId="formPlaintextEmail"
             >
-              <Form.Label column sm="2">
-                Aluno:
+              <Form.Label column sm="10">
+                Aluno: {props.message.userName}
               </Form.Label>
-              <Col sm="10">
+              {/* <Col sm="10">
                 <Form.Control
                   plaintext
                   readOnly
                   defaultValue={props.message.userName}
                 />
-              </Col>
-              <Form.Label column sm="2">
-                Curso:
+              </Col> */}
+              <Form.Label column sm="10">
+                Curso: {props.message.courseName || "Sem curso"}
               </Form.Label>
-              <Col sm="10">
+              {/* <Col sm="10">
                 <Form.Control
                   plaintext
                   readOnly
                   defaultValue={props.message.courseName || "Sem curso"}
                 />
-              </Col>
-              <Form.Label column sm="2">
-                Data:
+              </Col> */}
+              <Form.Label column sm="10">
+                Data:{" "}
+                {new Date(props.message.updatedAt).toLocaleDateString("pt-BR")}
               </Form.Label>
-              <Col sm="10">
+              {/* <Col sm="10">
                 <Form.Control
                   plaintext
                   readOnly
@@ -96,7 +97,11 @@ function MessageModal(props) {
                     props.message.updatedAt
                   ).toLocaleDateString("pt-BR")}
                 />
-              </Col>
+              </Col> */}
+
+              <Form.Label column sm="10">
+                Email: {props.message.userEmail}
+              </Form.Label>
 
               <Form.Label column sm="2">
                 Mensagem:
@@ -128,14 +133,13 @@ function MessageModal(props) {
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Label column sm="2">
-                  Responder:
+                  Respondido:
                 </Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
                   readOnly
                   placeholder={props.message.answer}
-                  // value={props.message.answer}
                 />
               </Form.Group>
             )}

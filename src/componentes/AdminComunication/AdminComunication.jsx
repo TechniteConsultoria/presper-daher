@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Pagination from "react-js-pagination";
 
 import {
   Container,
@@ -47,7 +48,11 @@ function Comunication() {
 
   const { allCourses } = useCourse();
   const [messagesList, setMessagesList] = useState([]);
+
   const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [updatedMsgId, setUpdatedMsgId] = useState("");
 
@@ -140,12 +145,16 @@ function Comunication() {
     // setCourseList(courses);
   }
 
-  async function getMessages() {
-    const query = `?page${page}`;
+  async function getMessages(page) {
+    const query = `?page=${page}`;
     let response;
     try {
       response = await MessageService.getMessage(query);
       console.log(response);
+      setPage(Number(response.data.page));
+      setCurrentPage(Number(response.data.page));
+      setTotalItems(Number(response.data.total));
+      setLastPage(Number(response.data.last_page));
     } catch (error) {
       console.log(error);
     }
@@ -176,10 +185,16 @@ function Comunication() {
   }
 
   async function updateMsgList() {
-    const query = `?page${page}`;
+    const query = `?page=${page}`;
     try {
       const response = await MessageService.getMessage(query);
       const updatedList = response.data.data;
+
+      setPage(Number(response.data.page));
+      setCurrentPage(Number(response.data.page));
+      setTotalItems(Number(response.data.total));
+      setLastPage(Number(response.data.last_page));
+
       setMessagesList(updatedList);
     } catch (error) {
       console.log(error);
@@ -377,6 +392,18 @@ function Comunication() {
               </tbody>
             </Table>
           </Container>
+        </div>
+
+        <div id="pagination-container" className="container-item">
+          <Pagination
+            // hideDisabled
+            activePage={currentPage}
+            itemsCountPerPage={5}
+            totalItemsCount={totalItems}
+            onChange={getMessages}
+            itemClass="page-item"
+            linkClass="page-link"
+          />
         </div>
       </Container>
 

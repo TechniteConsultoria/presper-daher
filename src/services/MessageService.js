@@ -12,7 +12,7 @@ class MessageService {
 
   async getMessage(query) {
     try {
-      const response = await ApiService.get(`/message`, query);
+      const response = await ApiService.get(`/message${query}`);
       return response;
     } catch (error) {
       return error;
