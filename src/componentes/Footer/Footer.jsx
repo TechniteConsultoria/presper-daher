@@ -22,13 +22,15 @@ function Footer() {
           <a href="/" className="link"> Chat</a>
         </div>
         <br/>
-  
-        <p className="text-footer">
+    <div className="footer-info"> 
+    <p className="text-footer">
           Ensino EAD © 2022 All Rights Reserved
-        </p>{" "}
-        <br />
+        </p>
+        </div>
        <span> Feito pela Technite</span>
       </footer>
+    
+        
     </>
   );
 }
