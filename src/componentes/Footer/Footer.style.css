@@ -21,23 +21,39 @@ height: 15em;
 width: 100%;
 }
 
+.footer-info{
+    position: absolute;
+    left: 44%;
+    right: 42%;
+    top: 60%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.15px;
+}
 
-.text-footer{
-position: absolute;
-left: 44.58%;
-right: 43.82%;
-top: 60%;
-display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 0.15px;
+span{
+    position: absolute;
+    left: 44%;
+    right: 42%;
+    top: 80%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.15px;
+}
+
+.text-footer, span{
+    font-size: .8em;
+    line-height: 160%;
+
 }
 
 .footer-home{
 position: absolute;
-left: 27.85%;
-right: 68.68%;
-bottom:55%;
+left: 27%;
+right: 68%;
+bottom:47%;
 display: inline-block;
 align-items: center;
 letter-spacing: 0.15px;
@@ -46,8 +62,8 @@ letter-spacing: 0.15px;
 
 .footer-about-us{
 position: absolute;
-left: 46.81%;
-right: 46.81%;
+left: 45%;
+right: 42%;
 bottom:47%;
 display: inline-block;
 align-items: center;
@@ -56,9 +72,9 @@ letter-spacing: 0.15px;
 
 .footer-support{
 position: absolute;
-left: 67.29%;
-right: 27.71%;
-bottom:47%;
+left: 67%;
+right: 27%;
+bottom:40%;
 display: inline-block;
 align-items: center;
 letter-spacing: 0.15px;
@@ -69,4 +85,126 @@ color: rgb(0, 0, 0);
 display: flex;
 align-items: center;
 letter-spacing: 0.15px;
+font-weight: 500;
+font-size: 12px;
+text-decoration: none;
+line-height: 25px;
 }
+
+
+
+@media only screen and (min-width: 200px) and (max-width: 768px) {
+    .footer-about-us{
+        position: absolute;
+        left: 45%;
+        right: 42%;
+        bottom:30%;
+        display: inline-block;
+        align-items: center;
+        letter-spacing: 0.15px;
+        }
+
+        .footer-info{
+            position: absolute;
+            left: 30%;
+            right: 30%;
+            top: 70%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            letter-spacing: 0.15px;
+        }
+        
+        span{
+            left: 30%;
+            right: 30%;
+            top: 90%;
+        }
+  }
+  
+  
+  @media only screen and (min-width: 600px) {
+  
+    .footer-about-us{
+        position: absolute;
+        left: 45%;
+        right: 42%;
+        bottom:40%;
+        display: inline-block;
+        align-items: center;
+        letter-spacing: 0.15px;
+        }
+
+        .footer-info{
+            position: absolute;
+            left: 40%;
+            right: 40%;
+            top: 70%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            letter-spacing: 0.15px;
+        }
+        
+        span{
+            left: 40%;
+            right: 40%;
+            top: 90%;
+        }
+    
+  }
+  @media only screen and (min-width: 768px) {
+    
+    .footer-about-us{
+        position: absolute;
+        left: 45%;
+        right: 42%;
+        bottom:40%;
+        display: inline-block;
+        align-items: center;
+        letter-spacing: 0.15px;
+        }
+  }
+  
+  @media only screen and (min-width: 992px) {
+    
+    .footer-about-us{
+        position: absolute;
+        left: 45%;
+        right: 45%;
+        bottom:40%;
+        display: inline-block;
+        align-items: center;
+        letter-spacing: 0.15px;
+        }
+  }
+  
+  @media only screen and (min-width: 1200px) {
+    .footer-about-us{
+        position: absolute;
+        left: 45%;
+        right: 42%;
+        bottom:47%;
+        display: inline-block;
+        align-items: center;
+        letter-spacing: 0.15px;
+        }
+        .footer-info{
+            position: absolute;
+            left: 45%;
+            right: 40%;
+            top: 70%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            letter-spacing: 0.15px;
+        }
+        
+    
+        span{
+            left: 45%;
+            right: 40%;
+            top: 90%;
+        }
+  }
+  
