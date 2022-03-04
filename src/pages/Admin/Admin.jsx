@@ -3,6 +3,7 @@ import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import { AdminNavbarData } from "../../componentes/AdminNavbar/AdminNavbarData";
 import Courses from "../../componentes/AdminCourses/AdminCourses";
 import Comunication from "../../componentes/AdminComunication/AdminComunication";
+import Banners from "../../componentes/AdminBanners/AdminBanners";
 
 import "./Admin.style.css";
 
@@ -53,6 +54,7 @@ function Admin() {
         <Container>
           {showPage === 2 && <Courses />}
           {showPage === 3 && <Comunication />}
+          {showPage === 4 && <Banners />}
         </Container>
       </div>
     </>
