@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
+import { toast } from "react-toastify"
+import uploadImage from "../../services/imagem/upload";
 
 const axios = require("axios").default;
 
@@ -21,18 +23,18 @@ function CreateCourseModal(props) {
 
   const [course, setCourse] = useState({});
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   async function handleSubmit() {
     const data = {
       // id: Math.floor(Math.random() * 100),
-      img: image,
-      title: title,
-      author: author,
-      price: price,
-      category: category,
+      img:         image,
+      title:       title,
+      author:      author,
+      price:       price,
+      category:    category,
       description: description,
-      videos: videosList,
+      videos:      videosList,
       // videos: videos,
     };
 
@@ -41,7 +43,8 @@ function CreateCourseModal(props) {
       axios.post(url, data).then((res) => {
         console.log(res);
       });
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
     setCourse(data);
@@ -68,6 +71,17 @@ function CreateCourseModal(props) {
 
     setVideosList(files);
     setVideosErrors(errors);
+  }
+
+  async function handleUploadImage(image){
+    if (image.type.includes('image')) {
+      
+      uploadImage(image, setImage)
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
   }
 
   return (
@@ -163,7 +177,9 @@ function CreateCourseModal(props) {
                 <Form.Control
                   type="file"
                   required
-                  onChange={(e) => setImage(e.target.file)}
+                  onChange={(e) => {
+                    handleUploadImage(e.target.files[0])
+                  }}
                 />
               </Form.Group>
             </Form.Group>
@@ -186,16 +202,16 @@ function CreateCourseModal(props) {
 
               {videosList?.length > 0
                 ? videosList.map((video, id) => {
-                    return (
-                      <Form.Check
-                        type="checkbox"
-                        label={video.name}
-                        key={id}
-                        checked
-                        onChange={() => console.log(video.name)}
-                      />
-                    );
-                  })
+                  return (
+                    <Form.Check
+                      type="checkbox"
+                      label={video.name}
+                      key={id}
+                      checked
+                      onChange={() => console.log(video.name)}
+                    />
+                  );
+                })
                 : ""}
             </Form.Group>
             {videosErrors?.length ? (
