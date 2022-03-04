@@ -8,8 +8,8 @@ import "./Login.styles.css";
 
 import google from "../../assets/google-logo.png";
 import facebook from "../../assets/facebook-logo.png";
-
-const axios = require("axios").default;
+import login from "../../services/user/login";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,36 +21,17 @@ function Login() {
   const [showAlert, setShowAlert] = useState(false);
 
   async function handleSubmit() {
-    const data = {
-      email,
-      senha,
-      lembrarSenha,
-    };
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-      axios.get(url).then((res) => {
-        // TODO: apenas para development
-        const user = res.data.find(({ email }) => email === data.email);
-        if (user !== undefined) {
-          if (user.password === data.senha) {
-            localStorage.setItem("user", JSON.stringify(user));
-            navigate("/");
-          } else {
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          }
-        } else {
-          setShowAlert(true);
-          setTimeout(() => {
-            setShowAlert(false);
-          }, 6000);
-        }
-        // TODO: apenas para development
-      });
-    } catch (error) {
+
+      let isOk = await login(email, senha)
+      isOk == 'ok' ? window.location.hash = '' : toast.error("Login incorreto!")
+
+    }
+    catch (error) {
+
+      toast.error(error)
       console.error(error);
+
     }
   }
 
@@ -145,7 +126,7 @@ function Login() {
             <Button
               type="submit"
               id="btn-login"
-              // style={{ background: "#14b8a6", border: "none" }}
+            // style={{ background: "#14b8a6", border: "none" }}
             >
               Acessar
             </Button>
