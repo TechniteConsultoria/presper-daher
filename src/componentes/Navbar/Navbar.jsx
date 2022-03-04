@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Form, FormControl } from "react-bootstrap";
@@ -7,9 +7,11 @@ import { BsFillCartFill } from "react-icons/bs";
 import "../Navbar/Navbar.style.css";
 
 import { CartContext } from "../../contexts/CartContext/CartContext";
+import { token } from "../../services/api";
 
 function NavbarComponent() {
   const { cart } = useContext(CartContext);
+  const [ isLogged, setIsLogged ] = useState("");
 
   const categorias = [
     {
@@ -30,7 +32,14 @@ function NavbarComponent() {
     },
   ];
 
-  const user = true;
+  useEffect(
+    () => {
+      setIsLogged(token)
+    },[]
+  )
+
+  console.log("isLogged")
+  console.log(isLogged)
 
   return (
     <>
@@ -79,7 +88,7 @@ function NavbarComponent() {
                     </span>
                   </Nav.Link>
 
-                  {!user ? (
+                  {!isLogged ? (
                     <>
                       <Nav.Link
                         href="/signup"
