@@ -16,6 +16,8 @@ import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
 import "./Home.style.css";
+import cursoLoad from "../../services/curso/cursoLoad";
+import loadPergunta from "../../services/pergunta/perguntaLoad";
 
 const axios = require("axios").default;
 
@@ -39,9 +41,9 @@ function Home() {
 
   async function handleSubmit() {
     const data = {
-      name: name,
-      email: email,
-      phone: phone,
+      name:    name,
+      email:   email,
+      phone:   phone,
       message: message,
     };
 
@@ -74,6 +76,10 @@ function Home() {
         setCoursesList(res.data);
       }
     });
+
+    let cursos = await cursoLoad()
+
+    setCoursesList(cursos)
   }
 
   async function getComments() {
@@ -84,6 +90,8 @@ function Home() {
         setTestimonialsList(res.data);
       }
     });
+    let perguntas = await loadPergunta()
+    setTestimonialsList(perguntas)
   }
 
   useEffect(() => {
