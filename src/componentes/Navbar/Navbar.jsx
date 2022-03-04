@@ -38,9 +38,6 @@ function NavbarComponent() {
     },[]
   )
 
-  console.log("isLogged")
-  console.log(isLogged)
-
   return (
     <>
       <div>
