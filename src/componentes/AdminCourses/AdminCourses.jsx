@@ -18,8 +18,7 @@ import cursos from "../../data/cursos";
 import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
-
-const axios = require("axios").default;
+import loadProduct from "../../services/produto/loadProduct";
 
 function Courses() {
   const [classificar, setClassificar] = useState("Mais vendidos");
@@ -108,16 +107,17 @@ function Courses() {
 
   async function getCourses() {
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-      axios.get(url).then((res) => {
-        if (res.status === 200) {
-          setCourseList(res.data);
-          console.log(res.data);
-        }
-      });
-    } catch (error) {
+      
+      let courses = await loadProduct();
+
+      setCourseList(courses);
+      
+    }
+    
+    catch (error) {
       console.log(error);
     }
+    
   }
 
   return (
