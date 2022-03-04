@@ -25,7 +25,7 @@ function Signup() {
 
       try {
 
-        cadastro(email, senha, "user")
+        cadastro(nome, email, senha, '1')
 
       }
       catch (error) {
