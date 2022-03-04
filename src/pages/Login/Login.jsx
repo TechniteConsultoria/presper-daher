@@ -24,7 +24,8 @@ function Login() {
     try {
 
       let isOk = await login(email, senha)
-      isOk == 'ok' ? window.location.hash = '' : toast.error("Login incorreto!")
+      isOk == 'ok' ? window.location.pathname = '' : toast.error("Login incorreto!")
+      // isOk == 'ok' ? console.log("bnjnbdfnbjndfjbndfnbdfjbdfjn"): toast.error("Login incorreto!")
 
     }
     catch (error) {
