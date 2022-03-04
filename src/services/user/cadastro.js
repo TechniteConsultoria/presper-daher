@@ -14,7 +14,7 @@ import servidorErrorMessage from '../../utils/servidorErrorMessage'
 export default async function cadastro(name, email, password, role, invitationToken,  tenantId) {
 
     return apiWithoutTenant.post('auth/sign-up', {
-      name:            name,
+      fullName:        name,
       email:           email, 
       password:        password, 
       role:            role, 
