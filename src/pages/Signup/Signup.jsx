@@ -25,7 +25,8 @@ function Signup() {
 
       try {
 
-        cadastro(nome, email, senha, '1')
+        let isOk = await cadastro(nome, email, senha, '1')
+        isOk == 'ok'? window.location.pathname = '' : console.log("erro?")
 
       }
       catch (error) {
