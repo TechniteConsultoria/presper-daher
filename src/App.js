@@ -17,8 +17,7 @@ import MyCertificates from "./pages/MyCertificates/MyCertificates.jsx";
 import MyPaymentInfo from "./pages/MyPaymentInfo/MyPaymentInfo.jsx";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart.jsx";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const location = useLocation();
@@ -33,16 +32,16 @@ function App() {
       </div>
 
       <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -57,7 +56,6 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         {/* 8 */}
       </Routes>
-
 
       <div>
         {location.pathname === "/login" ||
