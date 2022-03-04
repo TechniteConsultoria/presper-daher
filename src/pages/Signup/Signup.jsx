@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
 import "./Signup.styles.css";
+import { toast } from "react-toastify";
+import cadastro from "../../services/user/cadastro";
 
 const axios = require("axios").default;
 
@@ -20,36 +22,13 @@ function Signup() {
 
   async function handleSubmit() {
     if (submit && senha === confirmaSenha) {
-      const data = {
-        name: nome,
-        email: email,
-        password: senha,
-        subscribe: inscricao,
-        role: "user",
-      };
+
       try {
-        const urlGET =
-          "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-        axios.get(urlGET).then((res) => {
-          // TODO: apenas para development
-          const user = res.data.find(({ email }) => email === data.email);
-          if (user !== undefined) {
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          } else {
-            const url =
-              "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-            axios.post(url, data).then((res) => {
-              if (res.status === 201) {
-                navigate("/");
-              }
-            });
-          }
-          // TODO: apenas para development
-        });
-      } catch (error) {
+
+        cadastro(email, senha, "user")
+
+      }
+      catch (error) {
         console.error(error);
       }
       isSubmit(false);
