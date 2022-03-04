@@ -1,4 +1,8 @@
 import { createContext, useState, useEffect } from "react";
+import addInCart from "../../services/carrinho/addInCart";
+import deleteProductOfCart from "../../services/carrinho/deleteProductOfCart";
+import loadCart from "../../services/carrinho/loadCart";
+import makeSumToCarrinho from "../../utils/makeSumToCarrinho";
 
 const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
 
@@ -7,38 +11,25 @@ export const CartContext = createContext({});
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(cartFromLocalStorage);
 
-  function addItemToCart(item) {
-    let newItem = Object.assign({}, item);
-    let found = cart.find(({ id }) => id === item.id);
-    if (found === undefined) {
-      setCart([...cart, newItem]);
-      localStorage.setItem("cart", JSON.stringify(cart));
-    } else {
-      console.log("é igual:", found);
-    }
+  async function addItemToCart(_id) {
+    return await addInCart(_id)
   }
 
-  function removeItemFromCart(_id) {
-    let formatedList = [];
-    cart.map((prod) => {
-      if (prod.id !== _id) formatedList.push(prod);
-    });
-    localStorage.setItem("cart", JSON.stringify(formatedList));
+  async function removeItemFromCart(_id) {
+    
+    await deleteProductOfCart(_id)
+    
+    let formatedList = await getCart()
+    
     setCart(formatedList);
   }
 
   function getTotalAmount() {
-    let amount = cart.reduce(
-      (accum, item) => accum + parseFloat(item.price),
-      0
-    );
-    return amount;
+    return makeSumToCarrinho(cart);
   }
 
-  function getCart() {
-    let cart = localStorage.getItem("cart");
-    console.log(cart);
-    return cart;
+  async function getCart() {
+    return await loadCart();
   }
 
   useEffect(() => {
