@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
 import { toast } from "react-toastify";
+import bannerCreate from "../../services/banner/bannerCreate";
 import uploadImage from "../../services/imagem/upload";
 // import ResultCreateCourseModal from "./ResultCreateCourseModal";
 
@@ -21,6 +22,8 @@ function AddBannerModal(props) {
       descricao: imgDesc,
       status: imgStatus,
     };
+
+    await bannerCreate(data)
 
     
 
