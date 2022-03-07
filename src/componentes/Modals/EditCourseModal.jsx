@@ -5,6 +5,11 @@ import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
 
 import { BsFillTrashFill } from "react-icons/bs";
+import { formatPrice } from "../../utils/format";
+import IntlCurrencyInput from "react-intl-currency-input"
+
+import currencyConfig from "../../utils/currenryConfig";
+import cursoUpdate from "../../services/curso/cursoUpdate";
 
 // TODO - formatar data.videos antes de submeter
 
@@ -16,15 +21,14 @@ function EditCourseModal(props) {
 
   const oldVideos = props.course.videos;
 
-  console.log("props.course")
-  console.log(props.course)
-
   const [image, setImage] = useState(props.course.imagemUrl);
   const [title, setTitle] = useState(props.course.nome);
   const [author, setAuthor] = useState(props.course.autor);
   const [price, setPrice] = useState(props.course.preco);
   const [category, setCategory] = useState(props.course.categoria);
   const [description, setDescription] = useState(props.course.descricao);
+  const [handleChangePrice,       setHandleChangePrice] = useState(formatPrice(props.course.preco));
+
 
   const [videosList, setVideosList] = useState(props.course.videos);
 
@@ -37,17 +41,21 @@ function EditCourseModal(props) {
   }, [oldVideos]);
 
   function handleSubmit() {
+
     const data = {
       id: props.course.id,
-      img: image || props.course.img,
-      title: title || props.course.title,
-      author: author || props.course.author,
-      price: price || props.course.price,
-      category: category || props.course.category,
-      description: description || props.course.description,
+      imagemUrl: image || props.course.imagemUrl,
+      nome: title || props.course.nome,
+      autor: author || props.course.autor,
+      preco: price || props.course.preco,
+      categoria: category || props.course.categoria,
+      descricao: description || props.course.descricao,
       videos: newVideos,
     };
-    console.log(data);
+    console.log(data)
+
+    cursoUpdate(data, props.course.id)
+
     setResultEditCourseModalShow(true);
   }
 
@@ -61,6 +69,15 @@ function EditCourseModal(props) {
     setNewVideos(files);
     setVideosErrors(errors);
   }
+
+  const handleChangePriceOfProduct = (event, value, maskedValue) => {
+    event.preventDefault();
+
+    setPrice(value);                   // value without mask (ex: 1234.56)
+    setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
+  };
+
+  console.log(formatPrice(props.course.preco))
 
   return (
     <>
@@ -116,12 +133,19 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Preço
               </Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="float"
                 min={0.0}
                 defaultValue={props.course.preco}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+              /> */}
+               <IntlCurrencyInput 
+                  className="currencyInput"
+                  currency="BRL" 
+                  config={currencyConfig}
+                  value={handleChangePrice}
+                  onChange={handleChangePriceOfProduct} 
               />
             </Form.Group>
 
@@ -135,7 +159,7 @@ function EditCourseModal(props) {
               <Form.Control
                 as="textarea"
                 rows={3}
-                defaultValue={props.course.description}
+                defaultValue={props.course.descricao}
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
@@ -293,7 +317,7 @@ function EditCourseModal(props) {
         show={resultEditCourseModalShow}
         onHide={() => setResultEditCourseModalShow(false)}
         course={props.course}
-        result={"not-okay"}
+        result={"okay"}
       />
 
       <DeleteVideoModal
