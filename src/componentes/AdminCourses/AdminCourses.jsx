@@ -18,7 +18,7 @@ import cursos from "../../data/cursos";
 import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
-import loadProduct from "../../services/produto/loadProduct";
+import cursoLoad from "../../services/curso/cursoLoad";
 
 function Courses() {
   const [classificar, setClassificar] = useState("Mais vendidos");
@@ -108,7 +108,7 @@ function Courses() {
   async function getCourses() {
     try {
       
-      let courses = await loadProduct();
+      let courses = await cursoLoad();
 
       setCourseList(courses);
       
@@ -253,14 +253,15 @@ function Courses() {
             {courseList?.map((item) => (
               <CardComponent
                 key={item.id}
-                img={item.img}
-                title={item.title}
-                author={item.author}
+                img={item.imagemUrl}
+                title={item.nome}
+                author={item.autor}
                 rating={item.rating}
-                price={item.price}
+                price={item.preco}
                 sold={item.sold}
                 onClick={() => {
                   setCourse(item);
+                  console.log(item)
                   showEditCourseModal(true);
                 }}
               />
