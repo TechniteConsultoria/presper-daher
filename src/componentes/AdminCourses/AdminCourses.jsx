@@ -14,7 +14,7 @@ import CardComponent from "../Card/Card";
 import EditCourseModal from "../Modals/EditCourseModal";
 import CreateCourseModal from "../Modals/CreateCourseModal";
 
-import cursos from "../../data/cursos";
+// import cursos from "../../data/cursos";
 // import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
@@ -53,28 +53,28 @@ function Courses() {
     switch (classificar) {
       case "Menos vendidos":
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.sold - b.sold;
           })
         );
         break;
       case "Maior preço":
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.price + b.price;
           })
         );
         break;
       case "Menor preço":
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.price - b.price;
           })
         );
         break;
       default:
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.sold + b.sold;
           })
         );
@@ -83,26 +83,27 @@ function Courses() {
   }
 
   function filtrarPor(filtro) {
+  // alterar para funções com requisição do backend
     if (filtro !== "Sem filtro")
-      setCourseList(cursos.filter((c) => c.category === filtro));
-    else setCourseList(cursos);
+      setCourseList(courseList.filter((c) => c.category === filtro));
+    else setCourseList(courseList);
   }
 
   function buscarPor(buscarCurso) {
     setCourseList(
       // eslint-disable-next-line array-callback-return
-      cursos.filter((val) => {
+      courseList.filter((val) => {
         if (!buscarCurso.length) {
           setFiltro(filtro);
           return val;
         } else if (
           filtro === "Sem filtro" &&
-          val.title.toLowerCase().includes(buscarCurso.toLowerCase())
+          val.nome.toLowerCase().includes(buscarCurso.toLowerCase())
         ) {
           return val;
         } else if (
           val.category === filtro &&
-          val.title.toLowerCase().includes(buscarCurso.toLowerCase())
+          val.nome.toLowerCase().includes(buscarCurso.toLowerCase())
         ) {
           return val;
         }
