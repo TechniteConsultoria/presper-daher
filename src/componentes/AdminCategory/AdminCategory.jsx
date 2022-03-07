@@ -62,7 +62,7 @@ function Category() {
             <Col>
               <Row>
                 <h2>Todas categorias</h2>
-                <p>Visualize e edite seus cursos cadastrados</p>
+                <p>Visualize e edite as categorias cadastradas</p>
               </Row>
             </Col>
           </Row>
