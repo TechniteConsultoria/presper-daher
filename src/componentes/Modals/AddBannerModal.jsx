@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
+import { toast } from "react-toastify";
+import uploadImage from "../../services/imagem/upload";
 // import ResultCreateCourseModal from "./ResultCreateCourseModal";
 
 const axios = require("axios").default;
@@ -9,21 +11,18 @@ function AddBannerModal(props) {
 
   const [imgFile, setImgFile] = useState({});
   const [imgTitle, setImgTitle] = useState("");
+  const [imgDesc, setImgDesc]   = useState("");
   const [imgStatus, setImgStatus] = useState(false);
 
   async function handleSubmit() {
     const data = {
-      imgFile,
-      imgTitle,
-      imgStatus,
+      imagemUrl: imgFile,
+      titulo: imgTitle,
+      descricao: imgDesc,
+      status: imgStatus,
     };
 
-    console.log("POST: ", data);
-    //TODO - requisição POST
-    const url = "https://fake-api-json-server-presper.herokuapp.com/banners";
-    axios.post(url, data).then((res) => {
-      console.log(res.status);
-    });
+    
 
     setImgFile({});
     setImgTitle("");
@@ -36,6 +35,17 @@ function AddBannerModal(props) {
     setImgTitle("");
     setImgStatus(false);
   }, []);
+
+  async function handleUploadImage(image){
+    if (image.type.includes('image')) {
+      
+      uploadImage(image, setImgFile)
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
 
   return (
     <>
@@ -58,7 +68,9 @@ function AddBannerModal(props) {
                 <Form.Control
                   type="file"
                   required
-                  onChange={(e) => setImgFile(e.target.files[0])}
+                  onChange={(e) => {
+                    handleUploadImage(e.target.files[0])
+                  }}
                 />
               </Form.Group>
 
@@ -73,6 +85,20 @@ function AddBannerModal(props) {
                   required
                 />
               </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label column sm="2">
+                  Descrição
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Descrição"
+                  onChange={(e) => setImgDesc(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+
               <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Label column sm="2">
                   Status
