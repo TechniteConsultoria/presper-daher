@@ -11,8 +11,7 @@ import '../../index.css'
 import currencyConfig from "../../utils/currenryConfig";
 
 import cursoCreate from "../../services/curso/cursoCreate";
-
-const axios = require("axios").default;
+import loadCategorias from "../../services/categoria/loadCategorias";
 
 function CreateCourseModal(props) {
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
@@ -27,6 +26,8 @@ function CreateCourseModal(props) {
   const [videosErrors,            setVideosErrors]      = useState([]);
   const [videos,                  setVideos      ]      = useState([]);
   const [handleChangePrice,       setHandleChangePrice] = useState();
+  const [categorias,              setCategorias  ]      = useState([]);
+
 
   const [videosList, setVideosList] = useState([]);
 
@@ -96,6 +97,23 @@ function CreateCourseModal(props) {
     setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
   };
 
+  async function getCategories(){
+    try {
+      await loadCategorias(setCategorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(
+    () => {
+
+      getCategories()
+    },[]
+  )
+
   return (
     <>
       <Modal {...props} centered animation={false}>
@@ -138,6 +156,24 @@ function CreateCourseModal(props) {
                 onChange={(e) => setCategory(e.target.value)}
                 required
               />
+              <Form.Control
+                as="select"
+                placeholder="Descrição"
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                {
+                  categorias.map(
+                    (category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.nome}
+                      </option>
+                    )
+                  )
+                }
+
+              </Form.Control>
+              
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label column sm="2">
