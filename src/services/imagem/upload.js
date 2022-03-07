@@ -1,6 +1,6 @@
 import axios from "axios"
 import { toast } from "react-toastify"
-import { api } from "../api"
+import { api, ip, porta } from "../api"
 
 
 export default async function uploadImage(newImage, setImage) {
@@ -32,14 +32,17 @@ export default async function uploadImage(newImage, setImage) {
 
 
 
-    console.log(credencial)
+    let credentialCleaned = credencial.replace('"http://localhost:8157/api" ;localhost', '')
 
-    let upload = await axios.post(credencial, formData, {
+    console.log(`${ip}:${porta}/api${credentialCleaned}`)
+
+    let upload = await axios.post(`${ip}:${porta}/api${credentialCleaned}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     })
     if (upload.status != 200) {
+        console.log(upload)
         toast.info('Imagem inválida')
         return
     }
