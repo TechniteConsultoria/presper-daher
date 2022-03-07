@@ -10,6 +10,8 @@ import '../../index.css'
 
 import currencyConfig from "../../utils/currenryConfig";
 
+import cursoCreate from "../../services/curso/cursoCreate";
+
 const axios = require("axios").default;
 
 function CreateCourseModal(props) {
@@ -45,10 +47,7 @@ function CreateCourseModal(props) {
     };
 
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-      axios.post(url, data).then((res) => {
-        console.log(res);
-      });
+      cursoCreate(data)
     }
     catch (error) {
       console.error(error);
