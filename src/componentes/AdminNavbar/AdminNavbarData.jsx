@@ -4,6 +4,7 @@ import {
   BsFillBarChartLineFill,
   BsFillCollectionPlayFill,
   BsFillChatLeftFill,
+  BsFillArrowRightSquareFill,
 } from "react-icons/bs";
 
 export const AdminNavbarData = [

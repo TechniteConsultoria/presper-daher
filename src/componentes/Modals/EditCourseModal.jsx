@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Alert } from "react-bootstrap";
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
+import { BsFillTrashFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
@@ -12,13 +14,11 @@ import currencyConfig from "../../utils/currenryConfig";
 import cursoUpdate from "../../services/curso/cursoUpdate";
 import loadCategorias from "../../services/categoria/loadCategorias";
 import uploadImage from "../../services/imagem/upload";
+import DeleteCourseModal from "./DeleteCourseModal";
 
 // TODO - formatar data.videos antes de submeter
 
 function EditCourseModal(props) {
-  const [resultEditCourseModalShow, setResultEditCourseModalShow] =
-    useState(false);
-
   const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
 
   const oldVideos = props.course.videos;
@@ -31,14 +31,37 @@ function EditCourseModal(props) {
   const [description, setDescription] = useState(props.course.descricao);
   const [handleChangePrice,       setHandleChangePrice] = useState(formatPrice(props.course.preco));
 
+  // const {
+  //   image,
+  //   setImage,
+  //   title,
+  //   setTitle,
+  //   author,
+  //   setAuthor,
+  //   price,
+  //   setPrice,
+  //   category,
+  //   setCategory,
+  //   description,
+  //   setDescription,
+  //   videos,
+  //   setVideos,
+  //   videosErrors,
+  //   setVideosErrors,
+  //   updateCourse,
+  //   resultEditCourseModalShow,
+  //   setResultEditCourseModalShow,
+  //   resultDeleteCourseModalShow,
+  //   setResultDeleteCourseModalShow,
+  //   result,
+  // } = useCoursePage();
 
   const [videosList, setVideosList] = useState(props.course.videos);
-
   const [newVideos, setNewVideos] = useState([]);
   const [newVideo,  setNewVideo] = useState();
   const [videoToDelete, setVideoToDelete] = useState("");
   const [videosErrors, setVideosErrors] = useState([]);
-  const [categorias,              setCategorias  ]      = useState([]);
+  const [categorias,   setCategorias  ]      = useState([]);
 
 
   useEffect(() => {
@@ -315,9 +338,12 @@ function EditCourseModal(props) {
                 border: "1px solid rgb(108, 117, 125, 0.3)",
                 color: "#000",
               }}
-              onClick={props.onHide}
+              onClick={() => {
+                setResultDeleteCourseModalShow(true);
+                props.onHide();
+              }}
             >
-              Ocultar curso
+              Remover curso
             </Button>
 
             <Button
@@ -353,7 +379,13 @@ function EditCourseModal(props) {
         show={resultEditCourseModalShow}
         onHide={() => setResultEditCourseModalShow(false)}
         course={props.course}
-        result={"okay"}
+        result={result}
+      />
+
+      <DeleteCourseModal
+        show={resultDeleteCourseModalShow}
+        onHide={() => setResultDeleteCourseModalShow(false)}
+        course={props.course}
       />
 
       <DeleteVideoModal

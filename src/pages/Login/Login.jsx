@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -47,6 +47,7 @@ function Login() {
     setShowAlert(false);
   }, []);
 
+
   return (
     <div className="container-login">
       <section>
@@ -63,18 +64,20 @@ function Login() {
           </div>
 
           <form
-            // action="submit"
             className="row g-3 d-flex flex-column"
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              login();
             }}
           >
             <br />
             <button
               className="btn btn-lg"
               id="social-login"
-              onClick={googleLogin}
+              onClick={(e) => {
+                e.preventDefault();
+                googleLogin();
+              }}
             >
               <Image src={google} alt="google-log" className="logo" /> Continuar
               com Google
@@ -105,7 +108,7 @@ function Login() {
               required
               name="senha"
               onChange={(e) => {
-                setSenha(e.target.value);
+                setPassword(e.target.value);
               }}
             />
 
@@ -115,7 +118,7 @@ function Login() {
                 type="checkbox"
                 value=""
                 id="flexCheckDefault"
-                onChange={() => setLembrarSenha(!lembrarSenha)}
+                onChange={() => isRememberPassword(!rememberPassword)}
               ></input>
 
               <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -123,11 +126,7 @@ function Login() {
               </label>
             </div>
 
-            <Button
-              type="submit"
-              id="btn-login"
-            // style={{ background: "#14b8a6", border: "none" }}
-            >
+            <Button type="submit" id="btn-login">
               Acessar
             </Button>
 
@@ -142,6 +141,7 @@ function Login() {
       </section>
     </div>
   );
+
 }
 
 export default Login;

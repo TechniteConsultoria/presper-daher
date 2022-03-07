@@ -10,6 +10,8 @@ import {
   FormControl,
 } from "react-bootstrap";
 
+import { useCourse } from "../../contexts/CourseContext";
+
 import CardComponent from "../Card/Card";
 import EditCourseModal from "../Modals/EditCourseModal";
 import CreateCourseModal from "../Modals/CreateCourseModal";
@@ -22,10 +24,11 @@ import cursoLoad from "../../services/curso/cursoLoad";
 import loadCategorias from "../../services/categoria/loadCategorias";
 
 function Courses() {
+  const { allCourses } = useCourse();
+
   const [classificar, setClassificar] = useState("Mais vendidos");
   const [filtro, setFiltro] = useState("Sem filtro");
   const [buscarCurso, setBuscarCurso] = useState("");
-
   const [editCourseModal, showEditCourseModal] = useState(false);
   const [createCourseModal, showCreateCourseModal] = useState(false);
   const [course, setCourse] = useState({});
@@ -48,6 +51,10 @@ function Courses() {
     getCategories()
   }, []);
   
+  // useEffect(() => {
+  //   console.log("Alterado!");
+  //   setCourseList(allCourses);
+  // }, [allCourses]);
 
   function classificarPor(classificar) {
     switch (classificar) {
@@ -264,7 +271,23 @@ function Courses() {
 
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
-            {courseList?.map((item) => (
+            {/* {courseList?.map((item) => (
+              <CardComponent
+                key={item.id}
+                img={item.img}
+                title={item.title}
+                author={item.author}
+                rating={item.rating}
+                price={item.price}
+                sold={item.sold}
+                onClick={() => {
+                  setCourse(item);
+                  showEditCourseModal(true);
+                }}
+              />
+            ))} */}
+
+            {allCourses?.map((item) => (
               <CardComponent
                 key={item.id}
                 img={item.imagemUrl}

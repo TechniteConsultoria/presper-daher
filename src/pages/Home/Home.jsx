@@ -11,9 +11,12 @@ import {
 } from "react-bootstrap";
 
 import MaskedInput from "react-maskedinput";
-
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
+
+import { useCourse } from "../../contexts/CourseContext";
+import { useAuth } from "../../contexts/AuthContext";
+import MessageService from "../../services/MessageService";
 
 import "./Home.style.css";
 import cursoLoad from "../../services/curso/cursoLoad";
@@ -23,6 +26,11 @@ import bannerLoad from "../../services/banner/bannerLoad";
 const axios = require("axios").default;
 
 function Home() {
+  const { allCourses } = useCourse();
+  const { user } = useAuth();
+
+  const [testimonialsList, setTestimonialsList] = useState([]);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -35,7 +43,6 @@ function Home() {
 
   const [bannerList,      setBannerList     ] = useState([]);
   
-  const [testimonialsList, setTestimonialsList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -51,27 +58,22 @@ function Home() {
       message: message,
     };
 
-    const url =
-      "https://fake-api-json-server-presper.herokuapp.com/fale-conosco-mensagens";
-
     try {
-      axios.post(url, data).then((res) => {
-        isMsgSent(true);
-        if (res.status === 201) {
-          isMsgResult(true);
-        } else {
-          isMsgResult(false);
-        }
-      });
+      const response = await MessageService.createMessage(body);
+      isMsgSent(true);
+      if (response.status === 201) {
+        isMsgResult(true);
+      } else {
+        isMsgResult(false);
+      }
     } catch (error) {
       console.error(error);
     }
 
     setName("");
     setEmail("");
+    setPhone("");
     setMessage("");
-    isMsgSent(false);
-  }
 
   async function getCourses() {
 
@@ -86,7 +88,12 @@ function Home() {
     setBannerList(banner)
 
   }
+    setTimeout(() => {
+      isMsgSent(false);
+    }, 6000);
+  };
 
+  //todo -> pegando da FAKE API, precisa mudar!
   async function getComments() {
     const url =
       "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
@@ -105,7 +112,6 @@ function Home() {
     setMessage("");
     isMsgSent(false);
 
-    getCourses();
     getComments();
     getBanners();
   }, []);
@@ -160,7 +166,7 @@ function Home() {
 
           <div className="container-item">
             <div className="courses-container">
-              {coursesList?.map((item, id) => (
+              {allCourses?.map((item, id) => (
                 <Link
                   key={item.id}
                   id="card-link"
@@ -221,10 +227,9 @@ function Home() {
           <div className="contact-us-container">
             <div id="form">
               <Form
-                // action="submit"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleSubmit();
+                  createMessage();
                 }}
               >
                 <Form.Group className="mb-3">
@@ -251,7 +256,7 @@ function Home() {
                     required
                   />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label column sm="2">
                     Telefone
                   </Form.Label>
@@ -263,6 +268,7 @@ function Home() {
                     placeholder="(xx) xxxxx-xxxx"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
+                    required
                   />
                 </Form.Group>
                 <Form.Group

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { Form, FormControl } from "react-bootstrap";
@@ -9,11 +9,19 @@ import "../Navbar/Navbar.style.css";
 import { CartContext } from "../../contexts/CartContext/CartContext";
 import { token } from "../../services/api";
 import loadCategorias from "../../services/categoria/loadCategorias";
+import logo from "../../assets/project-logo.png";
+
+import { useCart } from "../../contexts/CartContext";
+
+import { useAuth } from "../../contexts/AuthContext";
 
 function NavbarComponent() {
-  const { cart } = useContext(CartContext);
   const [ isLogged, setIsLogged ] = useState("");
   const [categorias, setCategorias] = useState([]);
+
+
+  const { cart } = useCart();
+  const { user, logout, role } = useAuth();
 
   async function getCategories(){
     try {
@@ -33,6 +41,9 @@ function NavbarComponent() {
 
     },[]
   )
+  // useEffect(() => {
+  //   console.log(role);
+  // }, [user, logout, role]);
 
   return (
     <>
@@ -42,7 +53,7 @@ function NavbarComponent() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
             <Navbar.Brand href="/" id="nav-brand">
-              Presper Daher
+              <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
 
             <Navbar.Collapse id="basic-navbar-nav">
@@ -82,7 +93,42 @@ function NavbarComponent() {
                     </span>
                   </Nav.Link>
 
-                  {!isLogged ? (
+                  {isLogged ? (
+                    <>
+                      <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
+                        <NavDropdown.Item
+                          href={`/perfil`}
+                          id="minhaconta-items"
+                        >
+                          Perfil
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          href={`/my-courses`}
+                          id="minhaconta-items"
+                        >
+                          Meus Cursos
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          href={`/my-certificates`}
+                          id="minhaconta-items"
+                        >
+                          Certificados
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          href={`/my-payment-info`}
+                          id="minhaconta-items"
+                        >
+                          Formas de Pagamento
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                          id="minhaconta-items"
+                          onClick={() => logout()}
+                        >
+                          Sair
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </>
+                  ) : (
                     <>
                       <Nav.Link
                         href="/signup"
@@ -99,34 +145,23 @@ function NavbarComponent() {
                         Fazer Login
                       </Nav.Link>
                     </>
-                  ) : (
-                    <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
-                      <NavDropdown.Item href={`/perfil`} id="minhaconta-items">
-                        Perfil
-                      </NavDropdown.Item>
-                      <NavDropdown.Item
-                        href={`/my-courses`}
-                        id="minhaconta-items"
-                      >
-                        Meus Cursos
-                      </NavDropdown.Item>
-                      <NavDropdown.Item
-                        href={`/my-certificates`}
-                        id="minhaconta-items"
-                      >
+                  )}
+
+                  
+                  {/* {user.role === "ADMIN" && (
+                    <NavDropdown title="Admin" id="basic-nav-dropdown">
+                      <NavDropdown.Item href={`/admin`} id="minhaconta-items">
                         Certificados
                       </NavDropdown.Item>
+
                       <NavDropdown.Item
-                        href={`/my-payment-info`}
                         id="minhaconta-items"
+                        onClick={() => logout()}
                       >
-                        Formas de Pagamento
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href={`/`} id="minhaconta-items">
                         Sair
                       </NavDropdown.Item>
                     </NavDropdown>
-                  )}
+                  )} */}
                 </Nav>
               </div>
             </Navbar.Collapse>

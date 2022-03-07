@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useSignupPage } from "../../services/Hooks/SignupPageHook";
 import Alert from "react-bootstrap/Alert";
 
 import "./Signup.styles.css";
 import { toast } from "react-toastify";
 import cadastro from "../../services/user/cadastro";
-
-const axios = require("axios").default;
 
 function Signup() {
   const [nome, setNome] = useState("");
@@ -39,6 +37,20 @@ function Signup() {
   useEffect(() => {
     setShowAlert(false);
   }, []);
+  const {
+    signUp,
+    setName,
+    // setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    subscribed,
+    isSubscribed,
+    submited,
+    isSubmited,
+    // showAlert,
+  } = useSignupPage();
 
   return (
     <>
@@ -46,25 +58,16 @@ function Signup() {
         <section>
           <div className="card p-5">
             <h2 className="title-card">Sign up</h2>
-            {/* <p className="subtitle">Dados para realizar o cadastro:</p> */}
-            {submit && senha !== confirmaSenha && (
+            {submited && password !== confirmPassword && (
               <Alert variant="danger">As senhas são inválidas!</Alert>
             )}
             {showAlert && (
               <Alert variant="danger">
-                Ops! Parece que vc já está cadastrado em nossa plataforma. Faça
-                o login para acessar sua conta.
+                Ops! Parece que você já está cadastrado em nossa plataforma.
+                Faça o login para acessar sua conta.
               </Alert>
             )}
-            <form
-              // action="submit"
-              className="row g-3 d-flex flex-column"
-              onSubmit={(e) => {
-                e.preventDefault();
-                isSubmit(true);
-                handleSubmit();
-              }}
-            >
+            <form className="row g-3 d-flex flex-column">
               <input
                 type="text"
                 className="form"
@@ -72,7 +75,7 @@ function Signup() {
                 required
                 name="nome"
                 onChange={(e) => {
-                  setNome(e.target.value);
+                  setName(e.target.value);
                 }}
               />
               <input
@@ -92,7 +95,7 @@ function Signup() {
                 required
                 name="senha"
                 onChange={(e) => {
-                  setSenha(e.target.value);
+                  setPassword(e.target.value);
                 }}
               />
               <input
@@ -102,7 +105,7 @@ function Signup() {
                 required
                 name="confirmar-senha"
                 onChange={(e) => {
-                  setConfirmaSenha(e.target.value);
+                  setConfirmPassword(e.target.value);
                 }}
               />
 
@@ -112,11 +115,10 @@ function Signup() {
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
-                  onChange={() => setInscricao(!inscricao)}
+                  onChange={() => isSubscribed(!subscribed)}
                   style={{
                     border: "1px solid #14B8A6",
-                    // backgroundColor: "#14B8A6",
-                    backgroundColor: `${inscricao ? "#14B8A6" : ""}`,
+                    backgroundColor: `${subscribed ? "#14B8A6" : ""}`,
                   }}
                 ></input>
 
@@ -130,8 +132,14 @@ function Signup() {
                 type="submit"
                 className="btn btn-primary btn-lg"
                 style={{ background: "#14B8A6", border: "none" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.persist();
+                  isSubmited(true);
+                  signUp();
+                }}
               >
-                Acessar
+                Cadastrar
               </button>
 
               <a href="/login" style={{ color: "#14B8A6" }}>
