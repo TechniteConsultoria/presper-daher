@@ -249,10 +249,10 @@ function Courses() {
                 {categorias?.map((item, id) => {
                   return (
                     <Dropdown.Item
-                      onClick={() => setFiltro(item.value)}
+                      onClick={() => setFiltro(item.nome)}
                       key={id}
                     >
-                      {item.value}
+                      {item.nome}
                     </Dropdown.Item>
                   );
                 })}
