@@ -30,9 +30,8 @@ export default async function uploadImage(newImage, setImage) {
 
     console.log(credentialsData)
 
-
-
     let credentialCleaned = credencial.replace('"http://localhost:8157/api" ;localhost', '')
+    let downloadExtension = credentialsData.downloadUrl.replace('"http://localhost:8157/api" ;localhost', '')
 
     let ipLoad = `${ip}:${porta}/api${credentialCleaned}`
 
@@ -48,5 +47,7 @@ export default async function uploadImage(newImage, setImage) {
     }
     toast.success('Imagem Válida!')
 
-    setImage(ipLoad)
+    let pathToImage = `${ip}:${porta}/api${downloadExtension}`
+
+    setImage(pathToImage)
 }
