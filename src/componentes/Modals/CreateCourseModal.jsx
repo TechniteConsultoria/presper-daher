@@ -151,14 +151,7 @@ function CreateCourseModal(props) {
                 Categoria
               </Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Categoria"
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              />
-              <Form.Control
                 as="select"
-                placeholder="Descrição"
                 onChange={(e) => setCategory(e.target.value)}
                 required
               >
