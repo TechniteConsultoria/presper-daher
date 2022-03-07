@@ -11,7 +11,8 @@ export default async function login(email, password) {
       email: email,
       password: password,
     })  
-    .then((response) => {
+    .then(
+      async (response) => {
 
      let messageOk = `Login efetuado com sucesso! :)`
      let messageNotOk = `Ops, Dados Incorretos!`
@@ -19,7 +20,7 @@ export default async function login(email, password) {
      responseHandler(response.status, messageOk, messageNotOk )
       if (response.status == 200) {
 
-        loadUser(response.data)
+        await loadUser(response.data)
         handleLocalStorageEmailAndPassword(email, password)
         return 'ok'
       }
