@@ -10,6 +10,7 @@ import IntlCurrencyInput from "react-intl-currency-input"
 
 import currencyConfig from "../../utils/currenryConfig";
 import cursoUpdate from "../../services/curso/cursoUpdate";
+import loadCategorias from "../../services/categoria/loadCategorias";
 
 // TODO - formatar data.videos antes de submeter
 
@@ -35,6 +36,8 @@ function EditCourseModal(props) {
   const [newVideos, setNewVideos] = useState([]);
   const [videoToDelete, setVideoToDelete] = useState("");
   const [videosErrors, setVideosErrors] = useState([]);
+  const [categorias,              setCategorias  ]      = useState([]);
+
 
   useEffect(() => {
     setVideosList(oldVideos);
@@ -48,7 +51,7 @@ function EditCourseModal(props) {
       nome: title || props.course.nome,
       autor: author || props.course.autor,
       preco: price || props.course.preco,
-      categoria: category || props.course.categoria,
+      categoriaId: category || props.course.categoriaId,
       descricao: description || props.course.descricao,
       videos: newVideos,
     };
@@ -76,6 +79,23 @@ function EditCourseModal(props) {
     setPrice(value);                   // value without mask (ex: 1234.56)
     setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
   };
+
+  async function getCategories(){
+    try {
+      await loadCategorias(setCategorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(
+    () => {
+
+      getCategories()
+    },[]
+  )
 
   console.log(formatPrice(props.course.preco))
 
@@ -110,11 +130,22 @@ function EditCourseModal(props) {
                 Categoria
               </Form.Label>
               <Form.Control
-                type="text"
-                defaultValue={props.course.categoria}
+                as="select"
+                defaultValue={props.course.categoriaId}
                 onChange={(e) => setCategory(e.target.value)}
                 required
-              />
+              >
+                {
+                  categorias.map(
+                    (category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.nome}
+                      </option>
+                    )
+                  )
+                }
+
+              </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-3">
