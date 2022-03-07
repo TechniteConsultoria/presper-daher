@@ -42,7 +42,7 @@ function NavbarComponent() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
             <Navbar.Brand href="/" id="nav-brand">
-              Presper Daher gay
+              Presper Daher
             </Navbar.Brand>
 
             <Navbar.Collapse id="basic-navbar-nav">
