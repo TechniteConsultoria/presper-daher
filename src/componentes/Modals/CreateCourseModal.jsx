@@ -27,13 +27,12 @@ function CreateCourseModal(props) {
 
   async function handleSubmit() {
     const data = {
-      // id: Math.floor(Math.random() * 100),
-      img:         image,
-      title:       title,
-      author:      author,
-      price:       price,
-      category:    category,
-      description: description,
+      imagemUrl:   image,
+      nome:        title,
+      autor:       author,
+      preco:       price,
+      categoriaId: category,
+      descricao:   description,
       videos:      videosList,
       // videos: videos,
     };
