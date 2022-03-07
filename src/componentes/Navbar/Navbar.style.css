@@ -17,8 +17,21 @@
 }
 
 #search-bar {
-  /* background-color: #f0e9; */
-  width: 20em;
+     font-size: inherit;
+     padding-left: 1rem;
+     padding-right: 1rem;
+     height: auto;
+     width: 20em;
+     overflow-wrap: break-word;
+     border: 1px solid gray;
+     position: relative;
+     border-radius: 50px;
+     word-wrap: break-word;
+     background-color: transparent;
+     -webkit-border-radius: 50px;
+     -moz-border-radius: 50px;
+     -ms-border-radius: 50px;
+     -o-border-radius: 50px;
 }
 
 #cart-link {
