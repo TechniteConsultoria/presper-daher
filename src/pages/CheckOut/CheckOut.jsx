@@ -10,6 +10,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form"
 
 import { useCreditCard } from "../../contexts/CreditCardContext";
 
@@ -54,22 +55,41 @@ function CartCheckOut() {
         </div>
         <hr />
         <div className="payment-card">
-          <Col className="payment-btn">
-            <h4>Cartão de Crédito</h4>
-          </Col>
-          <div className="payment-form"></div>
-          {/* Adicionar os cartões já cadastrados e selecionar as opcões de compra*/}
-          <div>
-            <Button
-              id="btn-add-new-card"
-              onClick={() => {
-                setShowAddCardForm(!showAddCardForm);
-              }}
-            >
-              {" "}
-              Adicione um Novo Cartão
-            </Button>
-          </div>
+          <div className="payment-form">
+            
+          <Form.Group as={Row} className="mb-3">
+              <Form.Label as="legend">
+              Cartão de Crédito
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="Cartão 1"
+                  name="formHorizontalRadios"
+                  id="formHorizontalRadios1"
+                />
+                <Form.Check
+                  type="radio"
+                  label="Cartão 2 "
+                  name="formHorizontalRadios"
+                  id="formHorizontalRadios2"
+                />
+                
+                <Form.Check
+                  type="radio"
+                  label="Novo Cartão"
+                  name="formHorizontalRadios"
+                  id="formHorizontalRadios3"
+                  onClick={() => {
+                    setShowAddCardForm(!showAddCardForm);
+                  }}
+                />
+              </Col>
+            </Form.Group>
+            
+            </div>
+          {/* Adicionar os cartões já cadastrados e selecionar as opcões de compra/pagamento*/}
+         
 
           <div>{showAddCardForm && <AddCardForm />}</div>
           <div>
