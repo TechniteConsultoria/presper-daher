@@ -4,20 +4,27 @@ import ResultCreateCourseModal from "./ResultCreateCourseModal";
 import { toast } from "react-toastify"
 import uploadImage from "../../services/imagem/upload";
 
+import IntlCurrencyInput from "react-intl-currency-input"
+
+import '../../index.css'
+
+import currencyConfig from "../../utils/currenryConfig";
+
 const axios = require("axios").default;
 
 function CreateCourseModal(props) {
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
 
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [videos, setVideos] = useState([]);
-  const [videosErrors, setVideosErrors] = useState([]);
+  const [image,                   setImage       ]      = useState("");
+  const [title,                   setTitle       ]      = useState("");
+  const [author,                  setAuthor      ]      = useState("");
+  const [price,                   setPrice       ]      = useState("");
+  const [category,                setCategory    ]      = useState("");
+  const [description,             setDescription ]      = useState("");
+  const [videosErrors,            setVideosErrors]      = useState([]);
+  const [videos,                  setVideos      ]      = useState([]);
+  const [handleChangePrice,       setHandleChangePrice] = useState();
 
   const [videosList, setVideosList] = useState([]);
 
@@ -83,6 +90,13 @@ function CreateCourseModal(props) {
     }
   }
 
+  const handleChangePriceOfProduct = (event, value, maskedValue) => {
+    event.preventDefault();
+
+    setPrice(value);                   // value without mask (ex: 1234.56)
+    setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
+  };
+
   return (
     <>
       <Modal {...props} centered animation={false}>
@@ -141,12 +155,13 @@ function CreateCourseModal(props) {
               <Form.Label column sm="2">
                 Preço
               </Form.Label>
-              <Form.Control
-                type="float"
-                min={0.0}
-                placeholder="R$ 99.99"
-                onChange={(e) => setPrice(e.target.value)}
-                required
+              
+              <IntlCurrencyInput 
+                  className="currencyInput"
+                  currency="BRL" 
+                  config={currencyConfig}
+                  onChange={handleChangePriceOfProduct} 
+                  value={handleChangePrice}
               />
             </Form.Group>
             <Form.Group
