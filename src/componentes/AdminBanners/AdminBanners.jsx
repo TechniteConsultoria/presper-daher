@@ -12,6 +12,7 @@ import {
   Form,
   FormControl,
 } from "react-bootstrap";
+import bannerLoad from "../../services/banner/bannerLoad";
 
 const axios = require("axios").default;
 
@@ -22,10 +23,11 @@ function Banners(props) {
 
   async function getBanners() {
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/banners";
-      axios.get(url).then((res) => {
-        setBannersList(res.data);
-      });
+      
+      let bannerData = await bannerLoad()
+
+      setBannersList(bannerData);
+      
     } catch (error) {
       console.error(error);
     }
@@ -169,8 +171,8 @@ function Banners(props) {
               return (
                 <BannerCard
                   key={banner.id}
-                  title={banner.imgTitle}
-                  status={banner.imgStatus}
+                  title={banner.titulo}
+                  status={banner.status}
                   action={() => {
                     console.log("Executa uma ação");
                   }}
