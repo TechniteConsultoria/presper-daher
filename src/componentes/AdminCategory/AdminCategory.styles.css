@@ -1,0 +1,92 @@
+.container-admin {
+  background-color: #fff !important;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.container-item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding: 24px;
+  height: auto;
+}
+
+#mensagens-recebidas {
+  padding-bottom: 0;
+}
+
+.container-filtro {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.filtro-item {
+  margin: 8px;
+}
+
+.row-filtro {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.row-title {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+}
+
+.container-table {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.badge {
+  width: 100px;
+  background: #ffc700;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination a {
+  color: #000000;
+  border-color: #c6c7c8;
+}
+
+.page-item.active .page-link {
+  background-color: #6cb1cf !important;
+  border-color: #6cb1cf !important;
+  box-shadow: none !important;
+}
+
+#pagination-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* .icon {
+  margin-right: 16px;
+} */
+
+#icon-delete:hover {
+  color: #dc3545;
+}
+
+#icon-edit:hover {
+  color: #14b8a6;
+}
