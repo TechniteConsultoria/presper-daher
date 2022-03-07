@@ -18,6 +18,7 @@ import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 import "./Home.style.css";
 import cursoLoad from "../../services/curso/cursoLoad";
 import loadPergunta from "../../services/pergunta/perguntaLoad";
+import bannerLoad from "../../services/banner/bannerLoad";
 
 const axios = require("axios").default;
 
@@ -30,7 +31,10 @@ function Home() {
   const [msgSent, isMsgSent] = useState(false);
   const [msgResult, isMsgResult] = useState(false);
 
-  const [coursesList, setCoursesList] = useState([]);
+  const [coursesList,     setCoursesList    ] = useState([]);
+
+  const [bannerList,      setBannerList     ] = useState([]);
+  
   const [testimonialsList, setTestimonialsList] = useState([]);
 
   const navigate = useNavigate();
@@ -76,6 +80,13 @@ function Home() {
     setCoursesList(cursos)
   }
 
+  async function getBanners(){
+    let banner = await bannerLoad()
+
+    setBannerList(banner)
+
+  }
+
   async function getComments() {
     const url =
       "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
@@ -96,7 +107,9 @@ function Home() {
 
     getCourses();
     getComments();
+    getBanners();
   }, []);
+
 
   return (
     <>
@@ -104,51 +117,35 @@ function Home() {
         <Container fluid className="carousel-container">
           <Row>
             <Carousel fade className="carousel">
+              {
+              bannerList.map(({ imagemUrl, titulo, descricao, nome}) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2018/07/15/10/44/dna-3539309_1280.jpg"
-                  alt="First slide"
-                />
-                <Carousel.Caption>
-                  <h3>First slide label</h3>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2016/11/10/02/47/blood-1813410_1280.jpg"
-                  alt="Second slide"
+                  src={imagemUrl}
+                  alt={nome}
                 />
 
                 <Carousel.Caption>
-                  <h3>Second slide label</h3>
+                  <h3>
+                    {
+                    titulo
+                    }
+                  </h3>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    {
+                      descricao
+                    }
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2016/11/30/12/17/cells-1872666_1280.jpg"
-                  alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                  <h3>Third slide label</h3>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
+              ) )
+              }
             </Carousel>
           </Row>
         </Container>
+
+
         <br />
         <Container>
           <div className="container-item">
