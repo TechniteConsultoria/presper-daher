@@ -70,12 +70,6 @@ function Home() {
   }
 
   async function getCourses() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setCoursesList(res.data);
-      }
-    });
 
     let cursos = await cursoLoad()
 
@@ -179,11 +173,12 @@ function Home() {
                   }}
                 >
                   <CardComponent
-                    img={item.img}
-                    title={item.title}
-                    author={item.author}
+                    key={item.id}
+                    img={item.imagemUrl}
+                    title={item.nome}
+                    author={item.autor}
                     rating={item.rating}
-                    price={item.price}
+                    price={item.preco}
                     sold={item.sold}
                   />
                 </Link>
