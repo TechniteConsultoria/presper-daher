@@ -27,6 +27,8 @@ function CreateCourseModal(props) {
   const [videos,                  setVideos      ]      = useState([]);
   const [handleChangePrice,       setHandleChangePrice] = useState();
   const [categorias,              setCategorias  ]      = useState([]);
+  const [newVideo,                setNewVideo    ] = useState();
+
 
 
   const [videosList, setVideosList] = useState([]);
@@ -59,6 +61,8 @@ function CreateCourseModal(props) {
   }
 
   function handleAddVideos(data) {
+    console.log(data)
+
     let errors = [];
     let files = [];
     for (let i = 0; i < data.length; i++) {
@@ -234,8 +238,12 @@ function CreateCourseModal(props) {
                 type="file"
                 multiple
                 required
-                onChange={(e) => {
-                  handleAddVideos(e.target.files);
+                onChange={async (e) => {
+                  let video = e.target.files[0]
+                  console.log(video)
+                  console.log(video);
+                  await uploadImage(video, setNewVideo)
+                  handleAddVideos(newVideo);
                 }}
               />
             </Form.Group>

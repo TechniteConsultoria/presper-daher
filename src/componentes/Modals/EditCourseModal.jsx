@@ -11,6 +11,7 @@ import IntlCurrencyInput from "react-intl-currency-input"
 import currencyConfig from "../../utils/currenryConfig";
 import cursoUpdate from "../../services/curso/cursoUpdate";
 import loadCategorias from "../../services/categoria/loadCategorias";
+import uploadImage from "../../services/imagem/upload";
 
 // TODO - formatar data.videos antes de submeter
 
@@ -34,6 +35,7 @@ function EditCourseModal(props) {
   const [videosList, setVideosList] = useState(props.course.videos);
 
   const [newVideos, setNewVideos] = useState([]);
+  const [newVideo,  setNewVideo] = useState();
   const [videoToDelete, setVideoToDelete] = useState("");
   const [videosErrors, setVideosErrors] = useState([]);
   const [categorias,              setCategorias  ]      = useState([]);
@@ -63,6 +65,7 @@ function EditCourseModal(props) {
   }
 
   function handleAddNewVideos(data) {
+
     let errors = [];
     let files = [];
     for (let i = 0; i < data.length; i++) {
@@ -260,10 +263,12 @@ function EditCourseModal(props) {
               <Form.Control
                 type="file"
                 multiple
-                onChange={(e) => {
+                onChange={async (e) => {
+                  let video = e.target.file
+                  console.log(video)
                   console.log(e.target.files);
-                  // setNewVideos(e.target.files);
-                  handleAddNewVideos(e.target.files);
+                  await uploadImage(e.target.files, setNewVideo)
+                  handleAddNewVideos(newVideo);
                 }}
               />
             </Form.Group>
