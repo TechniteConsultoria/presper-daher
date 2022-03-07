@@ -15,7 +15,7 @@ import EditCourseModal from "../Modals/EditCourseModal";
 import CreateCourseModal from "../Modals/CreateCourseModal";
 
 import cursos from "../../data/cursos";
-import categorias from "../../data/categorias";
+// import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
 import cursoLoad from "../../services/curso/cursoLoad";
@@ -123,8 +123,8 @@ function Courses() {
 
   async function getCategories(){
     try {
-      let categorias = await loadCategorias();
-      setCategorias(categorias);
+      let categorias = await loadCategorias(setCategorias);
+      // setCategorias(categorias);
     }
     
     catch (error) {
