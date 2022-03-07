@@ -2,11 +2,11 @@ import { api, apiWithTenantAndWithToken } from "../api";
 
 
 
-export default async function cursoFind(perguntaId){
-    return await api.get(`pergunta/${perguntaId}`)
+export default async function cursoFind(produtoId){
+    return await api.get(`produto/${produtoId}`)
           .then((response) => {
             // console.log(response)
-            let perguntaData = response.data
-            return perguntaData
+            let produtoData = response.data
+            return produtoData
           });
 }

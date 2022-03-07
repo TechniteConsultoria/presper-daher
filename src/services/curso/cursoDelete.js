@@ -3,16 +3,16 @@ import { api, apiWithTenantAndWithToken } from "../api";
 
 
 
-export default async function cursoDelete(perguntaId){
-    return await api.delete(`pergunta/${perguntaId}`,{
+export default async function cursoDelete(produtoId){
+    return await api.delete(`produto/${produtoId}`,{
       params:{
-        id: perguntaId,
+        id: produtoId,
       }
     }).then((response) => {
             // console.log(response)
-            let perguntaData = response.data
+            let produtoData = response.data
             toast.success("Excluido com sucesso!")
             location.reload(true)
-            return perguntaData
+            return produtoData
           });
 }

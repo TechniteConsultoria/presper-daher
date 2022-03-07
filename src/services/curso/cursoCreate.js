@@ -9,12 +9,12 @@ import servidorErrorMessage from '../../utils/servidorErrorMessage'
 
 
 export default async function cursoCreate(data) {
-    return api.post('pergunta', {
+    return api.post('produto', {
       data
       })
       .then((response) => {
-        let mensagemOk = 'Recebemos seu pergunta, ele será revisado e logo estará na plataforma :)'
-        let mensagemNaoOK = 'Revise os dados do pergunta :('
+        let mensagemOk = 'Recebemos seu produto, ele será revisado e logo estará na plataforma :)'
+        let mensagemNaoOK = 'Revise os dados do produto :('
         responseHandler(response.status, mensagemOk, mensagemNaoOK)
         if (response.status == 200) {
           //first check the http response, returning the result to user

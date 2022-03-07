@@ -3,10 +3,10 @@ import { api, apiWithTenantAndWithToken } from "../api";
 
 
 export default async function cursoLoad(){
-    return await api.get(`pergunta`)
+    return await api.get(`produto`)
           .then((response) => {
             console.log(response)
-            let perguntaData = response.data.rows
-            return perguntaData
+            let produtoData = response.data.rows
+            return produtoData
           });
 }
