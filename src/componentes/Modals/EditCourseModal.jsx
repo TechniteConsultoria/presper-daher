@@ -169,7 +169,7 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Imagem
               </Form.Label>
-              <Form.Control readOnly defaultValue={props.course.img} required />
+              <Form.Control readOnly defaultValue={props.course.imagemUrl} required />
             </Form.Group>
 
             <Form.Group controlId="formFile" className="mb-3">
