@@ -34,9 +34,9 @@ export default async function uploadImage(newImage, setImage) {
 
     let credentialCleaned = credencial.replace('"http://localhost:8157/api" ;localhost', '')
 
-    console.log(`${ip}:${porta}/api${credentialCleaned}`)
+    let ipLoad = `${ip}:${porta}/api${credentialCleaned}`
 
-    let upload = await axios.post(`${ip}:${porta}/api${credentialCleaned}`, formData, {
+    let upload = await axios.post(ipLoad, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
@@ -48,5 +48,5 @@ export default async function uploadImage(newImage, setImage) {
     }
     toast.success('Imagem Válida!')
 
-    setImage(credentialsData.downloadUrl)
+    setImage(ipLoad)
 }
