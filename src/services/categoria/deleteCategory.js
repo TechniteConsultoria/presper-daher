@@ -4,7 +4,7 @@ import {api} from '../api'
 
 export default async function deleteCategory(id){
     // return await api.get(`user?filter%5B${filter}%5D=${valor}`).then(
-    return await api.delete(`departamento/${id}`).then(
+    return await api.delete(`categoria/${id}`).then(
     // await api.get(`empresa?`).then(
         (res) => {
             let status = res.status 
