@@ -8,33 +8,29 @@ import "../Navbar/Navbar.style.css";
 
 import { CartContext } from "../../contexts/CartContext/CartContext";
 import { token } from "../../services/api";
+import loadCategorias from "../../services/categoria/loadCategorias";
 
 function NavbarComponent() {
   const { cart } = useContext(CartContext);
   const [ isLogged, setIsLogged ] = useState("");
+  const [categorias, setCategorias] = useState([]);
 
-  const categorias = [
-    {
-      id: 11,
-      nome: "Cardiologia",
-    },
-    {
-      id: 22,
-      nome: "Geriatria",
-    },
-    {
-      id: 33,
-      nome: "Patologia",
-    },
-    {
-      id: 44,
-      nome: "Infectologia",
-    },
-  ];
+  async function getCategories(){
+    try {
+      await loadCategorias(setCategorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(
     () => {
       setIsLogged(token)
+
+      getCategories()
+
     },[]
   )
 
@@ -46,7 +42,7 @@ function NavbarComponent() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
             <Navbar.Brand href="/" id="nav-brand">
-              Presper Daher
+              Presper Daher gay
             </Navbar.Brand>
 
             <Navbar.Collapse id="basic-navbar-nav">
@@ -54,6 +50,7 @@ function NavbarComponent() {
                 <Nav className="me-auto" id="teste">
                   <NavDropdown title="Categorias" id="basic-nav-dropdown">
                     {categorias.map((item) => {
+                      console.log(item)
                       return (
                         <li key={item.id}>
                           <NavDropdown.Item href={`/`} id="categories-items">
