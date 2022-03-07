@@ -16,12 +16,15 @@ function EditCourseModal(props) {
 
   const oldVideos = props.course.videos;
 
-  const [image, setImage] = useState(props.course.img);
-  const [title, setTitle] = useState(props.course.title);
-  const [author, setAuthor] = useState(props.course.author);
-  const [price, setPrice] = useState(props.course.price);
-  const [category, setCategory] = useState(props.course.category);
-  const [description, setDescription] = useState(props.course.description);
+  console.log("props.course")
+  console.log(props.course)
+
+  const [image, setImage] = useState(props.course.imagemUrl);
+  const [title, setTitle] = useState(props.course.nome);
+  const [author, setAuthor] = useState(props.course.autor);
+  const [price, setPrice] = useState(props.course.preco);
+  const [category, setCategory] = useState(props.course.categoria);
+  const [description, setDescription] = useState(props.course.descricao);
 
   const [videosList, setVideosList] = useState(props.course.videos);
 
@@ -79,7 +82,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.title}
+                defaultValue={props.course.nome}
                 onChange={(e) => setTitle(e.target.value)}
                 required
               />
@@ -91,7 +94,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.category}
+                defaultValue={props.course.categoria}
                 onChange={(e) => setCategory(e.target.value)}
                 required
               />
@@ -103,7 +106,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.author}
+                defaultValue={props.course.autor}
                 onChange={(e) => setAuthor(e.target.value)}
                 required
               />
@@ -116,7 +119,7 @@ function EditCourseModal(props) {
               <Form.Control
                 type="float"
                 min={0.0}
-                defaultValue={props.course.price}
+                defaultValue={props.course.preco}
                 onChange={(e) => setPrice(e.target.value)}
                 required
               />
