@@ -19,6 +19,7 @@ import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
 import cursoLoad from "../../services/curso/cursoLoad";
+import loadCategorias from "../../services/categoria/loadCategorias";
 
 function Courses() {
   const [classificar, setClassificar] = useState("Mais vendidos");
@@ -28,6 +29,8 @@ function Courses() {
   const [editCourseModal, showEditCourseModal] = useState(false);
   const [createCourseModal, showCreateCourseModal] = useState(false);
   const [course, setCourse] = useState({});
+
+  const [categorias, setCategorias] = useState([]);
 
   const [courseList, setCourseList] = useState([]);
 
@@ -42,7 +45,9 @@ function Courses() {
 
   useEffect(() => {
     getCourses();
+    getCategories()
   }, []);
+  
 
   function classificarPor(classificar) {
     switch (classificar) {
@@ -107,18 +112,26 @@ function Courses() {
 
   async function getCourses() {
     try {
-      
       let courses = await cursoLoad();
-
       setCourseList(courses);
-      
+    }
+
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getCategories(){
+    try {
+      let categorias = await loadCategorias();
+      setCategorias(categorias);
     }
     
     catch (error) {
       console.log(error);
     }
-    
   }
+
 
   return (
     <>
