@@ -2,6 +2,7 @@ import React from "react";
 
 import { BsTrashFill, BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import bannerDelete from "../../services/banner/bannerDelete";
+import bannerUpdate from "../../services/banner/bannerUpdate";
 
 import "./BannerCard.styles.css";
 
@@ -14,10 +15,26 @@ function BannerCard(props) {
     
   }
 
-  async function showOne(id){
+  async function toggleShow(status){
+    console.log(status)
 
-    console.log(id)
+    let newStatus;
 
+    if(status == 1){
+      newStatus = 0
+    }
+    else{
+      newStatus = 1
+    }
+
+    console.log(newStatus)
+
+
+    let data = {
+      status: newStatus
+    }
+
+    bannerUpdate(data, props.id)
   }
 
   return (
@@ -25,10 +42,10 @@ function BannerCard(props) {
       <div className="banner-title">{props.title}</div>
       <div className="banner-icons">
         <div className="banner-status">
-          {props.status ? (
-            <BsEyeFill onClick={() => showOne(props.id)} id="active-icon" />
+          {props.status == 1 ? (
+            <BsEyeFill onClick={() => toggleShow(props.status)} id="active-icon" />
           ) : (
-            <BsEyeSlashFill  id="inactive-icon" />
+            <BsEyeSlashFill onClick={() => toggleShow(props.status)}   id="inactive-icon" />
           )}
         </div>
         <div className="banner-action">

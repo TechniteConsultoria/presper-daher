@@ -25,8 +25,6 @@ function AddBannerModal(props) {
 
     await bannerCreate(data)
 
-    
-
     setImgFile({});
     setImgTitle("");
     setImgStatus(false);
