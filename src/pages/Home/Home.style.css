@@ -25,10 +25,10 @@
 } */
 
 .w-100 {
- max-width:100%;
-  max-height:100%;
-  object-fit: cover;
-  vertical-align: bottom;
+  max-width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: none;
 }
 
 

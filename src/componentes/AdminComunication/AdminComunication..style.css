@@ -46,6 +46,7 @@
 .container-table {
   border: 1px solid #ced4da;
   border-radius: 8px;
+  margin-bottom: 40px;
 }
 
 .badge {
@@ -58,6 +59,22 @@
 }
 
 .row {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination a {
+  color: #000000;
+  border-color: #c6c7c8;
+}
+
+.page-item.active .page-link {
+  background-color: #6cb1cf !important;
+  border-color: #6cb1cf !important;
+  box-shadow: none !important;
+}
+
+#pagination-container {
   display: flex;
   flex-direction: column;
 }

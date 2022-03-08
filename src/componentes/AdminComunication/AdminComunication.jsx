@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Pagination from "react-js-pagination";
 
 import {
   Container,
@@ -11,8 +12,10 @@ import {
 } from "react-bootstrap";
 
 import MessageModal from "../Modals/MessageModal";
-
 import { BsFillEyeFill } from "react-icons/bs";
+
+import { useCourse } from "../../contexts/CourseContext";
+import MessageService from "../../services/MessageService";
 
 import "./AdminComunication..style.css";
 import mensagens from "../../data/mensagens";
@@ -20,27 +23,18 @@ import cursos from "../../data/cursos";
 
 //*
 //TODO - 1. arrrumar os filtros
-//TODO - 2. fazer a integração consumindo os dados do back
+//* DONE - 2. fazer a integração consumindo os dados do back
 //*
 
 function Comunication() {
-  const courses = cursos;
-
+  // const [messageId, setMessageId] = useState("");
+  // const [messageStatus, setMessageStatus] = useState("");
+  // const courses = cursos;
   // const [buscarCurso, setBuscarCurso] = useState("");
-
   // const [createCourseModal, showCreateCourseModal] = useState(false);
   // const [course, setCourse] = useState({});
-
   // const [courseList, setCourseList] = useState([]);
-
-  const [messagesList, setMessagesList] = useState([]);
-
-  const [messageModalShow, setMessageModalShow] = useState(false);
-  const [message, setMessage] = useState({});
-
-  const [classificar, setClassificar] = useState("Sem classificação");
-  const [filtroStatus, setFiltroStatus] = useState("Sem filtro");
-  const [filtroCurso, setFiltroCurso] = useState("Sem filtro");
+  // const [messagesList, setMessagesList] = useState([]);
 
   //   useEffect(() => {
   //     classificarPorData(classificar);
@@ -51,6 +45,23 @@ function Comunication() {
   //   useEffect(() => {
   //     buscarPor(buscarCurso);
   //   }, [buscarCurso]);
+
+  const { allCourses } = useCourse();
+  const [messagesList, setMessagesList] = useState([]);
+
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [updatedMsgId, setUpdatedMsgId] = useState("");
+
+  const [messageModalShow, setMessageModalShow] = useState(false);
+  const [message, setMessage] = useState({});
+
+  const [classificar, setClassificar] = useState("Sem classificação");
+  const [filtroStatus, setFiltroStatus] = useState("Sem filtro");
+  const [filtroCurso, setFiltroCurso] = useState("Sem filtro");
 
   useEffect(() => {
     getCourses();
@@ -120,23 +131,74 @@ function Comunication() {
   //   setMessagesList(list);
   // }
 
-  function setMessageStatus(id) {
-    const data = {
-      msgId: id,
-      status: "read",
-    };
+  // function setMessageStatus(id) {
+  //   const data = {
+  //     msgId: id,
+  //     status: "read",
+  //   };
 
-    console.log(data);
-  }
+  //   console.log(data);
+  // }
 
   async function getCourses() {
     //* req http
     // setCourseList(courses);
   }
 
-  async function getMessages() {
-    //* req http
-    setMessagesList(mensagens);
+  async function getMessages(page) {
+    const query = `?page=${page}`;
+    let response;
+    try {
+      response = await MessageService.getMessage(query);
+      console.log(response);
+      setPage(Number(response.data.page));
+      setCurrentPage(Number(response.data.page));
+      setTotalItems(Number(response.data.total));
+      setLastPage(Number(response.data.last_page));
+    } catch (error) {
+      console.log(error);
+    }
+
+    const msgs = response.data.data.map((m) => {
+      const courseName = allCourses.find((c) => c.id === m.courseId);
+      let newObject = { ...m };
+      newObject.courseName = courseName || null;
+      return newObject;
+    });
+    setMessagesList(msgs);
+  }
+
+  async function setMsgStatus(id, status) {
+    if (status === "NEW") {
+      const body = {
+        messageId: id,
+        messageStatus: status,
+      };
+      try {
+        const response = await MessageService.updateMessageStatus(body);
+        console.log(response.status);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return;
+  }
+
+  async function updateMsgList() {
+    const query = `?page=${page}`;
+    try {
+      const response = await MessageService.getMessage(query);
+      const updatedList = response.data.data;
+
+      setPage(Number(response.data.page));
+      setCurrentPage(Number(response.data.page));
+      setTotalItems(Number(response.data.total));
+      setLastPage(Number(response.data.last_page));
+
+      setMessagesList(updatedList);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -289,22 +351,24 @@ function Comunication() {
                 {messagesList?.map((msg, id) => {
                   return (
                     <tr key={id}>
-                      <td>{msg.course}</td>
-                      <td>{msg.author}</td>
-                      <td>{msg.date}</td>
+                      <td>{msg.courseName || "Sem curso"}</td>
+                      <td>{msg.userName}</td>
+                      <td>
+                        {new Date(msg.updatedAt).toLocaleDateString("pt-BR")}
+                      </td>
                       <td>
                         {}
-                        {msg.status === "new" && (
+                        {msg.status === "NEW" && (
                           <Badge pill bg="warning">
                             NOVA
                           </Badge>
                         )}
-                        {msg.status === "read" && (
+                        {msg.status === "READ" && (
                           <Badge pill bg="primary">
                             VISUALIZADA
                           </Badge>
                         )}
-                        {msg.status === "answered" && (
+                        {msg.status === "ANSWERED" && (
                           <Badge pill bg="success">
                             RESPONDIDA
                           </Badge>
@@ -315,8 +379,10 @@ function Comunication() {
                           className="icon"
                           onClick={() => {
                             setMessage(msg);
-                            setMessageStatus(message.id);
+                            setMsgStatus(msg.id, msg.status);
                             setMessageModalShow(true);
+                            setUpdatedMsgId(msg.id);
+                            updateMsgList();
                           }}
                         />
                       </td>
@@ -326,6 +392,18 @@ function Comunication() {
               </tbody>
             </Table>
           </Container>
+        </div>
+
+        <div id="pagination-container" className="container-item">
+          <Pagination
+            // hideDisabled
+            activePage={currentPage}
+            itemsCountPerPage={5}
+            totalItemsCount={totalItems}
+            onChange={getMessages}
+            itemClass="page-item"
+            linkClass="page-link"
+          />
         </div>
       </Container>
 

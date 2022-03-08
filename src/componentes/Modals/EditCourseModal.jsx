@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Alert } from "react-bootstrap";
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
+import { BsFillTrashFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
 
-import { BsFillTrashFill } from "react-icons/bs";
 import { formatPrice } from "../../utils/format";
 import IntlCurrencyInput from "react-intl-currency-input"
 
@@ -12,34 +13,57 @@ import currencyConfig from "../../utils/currenryConfig";
 import cursoUpdate from "../../services/curso/cursoUpdate";
 import loadCategorias from "../../services/categoria/loadCategorias";
 import uploadImage from "../../services/imagem/upload";
+import DeleteCourseModal from "./DeleteCourseModal";
 
 // TODO - formatar data.videos antes de submeter
 
 function EditCourseModal(props) {
-  const [resultEditCourseModalShow, setResultEditCourseModalShow] =
-    useState(false);
-
-  const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
-
+  
   const oldVideos = props.course.videos;
+  
+  // const [image, setImage] = useState(props.course.imagemUrl);
+  // const [title, setTitle] = useState(props.course.nome);
+  // const [author, setAuthor] = useState(props.course.autor);
+  // const [price, setPrice] = useState(props.course.preco);
+  // const [category, setCategory] = useState(props.course.categoria);
+  // const [description, setDescription] = useState(props.course.descricao);
+  const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
+  const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.preco));
+  const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] = useState(false)
 
-  const [image, setImage] = useState(props.course.imagemUrl);
-  const [title, setTitle] = useState(props.course.nome);
-  const [author, setAuthor] = useState(props.course.autor);
-  const [price, setPrice] = useState(props.course.preco);
-  const [category, setCategory] = useState(props.course.categoria);
-  const [description, setDescription] = useState(props.course.descricao);
-  const [handleChangePrice,       setHandleChangePrice] = useState(formatPrice(props.course.preco));
-
+  const {
+    image,
+    setImage,
+    title,
+    setTitle,
+    author,
+    setAuthor,
+    price,
+    setPrice,
+    category,
+    setCategory,
+    description,
+    setDescription,
+    videos,
+    setVideos,
+    videosErrors,
+    setVideosErrors,
+    updateCourse,
+    resultEditCourseModalShow,
+    setResultEditCourseModalShow,
+    // resultDeleteCourseModalShow,
+    // setResultDeleteCourseModalShow,
+    result,
+  } = useCoursePage();
 
   const [videosList, setVideosList] = useState(props.course.videos);
-
   const [newVideos, setNewVideos] = useState([]);
   const [newVideo,  setNewVideo] = useState();
   const [videoToDelete, setVideoToDelete] = useState("");
-  const [videosErrors, setVideosErrors] = useState([]);
+  // const [videosErrors, setVideosErrors] = useState([]);
   const [categorias,              setCategorias  ]      = useState([]);
 
+  // const [videosErrors, setVideosErrors] = useState([]);
 
   useEffect(() => {
     setVideosList(oldVideos);
@@ -101,7 +125,13 @@ function EditCourseModal(props) {
   )
 
   console.log(formatPrice(props.course.preco))
+  /*
+  
+  Line 272:29:  'setDeleteVideoModalShow' is not defined  no-undef
+  Line 392:15:  'deleteVideoModalShow' is not defined     no-undef
+  Line 393:23:  'setDeleteVideoModalShow' is not defined  no-undef
 
+  */
   return (
     <>
       <Modal {...props} centered animation={false}>
@@ -315,9 +345,12 @@ function EditCourseModal(props) {
                 border: "1px solid rgb(108, 117, 125, 0.3)",
                 color: "#000",
               }}
-              onClick={props.onHide}
+              onClick={() => {
+                setResultDeleteCourseModalShow(true);
+                props.onHide();
+              }}
             >
-              Ocultar curso
+              Remover curso
             </Button>
 
             <Button
@@ -353,7 +386,13 @@ function EditCourseModal(props) {
         show={resultEditCourseModalShow}
         onHide={() => setResultEditCourseModalShow(false)}
         course={props.course}
-        result={"okay"}
+        result={result}
+      />
+
+      <DeleteCourseModal
+        show={resultDeleteCourseModalShow}
+        onHide={() => setResultDeleteCourseModalShow(false)}
+        course={props.course}
       />
 
       <DeleteVideoModal

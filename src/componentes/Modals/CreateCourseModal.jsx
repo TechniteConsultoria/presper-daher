@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
+import { createContext, useState, useEffect, useContext } from "react";
+import { Modal, Button, Form, Row } from "react-bootstrap";
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
 import { toast } from "react-toastify"
 import uploadImage from "../../services/imagem/upload";
@@ -14,26 +15,26 @@ import cursoCreate from "../../services/curso/cursoCreate";
 import loadCategorias from "../../services/categoria/loadCategorias";
 
 function CreateCourseModal(props) {
-  const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
-    useState(false);
+  // const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
+  //   useState(false);
 
-  const [image,                   setImage       ]      = useState("");
-  const [title,                   setTitle       ]      = useState("");
-  const [author,                  setAuthor      ]      = useState("");
-  const [price,                   setPrice       ]      = useState("");
-  const [category,                setCategory    ]      = useState("");
-  const [description,             setDescription ]      = useState("");
-  const [videosErrors,            setVideosErrors]      = useState([]);
-  const [videos,                  setVideos      ]      = useState([]);
+  // const [image,                   setImage       ]      = useState("");
+  // const [title,                   setTitle       ]      = useState("");
+  // const [author,                  setAuthor      ]      = useState("");
+  // const [price,                   setPrice       ]      = useState("");
+  // const [category,                setCategory    ]      = useState("");
+  // const [description,             setDescription ]      = useState("");
+  // const [videosErrors,            setVideosErrors]      = useState([]);
+  // const [videos,                  setVideos      ]      = useState([]);
   const [handleChangePrice,       setHandleChangePrice] = useState();
   const [categorias,              setCategorias  ]      = useState([]);
   const [newVideo,                setNewVideo    ] = useState();
 
 
 
-  const [videosList, setVideosList] = useState([]);
+  // const [videosList, setVideosList] = useState([]);
 
-  const [course, setCourse] = useState({});
+  // const [course, setCourse] = useState({});
 
   useEffect(() => { }, []);
 
@@ -59,6 +60,36 @@ function CreateCourseModal(props) {
     setResultCreateCourseModalShow(true);
     setVideosErrors([]);
   }
+  
+  const {
+    createCourse,
+    result,
+    setResult,
+    setImage,
+    image,
+    setTitle,
+    title,
+    setAuthor,
+    author,
+    setPrice,
+    price,
+    setCategory,
+    category,
+    setDescription,
+    description,
+    setVideos,
+    setVideosErrors,
+    videosList,
+    setVideosList,
+    course,
+    setCourse,
+    resultCreateCourseModalShow,
+    setResultCreateCourseModalShow,
+  } = useCoursePage();
+
+  // useEffect(() => {
+  //   console.log(image);
+  // }, [setImage]);
 
   function handleAddVideos(data) {
     console.log(data)
@@ -69,15 +100,6 @@ function CreateCourseModal(props) {
       if (data[i].type === "video/mp4") files.push(data[i]);
       else errors.push(data[i]);
     }
-
-    //* Apenas para development
-    // let videos = [];
-    // files.map((el) => {
-    //   let t = String(el.name);
-    //   return videos.push(t);
-    // });
-    // setVideosList(videos);
-    //* Apenas para development
 
     setVideosList(files);
     setVideosErrors(errors);
@@ -131,11 +153,13 @@ function CreateCourseModal(props) {
           <Modal.Title>Adicionar curso</Modal.Title>
         </Modal.Header>
         <Form
+          encType="nultipart/form-data"
           action="submit"
           onSubmit={() => {
-            handleSubmit();
             props.onHide();
+            setResult(null);
             setVideosList();
+            createCourse();
           }}
         >
           <Modal.Body>
@@ -221,6 +245,7 @@ function CreateCourseModal(props) {
               </Form.Label>
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Control
+                  name="courseImage"
                   type="file"
                   required
                   onChange={(e) => {
@@ -229,7 +254,6 @@ function CreateCourseModal(props) {
                 />
               </Form.Group>
             </Form.Group>
-
             <Form.Group controlId="formFileMultiple" className="mb-3">
               <Form.Label column sm="4">
                 Adicionar vídeo
@@ -250,7 +274,7 @@ function CreateCourseModal(props) {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Vídeos selecionados:</Form.Label>
 
-              {videosList?.length > 0
+              {/* {videosList?.length > 0
                 ? videosList.map((video, id) => {
                   return (
                     <Form.Check
@@ -263,8 +287,20 @@ function CreateCourseModal(props) {
                   );
                 })
                 : ""}
+                    return (
+                      <Form.Check
+                        type="checkbox"
+                        label={video.name}
+                        key={id}
+                        checked
+                        onChange={() => console.log(video.name)}
+                      />
+                    );
+                  })
+                : ""} */}
             </Form.Group>
-            {videosErrors?.length ? (
+
+            {/* {videosErrors?.length ? (
               <Alert variant="danger">
                 Os seguintes arquivos não puderam ser carregados pois não
                 possuem a extensão <strong>mp4</strong>
@@ -278,7 +314,7 @@ function CreateCourseModal(props) {
               </Alert>
             ) : (
               ""
-            )}
+            )} */}
           </Modal.Body>
 
           <Modal.Footer>
@@ -314,7 +350,7 @@ function CreateCourseModal(props) {
         show={resultCreateCourseModalShow}
         onHide={() => setResultCreateCourseModalShow(false)}
         course={course}
-        result={"okay"}
+        result={result}
       />
     </>
   );

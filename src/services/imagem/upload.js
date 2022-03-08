@@ -16,7 +16,7 @@ export default async function uploadImage(newImage, setImage) {
     let credentials = await api.get(`file/credentials`, {
         params: {
             filename: imageName,
-            storageId: 'produtoImagem1',
+            storageId: 'banner',
         },
     })
     if (credentials.status != 200) {

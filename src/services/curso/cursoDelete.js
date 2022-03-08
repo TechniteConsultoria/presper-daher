@@ -12,7 +12,7 @@ export default async function cursoDelete(produtoId){
             // console.log(response)
             let produtoData = response.data
             toast.success("Excluido com sucesso!")
-            location.reload(true)
+            // location.reload(true)
             return produtoData
           });
 }

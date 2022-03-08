@@ -1,0 +1,165 @@
+#main-container {
+  margin-top: 24px;
+  margin-bottom: 48px;
+  height: 100%;
+}
+.payment-card{
+  display: block;
+  flex-direction: column;
+  margin-left: 3.5em;
+  width: 50%;
+}
+
+#novo-cartao{
+      width: 25%;
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      box-sizing: border-box;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      color: black;
+}
+#btn-add-new-card{
+  background-color: #14b8a6;
+  color: #fff;
+  border: none;
+  box-shadow:  3px 14px -8px rgba(98, 63, 101, 0.53);
+  color: white;
+  height: 2.1em;
+  border-radius: 4px;
+  margin-top: 8px;
+  width: 30%;
+  margin-left: 5%;
+}
+.container-prods {
+  width: 500px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.container-checkout {
+  width: 500px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.form-group{
+width: 45%;
+display: inline-block;
+flex-direction: column;
+margin: 2px 0px 2px 32px
+
+}
+
+
+.card-details{
+  width:40%;
+  height: 40%;
+  background-color: #fff;
+  border: 1px solid #c6c7c8;
+  border-radius: 8px;
+  box-shadow: 0px 3px 14px -8px rgba(98, 63, 101, 0.53);
+  margin-top:0;
+  bottom: 115px;
+  padding:.5em;
+  padding-left: 1em;
+  margin-left: 65%;
+  position:relative;
+  display: inline-block;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-title {
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-prod-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+#prod-title {
+  /*position: absolute;*/
+  font-weight: 300;
+  width:auto;
+  left: 872px;
+  top: 417px;
+  display: inline-block;
+  align-items: center;
+  letter-spacing: 0.15px;
+}
+#prod-author{
+  display: inline-block;
+  align-items: center;
+  letter-spacing: 0.15px;
+  width:auto;
+  left: 872px;
+  top: 450px;
+}
+
+#prod-price {
+  /*position: absolute;*/
+  margin-right: 16px;
+  font-weight: 500;
+  width:auto;
+  height: 40px;
+  left: 872px;
+  top: 510px;
+  display:flex;
+  align-items: center;
+  text-align: right;
+}
+
+
+.card-total-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#total-title {
+  font-weight: bold;
+}
+
+#total-amount {
+  font-weight: bold;
+  margin-right: 16px;
+}
+
+#btn-checkout {
+  background-color: #14b8a6;
+  color: #fff;
+  border: none;
+  box-shadow: 3px 14px -8px rgba(98, 63, 101, 0.53);
+  color: white;
+  height: 2.1em;
+  border-radius: 4px;
+  margin-top: 8px;
+  width: 90%;
+  margin-left: 5%;
+}
+
+
+.card-text {
+  margin-bottom: 16px;
+}
+
+
+#name-input{
+  width:70%;
+}
+
+.masked-input{
+  width: 200px;
+  height: 40px;
+  left: 114px;
+  top: 621px;
+}
