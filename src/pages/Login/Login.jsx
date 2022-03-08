@@ -90,7 +90,10 @@ function Login() {
             <button
               className="btn btn-lg"
               id="social-login"
-              onClick={facebookLogin}
+              onClick={(e) => {
+                e.preventDefault();
+                facebookLogin();
+              }}
             >
               <Image src={facebook} alt="google-log" className="logo" />{" "}
               Continuar com Facebook
