@@ -19,9 +19,9 @@ function Admin() {
   const [showPage, setShowPage] = useState(2);
   const { user, logout } = useAuth();
 
-  useEffect(() => {
-    if (user === null || user.role !== "ADMIN") navigate("/login");
-  }, [showPage, user]);
+  // useEffect(() => {
+  //   if (user === null || user.role !== "admin") navigate("/login");
+  // }, [showPage, user]);
 
   return (
     <>

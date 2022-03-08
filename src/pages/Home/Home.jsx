@@ -96,7 +96,6 @@ function Home() {
     let banner = await bannerLoad()
 
     setBannerList(banner)
-
   }
   // setTimeout(() => {
   //     isMsgSent(false);
@@ -113,7 +112,7 @@ function Home() {
       }
     });
     let perguntas = await loadPergunta()
-    setTestimonialsList(perguntas)
+    // setTestimonialsList(perguntas)
   }
 
   useEffect(() => {
@@ -124,6 +123,8 @@ function Home() {
 
     getComments();
     getBanners();
+    getCourses()
+
   }, []);
 
 
@@ -176,7 +177,7 @@ function Home() {
 
           <div className="container-item">
             <div className="courses-container">
-              {allCourses?.map((item, id) => (
+              {coursesList?.map((item, id) => (
                 <Link
                   key={item.id}
                   id="card-link"

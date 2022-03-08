@@ -283,7 +283,7 @@ function Courses() {
               />
             ))} */}
 
-            {allCourses?.map((item) => (
+            {courseList?.map((item) => (
               <CardComponent
                 key={item.id}
                 img={item.imagemUrl}

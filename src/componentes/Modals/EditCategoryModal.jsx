@@ -3,6 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 import ResultEditCategoryModal from "./ResultEditCategoryModal";
 import DeleteCategoryModal from "./DeleteCategoryModal";
+import changeCategorias from "../../services/categoria/changeCategorias";
 
 const axios = require("axios").default;
 
@@ -14,17 +15,21 @@ function EditCategoryModal(props) {
 
   async function handleSubmit() {
     //* APENAS PARA DESENVOLVIMENTO ------>
-    const id = props.category.id;
-    const data = {
-      name: categoryName,
-      createdAt: Date.now(),
-    };
-    const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
+    // const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
     try {
-      axios.put(`${url}/${id}`, data).then((res) => {
-        setResult(res.status);
-        isShowResultModal(true);
-      });
+      const id = props.category.id;
+      const data = {
+        nome: categoryName,
+        updatedAt: Date.now(),
+      };
+      // axios.put(`${url}/${id}`, data).then((res) => {
+      //   setResult(res.status);
+      //   isShowResultModal(true);
+      // });
+
+      let res = await changeCategorias(id, data)
+
+
     } catch (error) {
       console.error(error);
     }

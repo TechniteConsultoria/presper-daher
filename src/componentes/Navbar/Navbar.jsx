@@ -192,7 +192,7 @@ import "../Navbar/Navbar.style.css";
 
 import logo from "../../assets/project-logo.png";
 import loadCategorias from "../../services/categoria/loadCategorias";
-import { token } from "../../services/api";
+import { token, role } from "../../services/api";
 
 
 
@@ -276,7 +276,7 @@ function NavbarComponent() {
                     </span>
                   </Nav.Link>
 
-                  {user ? (
+                  {token ? (
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
@@ -331,7 +331,7 @@ function NavbarComponent() {
                   )}
 
                   
-                  {/* {user.role === "ADMIN" && (
+                  {role === "admin" && (
                     <NavDropdown title="Admin" id="basic-nav-dropdown">
                       <NavDropdown.Item href={`/admin`} id="minhaconta-items">
                         Certificados
@@ -343,7 +343,7 @@ function NavbarComponent() {
                         Sair
                       </NavDropdown.Item>
                     </NavDropdown>
-                  )} */}
+                  )}
                 </Nav>
               </div>
             </Navbar.Collapse>

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import CreateCategoryModal from "../Modals/CreateCategoryModal";
 import EditCategoryModal from "../Modals/EditCategoryModal";
 
+import loadCategorias from '../../services/categoria/loadCategorias'
+
 import { BsFillPencilFill } from "react-icons/bs";
 
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
@@ -17,12 +19,10 @@ function Category() {
   const [category, setCategory] = useState({});
 
   async function getCategories() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
     try {
-      await axios.get(url).then((res) => {
-        setCategoriesList(res.data);
-      });
-    } catch (error) {
+      await loadCategorias(setCategoriesList);
+    }
+    catch (error) {
       console.error(error);
     }
   }
@@ -82,7 +82,7 @@ function Category() {
                 {categoriesList?.map((cat, id) => {
                   return (
                     <tr key={id}>
-                      <td>{cat.name}</td>
+                      <td>{cat.nome}</td>
 
                       <td>
                         {new Date(cat.createdAt).toLocaleDateString("pt-BR")}

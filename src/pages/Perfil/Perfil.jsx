@@ -73,7 +73,9 @@ function Perfil(props) {
 
     try {
       //uses token from localStorage, which is setted in login and singup
-      let updatedUser = updateUser(id, data)
+      let updatedUser = await updateUser(id, data)
+
+      
     }
 
     catch (error) {
