@@ -1,0 +1,42 @@
+.banner-card {
+  border: 1px solid #c6c7c8;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px 16px 8px 16px;
+  min-width: 240px;
+  max-width: 400px;
+  box-shadow: 0px 0px 11px -6px #000000;
+}
+
+.banner-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.banner-title {
+  font-weight: 500;
+}
+
+.banner-status {
+  cursor: pointer;
+}
+
+.banner-status:hover {
+  opacity: 0.4;
+}
+
+.banner-action {
+  cursor: pointer;
+}
+
+.banner-action:hover {
+  color: #dc3545;
+}
+
+#active-icon {
+  color: #14b8a6;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import cadastrarCategory from "../../services/categoria/cadastrarCategory";
 import ResultCreateCategoryModal from "./ResultCreateCategoryModal";
 
 const axios = require("axios").default;
@@ -15,13 +16,20 @@ function CreateCategoryModal(props) {
       name: categoryName,
       createdAt: Date.now(),
     };
-    const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
+    // const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
     try {
-      axios.post(url, data).then((res) => {
-        setResult(res.status);
-        isShowResultModal(true);
-      });
-    } catch (error) {
+      // axios.post(url, data).then((res) => {
+      //   setResult(res.status);
+      //   isShowResultModal(true);
+      // });
+      let data = {
+        nome: categoryName
+      }
+
+      let res = await cadastrarCategory(data)
+      
+    }
+    catch (error) {
       console.error(error);
     }
     //* APENAS PARA DESENVOLVIMENTO ------>

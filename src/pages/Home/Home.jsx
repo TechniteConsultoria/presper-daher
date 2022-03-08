@@ -19,14 +19,15 @@ import { useAuth } from "../../contexts/AuthContext";
 import MessageService from "../../services/MessageService";
 
 import "./Home.style.css";
+import cursoLoad from "../../services/curso/cursoLoad";
+import loadPergunta from "../../services/pergunta/perguntaLoad";
+import bannerLoad from "../../services/banner/bannerLoad";
 
 const axios = require("axios").default;
 
 function Home() {
   const { allCourses } = useCourse();
   const { user } = useAuth();
-
-  const [testimonialsList, setTestimonialsList] = useState([]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,6 +37,26 @@ function Home() {
   const [msgSent, isMsgSent] = useState(false);
   const [msgResult, isMsgResult] = useState(false);
 
+  const [coursesList,     setCoursesList    ] = useState([]);
+
+  const [bannerList,      setBannerList     ] = useState([]);
+  
+  const [testimonialsList, setTestimonialsList] = useState([]);
+
+  const navigate = useNavigate();
+
+  function handleClick(id) {
+    navigate(`/course/${id}`);
+  }
+
+  async function handleSubmit() {
+    const data = {
+      name:    name,
+      email:   email,
+      phone:   phone,
+      message: message,
+    }
+  }
   const createMessage = async () => {
     let userId = null;
     if (user) userId = user.id;
@@ -63,11 +84,23 @@ function Home() {
     setEmail("");
     setPhone("");
     setMessage("");
+  }
+  async function getCourses() {
 
-    setTimeout(() => {
-      isMsgSent(false);
-    }, 6000);
-  };
+    let cursos = await cursoLoad()
+
+    setCoursesList(cursos)
+  }
+
+  async function getBanners(){
+    let banner = await bannerLoad()
+
+    setBannerList(banner)
+  }
+  // setTimeout(() => {
+  //     isMsgSent(false);
+  //   }, 6000);
+  // };
 
   //todo -> pegando da FAKE API, precisa mudar!
   async function getComments() {
@@ -78,6 +111,8 @@ function Home() {
         setTestimonialsList(res.data);
       }
     });
+    let perguntas = await loadPergunta()
+    // setTestimonialsList(perguntas)
   }
 
   useEffect(() => {
@@ -87,7 +122,11 @@ function Home() {
     isMsgSent(false);
 
     getComments();
+    getBanners();
+    getCourses()
+
   }, []);
+
 
   return (
     <>
@@ -95,51 +134,35 @@ function Home() {
         <Container fluid className="carousel-container">
           <Row>
             <Carousel fade className="carousel">
+              {
+              bannerList.map(({ imagemUrl, titulo, descricao, nome}) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2018/07/15/10/44/dna-3539309_1280.jpg"
-                  alt="First slide"
-                />
-                <Carousel.Caption>
-                  <h3>First slide label</h3>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2016/11/10/02/47/blood-1813410_1280.jpg"
-                  alt="Second slide"
+                  src={imagemUrl}
+                  alt={nome}
                 />
 
                 <Carousel.Caption>
-                  <h3>Second slide label</h3>
+                  <h3>
+                    {
+                    titulo
+                    }
+                  </h3>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    {
+                      descricao
+                    }
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2016/11/30/12/17/cells-1872666_1280.jpg"
-                  alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                  <h3>Third slide label</h3>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
+              ) )
+              }
             </Carousel>
           </Row>
         </Container>
+
+
         <br />
         <Container>
           <div className="container-item">
@@ -154,7 +177,7 @@ function Home() {
 
           <div className="container-item">
             <div className="courses-container">
-              {allCourses?.map((item, id) => (
+              {coursesList?.map((item, id) => (
                 <Link
                   key={item.id}
                   id="card-link"
@@ -164,12 +187,13 @@ function Home() {
                   }}
                 >
                   <CardComponent
-                    img={item.img}
-                    title={item.title}
-                    author={item.author}
-                    rating={5}
-                    price={item.price}
-                    sold={99}
+                    key={item.id}
+                    img={item.imagemUrl}
+                    title={item.nome}
+                    author={item.autor}
+                    rating={item.rating}
+                    price={item.preco}
+                    sold={item.sold}
                   />
                 </Link>
               ))}

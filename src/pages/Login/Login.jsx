@@ -1,4 +1,4 @@
-import React from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
@@ -8,14 +8,45 @@ import "./Login.styles.css";
 
 import google from "../../assets/google-logo.png";
 import facebook from "../../assets/facebook-logo.png";
+import login from "../../services/user/login";
+import { toast } from "react-toastify";
 
 function Login() {
+
+  // const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [lembrarSenha, setLembrarSenha] = useState(false);
+
+  // const [showAlert, setShowAlert] = useState(false);
+
+  async function handleSubmit() {
+    try {
+
+      let isOk = await login(email, senha)
+      isOk == 'ok' ? window.location.pathname = '' : toast.error("Login incorreto!")
+
+    }
+    catch (error) {
+
+      toast.error(error)
+      console.error(error);
+
+    }
+  }
+
+
+  useEffect(() => {
+    setShowAlert(false);
+  }, []);
+
   const {
+    email,
     setEmail,
     setPassword,
     isRememberPassword,
     rememberPassword,
     showAlert,
+    setShowAlert,
     facebookLogin,
     googleLogin,
     login,
@@ -40,6 +71,7 @@ function Login() {
             className="row g-3 d-flex flex-column"
             onSubmit={(e) => {
               e.preventDefault();
+              // handleSubmit();
               login();
             }}
           >

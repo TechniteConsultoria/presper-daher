@@ -1,9 +1,14 @@
 import { ApiService } from "../services/ApiService";
+import cursoCreate from "./curso/cursoCreate";
+import cursoDelete from "./curso/cursoDelete";
+import cursoFind from "./curso/cursoFind";
+import cursoLoad from "./curso/cursoLoad";
+import cursoUpdate from "./curso/cursoUpdate";
 
 class CourseService {
   async createCourse(body) {
     try {
-      const response = await ApiService.post("/course", body);
+      const response = await cursoCreate(body)
       return response;
     } catch (error) {
       return error;
@@ -12,7 +17,7 @@ class CourseService {
 
   async updateCourse(id, body) {
     try {
-      const response = await ApiService.put(`/course/${id}`, body);
+      const response = cursoUpdate(id, body)
       return response;
     } catch (error) {
       return error;
@@ -21,7 +26,7 @@ class CourseService {
 
   async getAllCourses() {
     try {
-      const response = await ApiService.get("/course");
+      const response = await cursoLoad()
       return response;
     } catch (error) {
       console.log(error);
@@ -30,7 +35,7 @@ class CourseService {
 
   async getCourse(id) {
     try {
-      const response = await ApiService.get(`/course/${id}`);
+      const response = await cursoFind(id)
       return response;
     } catch (error) {
       console.log(error);
@@ -39,7 +44,7 @@ class CourseService {
 
   async deleteCourse(id) {
     try {
-      const response = await ApiService.delete(`/course/${id}`);
+      const response = await cursoDelete(id)
       return response;
     } catch (error) {
       console.log(error);

@@ -50,7 +50,7 @@ export default function AuthProvider({ children }) {
     //   sameSite: true,
     // });
 
-    localStorage.setItem("user", JSON.stringify(myUser));
+    localStorage.setItem("user", myUser);
     localStorage.setItem("@presper-daher:token", myToken);
   }
 
@@ -64,7 +64,8 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user") || null));
+    // setUser(JSON.parse(localStorage.getItem("user") || null));
+    setUser(localStorage.getItem("user") || null);
   }, []);
 
   // useEffect(() => {

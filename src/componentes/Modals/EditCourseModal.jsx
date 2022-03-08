@@ -5,14 +5,31 @@ import { BsFillTrashFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
+
+import { formatPrice } from "../../utils/format";
+import IntlCurrencyInput from "react-intl-currency-input"
+
+import currencyConfig from "../../utils/currenryConfig";
+import cursoUpdate from "../../services/curso/cursoUpdate";
+import loadCategorias from "../../services/categoria/loadCategorias";
+import uploadImage from "../../services/imagem/upload";
 import DeleteCourseModal from "./DeleteCourseModal";
 
 // TODO - formatar data.videos antes de submeter
 
 function EditCourseModal(props) {
-  const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
-
+  
   const oldVideos = props.course.videos;
+  
+  // const [image, setImage] = useState(props.course.imagemUrl);
+  // const [title, setTitle] = useState(props.course.nome);
+  // const [author, setAuthor] = useState(props.course.autor);
+  // const [price, setPrice] = useState(props.course.preco);
+  // const [category, setCategory] = useState(props.course.categoria);
+  // const [description, setDescription] = useState(props.course.descricao);
+  const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
+  const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.preco));
+  const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] = useState(false)
 
   const {
     image,
@@ -34,14 +51,18 @@ function EditCourseModal(props) {
     updateCourse,
     resultEditCourseModalShow,
     setResultEditCourseModalShow,
-    resultDeleteCourseModalShow,
-    setResultDeleteCourseModalShow,
+    // resultDeleteCourseModalShow,
+    // setResultDeleteCourseModalShow,
     result,
   } = useCoursePage();
 
   const [videosList, setVideosList] = useState(props.course.videos);
   const [newVideos, setNewVideos] = useState([]);
+  const [newVideo,  setNewVideo] = useState();
   const [videoToDelete, setVideoToDelete] = useState("");
+  // const [videosErrors, setVideosErrors] = useState([]);
+  const [categorias,              setCategorias  ]      = useState([]);
+
   // const [videosErrors, setVideosErrors] = useState([]);
 
   useEffect(() => {
@@ -49,20 +70,26 @@ function EditCourseModal(props) {
   }, [oldVideos]);
 
   function handleSubmit() {
-    const id = props.course.id;
+
     const data = {
-      img: image || props.course.img,
-      title: title || props.course.title,
-      author: author || props.course.author,
-      price: price || props.course.price,
-      category: category || props.course.category.name,
-      description: description || props.course.description,
-      // videos: newVideos,
+      id: props.course.id,
+      imagemUrl: image || props.course.imagemUrl,
+      nome: title || props.course.nome,
+      autor: author || props.course.autor,
+      preco: price || props.course.preco,
+      categoriaId: category || props.course.categoriaId,
+      descricao: description || props.course.descricao,
+      videos: newVideos,
     };
-    updateCourse(id, data);
+    console.log(data)
+
+    cursoUpdate(data, props.course.id)
+
+    setResultEditCourseModalShow(true);
   }
 
   function handleAddNewVideos(data) {
+
     let errors = [];
     let files = [];
     for (let i = 0; i < data.length; i++) {
@@ -73,6 +100,38 @@ function EditCourseModal(props) {
     setVideosErrors(errors);
   }
 
+  const handleChangePriceOfProduct = (event, value, maskedValue) => {
+    event.preventDefault();
+
+    setPrice(value);                   // value without mask (ex: 1234.56)
+    setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
+  };
+
+  async function getCategories(){
+    try {
+      await loadCategorias(setCategorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(
+    () => {
+
+      getCategories()
+    },[]
+  )
+
+  console.log(formatPrice(props.course.preco))
+  /*
+  
+  Line 272:29:  'setDeleteVideoModalShow' is not defined  no-undef
+  Line 392:15:  'deleteVideoModalShow' is not defined     no-undef
+  Line 393:23:  'setDeleteVideoModalShow' is not defined  no-undef
+
+  */
   return (
     <>
       <Modal {...props} centered animation={false}>
@@ -93,7 +152,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.title}
+                defaultValue={props.course.nome}
                 onChange={(e) => setTitle(e.target.value)}
                 required
               />
@@ -104,11 +163,22 @@ function EditCourseModal(props) {
                 Categoria
               </Form.Label>
               <Form.Control
-                type="text"
-                defaultValue={props.course.category?.name}
+                as="select"
+                defaultValue={props.course.categoriaId}
                 onChange={(e) => setCategory(e.target.value)}
                 required
-              />
+              >
+                {
+                  categorias.map(
+                    (category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.nome}
+                      </option>
+                    )
+                  )
+                }
+
+              </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -117,7 +187,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.author}
+                defaultValue={props.course.autor}
                 onChange={(e) => setAuthor(e.target.value)}
                 required
               />
@@ -127,12 +197,19 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Preço
               </Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="float"
                 min={0.0}
-                defaultValue={props.course.price}
+                defaultValue={props.course.preco}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+              /> */}
+               <IntlCurrencyInput 
+                  className="currencyInput"
+                  currency="BRL" 
+                  config={currencyConfig}
+                  value={handleChangePrice}
+                  onChange={handleChangePriceOfProduct} 
               />
             </Form.Group>
 
@@ -146,7 +223,7 @@ function EditCourseModal(props) {
               <Form.Control
                 as="textarea"
                 rows={3}
-                defaultValue={props.course.description}
+                defaultValue={props.course.descricao}
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
@@ -156,7 +233,7 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Imagem
               </Form.Label>
-              <Form.Control readOnly defaultValue={props.course.img} required />
+              <Form.Control readOnly defaultValue={props.course.imagemUrl} required />
             </Form.Group>
 
             <Form.Group controlId="formFile" className="mb-3">
@@ -216,10 +293,12 @@ function EditCourseModal(props) {
               <Form.Control
                 type="file"
                 multiple
-                onChange={(e) => {
+                onChange={async (e) => {
+                  let video = e.target.file
+                  console.log(video)
                   console.log(e.target.files);
-                  // setNewVideos(e.target.files);
-                  handleAddNewVideos(e.target.files);
+                  await uploadImage(e.target.files, setNewVideo)
+                  handleAddNewVideos(newVideo);
                 }}
               />
             </Form.Group>

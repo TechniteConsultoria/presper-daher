@@ -20,6 +20,7 @@ import MessageService from "../../services/MessageService";
 import "./AdminComunication..style.css";
 import mensagens from "../../data/mensagens";
 import cursos from "../../data/cursos";
+import loadPergunta from "../../services/pergunta/perguntaLoad";
 
 //*
 //TODO - 1. arrrumar os filtros
@@ -145,27 +146,40 @@ function Comunication() {
     // setCourseList(courses);
   }
 
+  // async function getMessages(page) {
+  //   const query = `?page=${page}`;
+  //   let response;
+  //   try {
+  //     response = await MessageService.getMessage(query);
+  //     console.log(response);
+  //     setPage(Number(response.data.page));
+  //     setCurrentPage(Number(response.data.page));
+  //     setTotalItems(Number(response.data.total));
+  //     setLastPage(Number(response.data.last_page));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+
+  //   const msgs = response.data.data.map((m) => {
+  //     const courseName = allCourses.find((c) => c.id === m.courseId);
+  //     let newObject = { ...m };
+  //     newObject.courseName = courseName || null;
+  //     return newObject;
+  //   });
+  //   setMessagesList(msgs);
+  // }
+
   async function getMessages(page) {
     const query = `?page=${page}`;
-    let response;
+    let questions;
     try {
-      response = await MessageService.getMessage(query);
-      console.log(response);
-      setPage(Number(response.data.page));
-      setCurrentPage(Number(response.data.page));
-      setTotalItems(Number(response.data.total));
-      setLastPage(Number(response.data.last_page));
+      questions = await loadPergunta()
+
     } catch (error) {
       console.log(error);
     }
 
-    const msgs = response.data.data.map((m) => {
-      const courseName = allCourses.find((c) => c.id === m.courseId);
-      let newObject = { ...m };
-      newObject.courseName = courseName || null;
-      return newObject;
-    });
-    setMessagesList(msgs);
+    setMessagesList(questions);
   }
 
   async function setMsgStatus(id, status) {

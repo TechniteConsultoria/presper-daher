@@ -10,11 +10,14 @@ import { useCart } from "../../contexts/CartContext";
 import { useCourse } from "../../contexts/CourseContext";
 
 import "./CourseDetails.styles.css";
+import { formatPrice } from "../../utils/format";
 
 const axios = require("axios").default;
 
 function CourseDetails() {
   const { id } = useParams();
+
+  console.log(id)
 
   const { addItemToCart } = useCart();
   const { getCourseById } = useCourse();
@@ -24,11 +27,13 @@ function CourseDetails() {
   async function getCourse() {
     const result = await getCourseById(id);
     setCourse({
-      title: result.title,
-      category: result.category.name,
-      author: result.author,
-      price: result.price,
-      description: result.description,
+      id:          result.id,
+      titulo:      result.titulo,
+      categoria:   result.id,
+      autor:       result.autor,
+      preco:       result.preco,
+      description: result.descricao,
+      imagemUrl:   result.imagemUrl
     });
   }
 
@@ -41,9 +46,9 @@ function CourseDetails() {
       <div className="head-container">
         <Container id="course-info">
           <div className="info-container">
-            <h2>{course?.title}</h2>
-            <h5>{course?.category}</h5>
-            <h6>{course?.author}</h6>
+            <h2>{course?.titulo}</h2>
+            <h5>{course?.id}</h5>
+            <h6>{course?.autor}</h6>
             <h6>
               <div className="certificate-container">
                 <BsFillAwardFill size="1em" style={{ color: "#CFB53B" }} />{" "}
@@ -54,12 +59,12 @@ function CourseDetails() {
             <h6>999 vendidos</h6>
 
             <h6 style={{ fontSize: "24px", color: "#6CB1CF" }}>
-              R$ {course?.price}
+              { formatPrice(Number( course?.preco )) }
             </h6>
           </div>
           <div className="img-btn-container">
-            <Image src={course?.img} id="course-img" />
-            <Button id="btn-add-cart" onClick={() => addItemToCart(course)}>
+            <Image src={course?.imagemUrl} id="course-img" />
+            <Button id="btn-add-cart" onClick={() => addItemToCart(  course )}>
               Adicionar ao carrinho
             </Button>
           </div>
@@ -69,7 +74,7 @@ function CourseDetails() {
         <div className="content-item">
           <Col>
             <h2>Descrição</h2>
-            <p>{course?.description}</p>
+            <p>{course?.descricao}</p>
           </Col>
         </div>
         <div className="content-item">
@@ -102,8 +107,8 @@ function CourseDetails() {
               <Row>
                 <Col key={item.id}>
                   <RatingCard
-                    img={item.img}
-                    author={item.author}
+                    img={item.imagemUrl}
+                    author={item.autor}
                     text={item.text}
                     rating={item.rating}
                   />

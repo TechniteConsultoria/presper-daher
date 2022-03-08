@@ -3,6 +3,7 @@ import {
   BsFillCollectionPlayFill,
   BsFillChatLeftFill,
   BsTagsFill,
+  BsFillBarChartLineFill,
 } from "react-icons/bs";
 
 export const AdminNavbarData = [
@@ -25,9 +26,16 @@ export const AdminNavbarData = [
     cod: 3,
   },
   {
+    title: "Banners",
+    icon: <BsFillBarChartLineFill />,
+    link: "/admin/banners",
+    cod: 4,
+
+  },
+  {
     title: "Categorias",
     icon: <BsTagsFill />,
     link: "/admin/categoria",
-    cod: 4,
+    cod: 5,
   },
 ];

@@ -13,6 +13,10 @@ import Alert from "react-bootstrap/Alert";
 import MaskedInput from "react-maskedinput";
 
 import { BsPencilFill } from "react-icons/bs";
+import loadUser from "../../services/user/loadUser";
+import { token } from "../../services/api";
+import updateUser from "../../services/user/updateUser";
+import { toast } from "react-toastify";
 
 const axios = require("axios").default;
 
@@ -39,51 +43,58 @@ function Perfil(props) {
     // props.handleFile(fileUploaded);
     setPic(fileUploaded);
   };
+  
+  async function handleLoadUser(){
+    const loggedInUser = await loadUser(token)
 
-  const handleSubmit = () => {
+    if (!loggedInUser) {
+      toast.error("Usuário não encontrado, tente recarregar a página, por favor")
+      return
+    }
+
+    setUser(loggedInUser);
+    
+
+  }
+
+  async function handleUpdateUser(){
     const id = user.id;
     const data = {
-      name: name || user.name,
-      email: email || user.email,
-      phone: phone || user.phone,
+      name:       name       || user.name,
+      email:      email      || user.email,
+      phone:      phone      || user.phone,
       profession: profession || user.profession,
-      bio: bio || user.bio,
-      pic: pic || user.pic,
+      bio:        bio        || user.bio,
+      pic:        pic        || user.pic,
     };
 
     console.log(data);
     console.log(user);
 
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-      axios.get(`${url}/${id}`).then((res) => {
-        if (res.status === 200) {
-          axios.put(`${url}/${id}`, data).then((res) => {
-            localStorage.setItem("user", JSON.stringify(res.data));
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          });
-        } else {
-          setHasError(true);
-        }
-      });
-    } catch (error) {
+      //uses token from localStorage, which is setted in login and singup
+      let updatedUser = await updateUser(id, data)
+
+      
+    }
+
+    catch (error) {
       setHasError(true);
       console.log(error);
     }
+
+  }
+
+  const handleSubmit = () => {
+    handleUpdateUser()
   };
 
+
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
-    }
+    handleLoadUser()
   }, []);
 
-  useEffect(() => {}, [user]);
+  // useEffect(() => {}, [user]);
 
   return (
     <>

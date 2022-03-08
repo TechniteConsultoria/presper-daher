@@ -1,9 +1,66 @@
-import { useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { Modal, Button, Form, Row } from "react-bootstrap";
 import { useCoursePage } from "../../services/Hooks/CoursePageHook";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
+import { toast } from "react-toastify"
+import uploadImage from "../../services/imagem/upload";
+
+import IntlCurrencyInput from "react-intl-currency-input"
+
+import '../../index.css'
+
+import currencyConfig from "../../utils/currenryConfig";
+
+import cursoCreate from "../../services/curso/cursoCreate";
+import loadCategorias from "../../services/categoria/loadCategorias";
 
 function CreateCourseModal(props) {
+  // const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
+  //   useState(false);
+
+  // const [image,                   setImage       ]      = useState("");
+  // const [title,                   setTitle       ]      = useState("");
+  // const [author,                  setAuthor      ]      = useState("");
+  // const [price,                   setPrice       ]      = useState("");
+  // const [category,                setCategory    ]      = useState("");
+  // const [description,             setDescription ]      = useState("");
+  // const [videosErrors,            setVideosErrors]      = useState([]);
+  // const [videos,                  setVideos      ]      = useState([]);
+  const [handleChangePrice,       setHandleChangePrice] = useState();
+  const [categorias,              setCategorias  ]      = useState([]);
+  const [newVideo,                setNewVideo    ] = useState();
+
+
+
+  // const [videosList, setVideosList] = useState([]);
+
+  // const [course, setCourse] = useState({});
+
+  useEffect(() => { }, []);
+
+  async function handleSubmit() {
+    const data = {
+      imagemUrl:   image,
+      nome:        title,
+      autor:       author,
+      preco:       price,
+      categoriaId: category,
+      descricao:   description,
+      videos:      videosList,
+      // videos: videos,
+    };
+
+    try {
+      cursoCreate(data)
+    }
+    catch (error) {
+      console.error(error);
+    }
+    setCourse(data);
+    setResultCreateCourseModalShow(true);
+    setVideosErrors([]);
+  }
+  
   const {
     createCourse,
     result,
@@ -11,12 +68,18 @@ function CreateCourseModal(props) {
     setImage,
     image,
     setTitle,
+    title,
     setAuthor,
+    author,
     setPrice,
+    price,
     setCategory,
+    category,
     setDescription,
+    description,
     setVideos,
     setVideosErrors,
+    videosList,
     setVideosList,
     course,
     setCourse,
@@ -29,6 +92,8 @@ function CreateCourseModal(props) {
   // }, [setImage]);
 
   function handleAddVideos(data) {
+    console.log(data)
+
     let errors = [];
     let files = [];
     for (let i = 0; i < data.length; i++) {
@@ -39,6 +104,41 @@ function CreateCourseModal(props) {
     setVideosList(files);
     setVideosErrors(errors);
   }
+
+  async function handleUploadImage(image){
+    if (image.type.includes('image')) {
+      
+      uploadImage(image, setImage)
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
+
+  const handleChangePriceOfProduct = (event, value, maskedValue) => {
+    event.preventDefault();
+
+    setPrice(value);                   // value without mask (ex: 1234.56)
+    setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
+  };
+
+  async function getCategories(){
+    try {
+      await loadCategorias(setCategorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(
+    () => {
+
+      getCategories()
+    },[]
+  )
 
   return (
     <>
@@ -79,11 +179,22 @@ function CreateCourseModal(props) {
                 Categoria
               </Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Categoria"
+                as="select"
                 onChange={(e) => setCategory(e.target.value)}
                 required
-              />
+              >
+                {
+                  categorias.map(
+                    (category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.nome}
+                      </option>
+                    )
+                  )
+                }
+
+              </Form.Control>
+              
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label column sm="2">
@@ -100,12 +211,13 @@ function CreateCourseModal(props) {
               <Form.Label column sm="2">
                 Preço
               </Form.Label>
-              <Form.Control
-                type="float"
-                min={0.0}
-                placeholder="R$ 99.99"
-                onChange={(e) => setPrice(e.target.value)}
-                required
+              
+              <IntlCurrencyInput 
+                  className="currencyInput"
+                  currency="BRL" 
+                  config={currencyConfig}
+                  onChange={handleChangePriceOfProduct} 
+                  value={handleChangePrice}
               />
             </Form.Group>
             <Form.Group
@@ -135,9 +247,9 @@ function CreateCourseModal(props) {
                 <Form.Control
                   name="courseImage"
                   type="file"
-                  // required
+                  required
                   onChange={(e) => {
-                    setImage(e.target.files[0]);
+                    handleUploadImage(e.target.files[0])
                   }}
                 />
               </Form.Group>
@@ -149,9 +261,13 @@ function CreateCourseModal(props) {
               <Form.Control
                 type="file"
                 multiple
-                // required
-                onChange={(e) => {
-                  handleAddVideos(e.target.files);
+                required
+                onChange={async (e) => {
+                  let video = e.target.files[0]
+                  console.log(video)
+                  console.log(video);
+                  await uploadImage(video, setNewVideo)
+                  handleAddVideos(newVideo);
                 }}
               />
             </Form.Group>
@@ -160,6 +276,17 @@ function CreateCourseModal(props) {
 
               {/* {videosList?.length > 0
                 ? videosList.map((video, id) => {
+                  return (
+                    <Form.Check
+                      type="checkbox"
+                      label={video.name}
+                      key={id}
+                      checked
+                      onChange={() => console.log(video.name)}
+                    />
+                  );
+                })
+                : ""}
                     return (
                       <Form.Check
                         type="checkbox"
