@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -8,8 +8,8 @@ import "./Login.styles.css";
 
 import google from "../../assets/google-logo.png";
 import facebook from "../../assets/facebook-logo.png";
-
-const axios = require("axios").default;
+import login from "../../services/user/login";
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,36 +21,17 @@ function Login() {
   const [showAlert, setShowAlert] = useState(false);
 
   async function handleSubmit() {
-    const data = {
-      email,
-      senha,
-      lembrarSenha,
-    };
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-      axios.get(url).then((res) => {
-        // TODO: apenas para development
-        const user = res.data.find(({ email }) => email === data.email);
-        if (user !== undefined) {
-          if (user.password === data.senha) {
-            localStorage.setItem("user", JSON.stringify(user));
-            navigate("/");
-          } else {
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          }
-        } else {
-          setShowAlert(true);
-          setTimeout(() => {
-            setShowAlert(false);
-          }, 6000);
-        }
-        // TODO: apenas para development
-      });
-    } catch (error) {
+
+      let isOk = await login(email, senha)
+      isOk == 'ok' ? window.location.pathname = '' : toast.error("Login incorreto!")
+
+    }
+    catch (error) {
+
+      toast.error(error)
       console.error(error);
+
     }
   }
 
@@ -65,6 +46,7 @@ function Login() {
   useEffect(() => {
     setShowAlert(false);
   }, []);
+
 
   return (
     <div className="container-login">
@@ -82,18 +64,20 @@ function Login() {
           </div>
 
           <form
-            // action="submit"
             className="row g-3 d-flex flex-column"
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              login();
             }}
           >
             <br />
             <button
               className="btn btn-lg"
               id="social-login"
-              onClick={googleLogin}
+              onClick={(e) => {
+                e.preventDefault();
+                googleLogin();
+              }}
             >
               <Image src={google} alt="google-log" className="logo" /> Continuar
               com Google
@@ -124,7 +108,7 @@ function Login() {
               required
               name="senha"
               onChange={(e) => {
-                setSenha(e.target.value);
+                setPassword(e.target.value);
               }}
             />
 
@@ -134,7 +118,7 @@ function Login() {
                 type="checkbox"
                 value=""
                 id="flexCheckDefault"
-                onChange={() => setLembrarSenha(!lembrarSenha)}
+                onChange={() => isRememberPassword(!rememberPassword)}
               ></input>
 
               <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -142,11 +126,7 @@ function Login() {
               </label>
             </div>
 
-            <Button
-              type="submit"
-              id="btn-login"
-              // style={{ background: "#14b8a6", border: "none" }}
-            >
+            <Button type="submit" id="btn-login">
               Acessar
             </Button>
 
@@ -161,6 +141,7 @@ function Login() {
       </section>
     </div>
   );
+
 }
 
 export default Login;

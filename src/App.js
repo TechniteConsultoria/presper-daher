@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Signup from "./pages/Signup/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
@@ -16,41 +17,61 @@ import MyCourses from "./pages/MyCourses/MyCourses.jsx";
 import MyCertificates from "./pages/MyCertificates/MyCertificates.jsx";
 import MyPaymentInfo from "./pages/MyPaymentInfo/MyPaymentInfo.jsx";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CartCheckOut from "./pages/CheckOut/CheckOut.jsx";
+
+import AuthProvider from "./contexts/AuthContext";
+import CourseProvider from "./contexts/CourseContext";
+import CreditCardProvider from "./contexts/CreditCardContext.js";
 
 function App() {
   const location = useLocation();
+
   return (
     <div>
-      <div>
-        {location.pathname === "/login" ||
-        location.pathname === "/signup" ||
-        location.pathname === "/admin" ? null : (
-          <Header />
-        )}
-      </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/course-details/:id" element={<CourseDetails />} />
-        <Route path="/shopping-cart" element={<ShoppingCart />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/my-courses" element={<MyCourses />} />
-        <Route path="/my-certificates" element={<MyCertificates />} />
-        <Route path="/my-payment-info" element={<MyPaymentInfo />} />
-        <Route path="/admin" element={<Admin />} />
-        {/* 8 */}
-      </Routes>
+      <AuthProvider>
+        <CourseProvider>
+          
+          <CreditCardProvider>
 
-      <div>
-        {location.pathname === "/login" ||
-        location.pathname === "/signup" ||
-        location.pathname === "/admin" ? null : (
-          <Footer />
-        )}
-      </div>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/course-details/:id" element={<CourseDetails />} />
+              <Route path="/shopping-cart" element={<ShoppingCart />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/my-courses" element={<MyCourses />} />
+              <Route path="/my-certificates" element={<MyCertificates />} />
+              <Route path="/my-payment-info" element={<MyPaymentInfo />} />
+              <Route path="/check-out" element={<CartCheckOut />} />
+              <Route path="/admin" element={<Admin />} />
+            </Routes>
 
-      <div></div>
+            <div>
+              {location.pathname === "/login" ||
+              location.pathname === "/signup" ||
+              location.pathname === "/admin" ? null : (
+                <Footer />
+              )}
+            </div>
+
+            <div></div>
+          </CreditCardProvider>
+        </CourseProvider>
+      </AuthProvider>
     </div>
   );
 }

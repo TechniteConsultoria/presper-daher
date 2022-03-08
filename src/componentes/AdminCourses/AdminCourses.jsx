@@ -10,25 +10,30 @@ import {
   FormControl,
 } from "react-bootstrap";
 
+import { useCourse } from "../../contexts/CourseContext";
+
 import CardComponent from "../Card/Card";
 import EditCourseModal from "../Modals/EditCourseModal";
 import CreateCourseModal from "../Modals/CreateCourseModal";
 
-import cursos from "../../data/cursos";
-import categorias from "../../data/categorias";
+// import cursos from "../../data/cursos";
+// import categorias from "../../data/categorias";
 
 import "./AdminCourses.style.css";
-
-const axios = require("axios").default;
+import cursoLoad from "../../services/curso/cursoLoad";
+import loadCategorias from "../../services/categoria/loadCategorias";
 
 function Courses() {
+  const { allCourses } = useCourse();
+
   const [classificar, setClassificar] = useState("Mais vendidos");
   const [filtro, setFiltro] = useState("Sem filtro");
   const [buscarCurso, setBuscarCurso] = useState("");
-
   const [editCourseModal, showEditCourseModal] = useState(false);
   const [createCourseModal, showCreateCourseModal] = useState(false);
   const [course, setCourse] = useState({});
+
+  const [categorias, setCategorias] = useState([]);
 
   const [courseList, setCourseList] = useState([]);
 
@@ -43,34 +48,40 @@ function Courses() {
 
   useEffect(() => {
     getCourses();
+    getCategories()
   }, []);
+  
+  // useEffect(() => {
+  //   console.log("Alterado!");
+  //   setCourseList(allCourses);
+  // }, [allCourses]);
 
   function classificarPor(classificar) {
     switch (classificar) {
       case "Menos vendidos":
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.sold - b.sold;
           })
         );
         break;
       case "Maior preço":
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.price + b.price;
           })
         );
         break;
       case "Menor preço":
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.price - b.price;
           })
         );
         break;
       default:
         setCourseList(
-          cursos.sort((a, b) => {
+          courseList.sort((a, b) => {
             return a.sold + b.sold;
           })
         );
@@ -79,26 +90,27 @@ function Courses() {
   }
 
   function filtrarPor(filtro) {
+  // alterar para funções com requisição do backend
     if (filtro !== "Sem filtro")
-      setCourseList(cursos.filter((c) => c.category === filtro));
-    else setCourseList(cursos);
+      setCourseList(courseList.filter((c) => c.category === filtro));
+    else setCourseList(courseList);
   }
 
   function buscarPor(buscarCurso) {
     setCourseList(
       // eslint-disable-next-line array-callback-return
-      cursos.filter((val) => {
+      courseList.filter((val) => {
         if (!buscarCurso.length) {
           setFiltro(filtro);
           return val;
         } else if (
           filtro === "Sem filtro" &&
-          val.title.toLowerCase().includes(buscarCurso.toLowerCase())
+          val.nome.toLowerCase().includes(buscarCurso.toLowerCase())
         ) {
           return val;
         } else if (
           val.category === filtro &&
-          val.title.toLowerCase().includes(buscarCurso.toLowerCase())
+          val.nome.toLowerCase().includes(buscarCurso.toLowerCase())
         ) {
           return val;
         }
@@ -108,17 +120,26 @@ function Courses() {
 
   async function getCourses() {
     try {
-      const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-      axios.get(url).then((res) => {
-        if (res.status === 200) {
-          setCourseList(res.data);
-          console.log(res.data);
-        }
-      });
-    } catch (error) {
+      let courses = await cursoLoad();
+      setCourseList(courses);
+    }
+
+    catch (error) {
       console.log(error);
     }
   }
+
+  async function getCategories(){
+    try {
+      let categorias = await loadCategorias(setCategorias);
+      // setCategorias(categorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <>
@@ -236,10 +257,10 @@ function Courses() {
                 {categorias?.map((item, id) => {
                   return (
                     <Dropdown.Item
-                      onClick={() => setFiltro(item.value)}
+                      onClick={() => setFiltro(item.nome)}
                       key={id}
                     >
-                      {item.value}
+                      {item.nome}
                     </Dropdown.Item>
                   );
                 })}
@@ -250,7 +271,7 @@ function Courses() {
 
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
-            {courseList?.map((item) => (
+            {/* {courseList?.map((item) => (
               <CardComponent
                 key={item.id}
                 img={item.img}
@@ -261,6 +282,23 @@ function Courses() {
                 sold={item.sold}
                 onClick={() => {
                   setCourse(item);
+                  showEditCourseModal(true);
+                }}
+              />
+            ))} */}
+
+            {allCourses?.map((item) => (
+              <CardComponent
+                key={item.id}
+                img={item.imagemUrl}
+                title={item.nome}
+                author={item.autor}
+                rating={item.rating}
+                price={item.preco}
+                sold={item.sold}
+                onClick={() => {
+                  setCourse(item);
+                  console.log(item)
                   showEditCourseModal(true);
                 }}
               />

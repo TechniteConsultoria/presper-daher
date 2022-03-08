@@ -7,7 +7,7 @@ function ResultCreateCourseModal(props) {
         <Modal.Header closeButton={false}>
           <Modal.Title>Adicionar curso</Modal.Title>
         </Modal.Header>
-        {props.result === "okay" ? (
+        {props.result !== null && props.result === 201 ? (
           <Modal.Body>
             O curso <strong>{props.course.title}</strong> foi adicionado com
             sucesso!
@@ -23,7 +23,7 @@ function ResultCreateCourseModal(props) {
           <Button
             style={{
               backgroundColor: `${
-                props.result === "okay" ? "#14B8A6" : "rgb(191, 46, 60)"
+                props.result === 201 ? "#14B8A6" : "rgb(191, 46, 60)"
               }`,
               border: "none",
               boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",

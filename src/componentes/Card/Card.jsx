@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
+import { formatPrice } from "../../utils/format";
 
 export default class CardComponent extends React.Component {
   constructor(props) {
@@ -55,7 +56,7 @@ export default class CardComponent extends React.Component {
                 alignItems: "center",
               }}
             >
-              <ReactStars value={this.state.rating} edit={false} size={16} />
+              <ReactStars value={this.state.rating} edit={false} size={18} />
               <Card.Text
                 style={{
                   fontSize: "16px",
@@ -63,7 +64,7 @@ export default class CardComponent extends React.Component {
                   fontWeight: "600",
                 }}
               >
-                R$ {this.state.price}
+                {formatPrice(this.state.price)}
               </Card.Text>
             </div>
           </Card.Body>
