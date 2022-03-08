@@ -10,7 +10,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form"
+import Form from "react-bootstrap/Form";
 
 import { useCreditCard } from "../../contexts/CreditCardContext";
 
@@ -54,75 +54,73 @@ function CartCheckOut() {
           </Row>
         </div>
         <hr />
-        <div className="payment-card">
-          <div className="payment-form">
-            
-          <Form.Group as={Row} className="mb-3">
-              <Form.Label as="legend">
-              Cartão de Crédito
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Check
-                  type="radio"
-                  label="Cartão 1"
-                  name="formHorizontalRadios"
-                  id="formHorizontalRadios1"
-                />
-                <Form.Check
-                  type="radio"
-                  label="Cartão 2 "
-                  name="formHorizontalRadios"
-                  id="formHorizontalRadios2"
-                />
-                
-                <Form.Check
-                  type="radio"
-                  label="Novo Cartão"
-                  name="formHorizontalRadios"
-                  id="formHorizontalRadios3"
-                  onClick={() => {
-                    setShowAddCardForm(!showAddCardForm);
-                  }}
-                />
-              </Col>
-            </Form.Group>
-            
-            </div>
-          {/* Adicionar os cartões já cadastrados e selecionar as opcões de compra/pagamento*/}
-         
+        <div className="page-content">
+          <div className="payment-card">
+            <div className="payment-form">
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label as="legend">Cartão de Crédito</Form.Label>
+                <Col sm={10}>
+                  <Form.Check
+                    type="radio"
+                    label="Cartão 1"
+                    name="formHorizontalRadios"
+                    id="formHorizontalRadios1"
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="Cartão 2 "
+                    name="formHorizontalRadios"
+                    id="formHorizontalRadios2"
+                  />
 
-          <div>{showAddCardForm && <AddCardForm />}</div>
-          <div>
-            {creditCardList?.map((card) => {
+                  <Form.Check
+                    type="radio"
+                    label="Novo Cartão"
+                    name="formHorizontalRadios"
+                    id="formHorizontalRadios3"
+                    onClick={() => {
+                      setShowAddCardForm(!showAddCardForm);
+                    }}
+                  />
+                </Col>
+              </Form.Group>
+            </div>
+
+            <div className="form-container">
+              {showAddCardForm && <AddCardForm />}
+            </div>
+            <div>
+              {creditCardList?.map((card) => {
+                return (
+                  <div key={card.id}>
+                    <p>{card.name}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="card-details">
+            <h4> Detalhes do Pedido </h4>
+            <div className="card-title">Produtos</div>
+            {prods?.map((prod, idx) => {
               return (
-                <div key={card.id}>
-                  <p>{card.name}</p>
+                <div className="card-prod-list" key={idx}>
+                  <div id="prod-author"> Autor(a): {prod.author} </div>
+                  <div id="prod-title"> Curso: {prod.title} </div>
+                  <div id="prod-price"> Valor: R$ {prod.price}</div>
                 </div>
               );
             })}
+            <hr />
+            <div className="card-total-container">
+              <div id="total-title">Total</div>
+              <div id="total-amount">R$ {getTotalAmount()}</div>
+            </div>
+            <Link to="/">
+              <Button id="btn-checkout"> Finalizar Compra </Button>
+            </Link>
           </div>
-        </div>
-
-        <div className="card-details">
-          <h4> Detalhes do Pedido </h4>
-          <div className="card-title">Produtos</div>
-          {prods?.map((prod, idx) => {
-            return (
-              <div className="card-prod-list" key={idx}>
-                <div id="prod-author"> Autor(a): {prod.author} </div>
-                <div id="prod-title"> Curso: {prod.title} </div>
-                <div id="prod-price"> Valor: R$ {prod.price}</div>
-              </div>
-            );
-          })}
-          <hr />
-          <div className="card-total-container">
-            <div id="total-title">Total</div>
-            <div id="total-amount">R$ {getTotalAmount()}</div>
-          </div>
-          <Link to="/">
-            <Button id="btn-checkout"> Finalizar Compra </Button>
-          </Link>
         </div>
       </Container>
     </>

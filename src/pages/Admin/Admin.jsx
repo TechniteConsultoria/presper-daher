@@ -5,6 +5,7 @@ import { AdminNavbarData } from "../../componentes/AdminNavbar/AdminNavbarData";
 import Courses from "../../componentes/AdminCourses/AdminCourses";
 import Comunication from "../../componentes/AdminComunication/AdminComunication";
 import Banners from "../../componentes/AdminBanners/AdminBanners";
+import Category from "../../componentes/AdminCategory/AdminCategory";
 
 import { BsFillArrowRightSquareFill } from "react-icons/bs";
 
@@ -76,6 +77,7 @@ function Admin() {
           {showPage === 2 && <Courses />}
           {showPage === 3 && <Comunication />}
           {showPage === 4 && <Banners />}
+          {showPage === 5 && <Category />}
         </Container>
       </div>
     </>
