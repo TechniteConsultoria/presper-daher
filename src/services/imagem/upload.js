@@ -16,7 +16,7 @@ export default async function uploadImage(newImage, setImage) {
     let credentials = await api.get(`file/credentials`, {
         params: {
             filename: imageName,
-            storageId: 'banner',
+            storageId: 'produtoImagem1',
         },
     })
     if (credentials.status != 200) {
@@ -48,6 +48,8 @@ export default async function uploadImage(newImage, setImage) {
     toast.success('Imagem Válida!')
 
     let pathToImage = `${ip}:${porta}/api${downloadExtension}`
+
+    console.log(pathToImage)
 
     setImage(pathToImage)
 }
