@@ -18,6 +18,7 @@ import MyCertificates from "./pages/MyCertificates/MyCertificates.jsx";
 import MyPaymentInfo from "./pages/MyPaymentInfo/MyPaymentInfo.jsx";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart.jsx";
 import CartCheckOut from "./pages/CheckOut/CheckOut.jsx";
+import WatchCourse from "./pages/WatchCourse/WatchCourse.jsx";
 
 import AuthProvider from "./contexts/AuthContext";
 import CourseProvider from "./contexts/CourseContext";
@@ -50,6 +51,7 @@ function App() {
               <Route path="/my-payment-info" element={<MyPaymentInfo />} />
               <Route path="/check-out" element={<CartCheckOut />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/watch-course/:id" element={<WatchCourse />} />
             </Routes>
 
             <div>
