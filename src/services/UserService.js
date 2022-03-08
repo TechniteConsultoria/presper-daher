@@ -1,4 +1,5 @@
 import { ApiService } from "../services/ApiService";
+import { apiWithoutTenant } from "./api";
 
 class UserService {
   async createUser(body) {
@@ -21,7 +22,7 @@ class UserService {
 
   async authenticateGoogleUser() {
     try {
-      const response = await ApiService.get("auth/google");
+      const response = await apiWithoutTenant.post("auth/google");
       return response;
     } catch (error) {
       return error;
