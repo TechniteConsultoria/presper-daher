@@ -37,29 +37,6 @@ function CreateCourseModal(props) {
   // const [course, setCourse] = useState({});
 
   useEffect(() => { }, []);
-
-  async function handleSubmit() {
-    const data = {
-      imagemUrl:   image,
-      nome:        title,
-      autor:       author,
-      preco:       price,
-      categoriaId: category,
-      descricao:   description,
-      videos:      videosList,
-      // videos: videos,
-    };
-
-    try {
-      cursoCreate(data)
-    }
-    catch (error) {
-      console.error(error);
-    }
-    setCourse(data);
-    setResultCreateCourseModalShow(true);
-    setVideosErrors([]);
-  }
   
   const {
     createCourse,
@@ -91,24 +68,36 @@ function CreateCourseModal(props) {
   //   console.log(image);
   // }, [setImage]);
 
-  function handleAddVideos(data) {
-    console.log(data)
-
-    let errors = [];
-    let files = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].type === "video/mp4") files.push(data[i]);
-      else errors.push(data[i]);
+  function handleAddVideos(pathToVideo) {
+    let data = {
+      url: pathToVideo,
+      ordem: videosList.length
     }
+    console.log(data)
+    console.log(data.ordem)
 
-    setVideosList(files);
-    setVideosErrors(errors);
+    setVideosList((prevData) => {
+      return [...new Set( [ ...prevData, data  ] )]	
+     } );
   }
 
   async function handleUploadImage(image){
     if (image.type.includes('image')) {
       
       uploadImage(image, setImage)
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
+
+  async function handleUploadVideo(image){
+    if (image.type.includes('mp4')) {
+      
+      let videoPath = await uploadImage(image, setNewVideo)
+
+      handleAddVideos(videoPath);
 
     }
     else {
@@ -266,8 +255,7 @@ function CreateCourseModal(props) {
                   let video = e.target.files[0]
                   console.log(video)
                   console.log(video);
-                  await uploadImage(video, setNewVideo)
-                  handleAddVideos(newVideo);
+                  await handleUploadVideo(video)
                 }}
               />
             </Form.Group>
