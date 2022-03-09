@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import { token } from "../services/api";
 import addInCart from "../services/carrinho/addInCart";
 import deleteProductOfCart from "../services/carrinho/deleteProductOfCart";
 import loadCart from "../services/carrinho/loadCart";
@@ -34,6 +35,7 @@ export const CartProvider = ({ children }) => {
   }
 
   async function getCart() {
+    if(!token) return []
     return await loadCart();
   }
 
