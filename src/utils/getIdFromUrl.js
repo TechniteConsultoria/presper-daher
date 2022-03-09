@@ -1,6 +1,7 @@
-export default function getIdFromUrl(hashUrl){
-    // gets the product id throught the page url!!!
-    const rawUrl = window.location.hash
-    const id = rawUrl.replace(hashUrl, '')
-    return id
+export default function getIdFromUrl(pathnameToClear){
+
+  let rawUrl = window.location.pathname
+  let cleanUrl = rawUrl.replace(`${pathnameToClear}`, '')
+  
+  return cleanUrl
   }
