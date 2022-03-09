@@ -5,12 +5,12 @@ import loadCart from "../services/carrinho/loadCart";
 
 import makeSumToCarrinho from "../utils/makeSumToCarrinho";
 
-const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+// const cartFromLocalStorage = JSON.parse(getTotalAmount);
 
 export const CartContext = createContext({});
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(cartFromLocalStorage);
+
 
   async function addItemToCart(prodData) {
 
@@ -37,6 +37,8 @@ export const CartProvider = ({ children }) => {
     return await loadCart();
   }
 
+  const [cart, setCart] = useState(getCart);
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -58,7 +60,7 @@ export const CartProvider = ({ children }) => {
 
 export function useCart() {
   const context = useContext(CartContext);
-  const { cart, addItemToCart, removeItemFromCart, getTotalAmount } = context;
+  const { cart, addItemToCart, removeItemFromCart, getTotalAmount, getCart } = context;
 
-  return { cart, addItemToCart, removeItemFromCart, getTotalAmount };
+  return { cart, addItemToCart, removeItemFromCart, getTotalAmount, getCart };
 }
