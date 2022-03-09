@@ -18,7 +18,7 @@ import {
 } from "react-share";
 
 function ShareCourse(props) {
-  const shareURL = `hhtp://localhost:3000/course/${props.courseId}`;
+  const shareURL = `http://localhost:3000/course/${props.courseId}`;
   return (
     <>
       <Container>

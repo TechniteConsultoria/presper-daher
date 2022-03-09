@@ -227,7 +227,7 @@ function NavbarComponent() {
   // }, [user, logout, role]);
     useEffect(
     () => {
-      setIsLogged(token)
+      // setIsLogged(token)
 
       getCategories()
 

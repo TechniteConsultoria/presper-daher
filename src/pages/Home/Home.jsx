@@ -115,7 +115,7 @@ function Home() {
     // setTestimonialsList(perguntas)
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     setName("");
     setEmail("");
     setMessage("");
