@@ -198,6 +198,7 @@ import { token, role } from "../../services/api";
 
 function NavbarComponent() {
   const { cart } = useCart();
+  const [cartLoaded, setCartLoaded] = useState([]);
   const { user, logout, role } = useAuth();
   
   const [ isLogged, setIsLogged ] = useState("");
@@ -214,6 +215,11 @@ function NavbarComponent() {
     }
   }
 
+  async function handleLoadCart(){
+    let loadedCart = await cart
+    setCartLoaded(loadedCart)
+  }
+
 
 
   // useEffect(() => {
@@ -224,6 +230,8 @@ function NavbarComponent() {
       setIsLogged(token)
 
       getCategories()
+
+      handleLoadCart()
 
     },[]
   )
@@ -272,7 +280,7 @@ function NavbarComponent() {
                   >
                     <BsFillCartFill style={{ fontSize: "24px" }} />
                     <span id="cart-count">
-                      {cart.length === null ? 0 : cart.length}
+                      {cartLoaded.length === null ? 0 : cartLoaded.length}
                     </span>
                   </Nav.Link>
 
