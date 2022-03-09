@@ -6,8 +6,6 @@ import "./Signup.styles.css";
 import { toast } from "react-toastify";
 import cadastro from "../../services/user/cadastro";
 
-const axios = require("axios").default;
-
 function Signup() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -22,14 +20,13 @@ function Signup() {
 
   async function handleSubmit() {
     if (submit && senha === confirmaSenha) {
-
       try {
-
-        let isOk = await cadastro(nome, email, senha, '1')
-        isOk == 'ok'?  toast.success("OK!") : console.log("erro?")
-
-      }
-      catch (error) {
+        let isOk = await cadastro(nome, email, senha, "1");
+        if (isOk == "ok") {
+          toast.success("OK!");
+          navigate("/");
+        } else console.log("erro?");
+      } catch (error) {
         console.error(error);
       }
       isSubmit(false);
@@ -46,7 +43,7 @@ function Signup() {
         <section>
           <div className="card p-5">
             <h2 className="title-card">Sign up</h2>
-            {/* <p className="subtitle">Dados para realizar o cadastro:</p> */}
+
             {submit && senha !== confirmaSenha && (
               <Alert variant="danger">As senhas são inválidas!</Alert>
             )}
@@ -115,7 +112,6 @@ function Signup() {
                   onChange={() => setInscricao(!inscricao)}
                   style={{
                     border: "1px solid #14B8A6",
-                    // backgroundColor: "#14B8A6",
                     backgroundColor: `${inscricao ? "#14B8A6" : ""}`,
                   }}
                 ></input>
