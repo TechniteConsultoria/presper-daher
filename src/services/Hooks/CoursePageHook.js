@@ -40,9 +40,11 @@ export const useCoursePage = () => {
     };
     // const courseImage = image;
 
+    console.log(body)
+
     try {
       const response = await CourseService.createCourse(body);
-      setResult(response.status);
+      setResult(response);
     } catch (error) {
       console.error(error);
     }
