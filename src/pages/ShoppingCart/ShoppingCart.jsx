@@ -20,6 +20,7 @@ import loadCart from "../../services/carrinho/loadCart";
 
 function ShoppingCart() {
   const [cart, setCart] = useState([]);
+  const [amount, setAmount] = useState([]);
   const [prodRemoved, isProdRemoved] = useState(false);
   const [displayedCart, setDisplayedCart] = useState(false);
   const { removeItemFromCart, getTotalAmount } = useCart();
@@ -27,6 +28,9 @@ function ShoppingCart() {
   async function getCart(){
     let loadedCart = await loadCart()
     setCart(loadedCart)
+
+    let totalAmount = await getTotalAmount()
+    setAmount(totalAmount)
   }
 
   useEffect(
@@ -80,18 +84,18 @@ function ShoppingCart() {
             <div className="container-checkout">
               <div className="checkout-card">
                 <div className="card-title">Checkout</div>
-                {cart?.map((prod, idx) => {
+                {cart?.map(({ produto }, idx) => {
                   return (
                     <div className="card-prod-list" key={idx}>
-                      <div id="prod-title">{prod.title}</div>
-                      <div id="prod-price">R$ {prod.price}</div>
+                      <div id="prod-title">{produto.nome}</div>
+                      <div id="prod-price">R$ {produto.preco}</div>
                     </div>
                   );
                 })}
                 <hr />
                 <div className="card-total-container">
                   <div id="total-title">Total</div>
-                  <div id="total-amount">R$ {async () => await getTotalAmount()}</div>
+                  <div id="total-amount">R$ {amount}</div>
                 </div>
 
                 <button className="buy-btn" onClick={GoToCheckOut}>
