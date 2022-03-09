@@ -7,8 +7,5 @@ export default function makeSumToCarrinho(carrinhos){
 
         return sumTotal;
     }, 0)
-    
-    console.log("total")
-    console.log(total)
     return total
 }

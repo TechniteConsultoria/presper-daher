@@ -17,6 +17,7 @@ import { useCart } from "../../contexts/CartContext";
 
 import "./ShoppingCart.styles.css";
 import loadCart from "../../services/carrinho/loadCart";
+import { formatPrice } from "../../utils/format";
 
 function ShoppingCart() {
   const [cart, setCart] = useState([]);
@@ -88,14 +89,14 @@ function ShoppingCart() {
                   return (
                     <div className="card-prod-list" key={idx}>
                       <div id="prod-title">{produto.nome}</div>
-                      <div id="prod-price">R$ {produto.preco}</div>
+                      <div id="prod-price">{ formatPrice(produto.preco) }</div>
                     </div>
                   );
                 })}
                 <hr />
                 <div className="card-total-container">
                   <div id="total-title">Total</div>
-                  <div id="total-amount">R$ {amount}</div>
+                  <div id="total-amount"> {  formatPrice(amount)  }</div>
                 </div>
 
                 <button className="buy-btn" onClick={GoToCheckOut}>
