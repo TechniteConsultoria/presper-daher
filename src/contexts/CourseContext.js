@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import CourseService from "../services/CourseService";
+import cursoFind from "../services/curso/cursoFind";
+import cursoLoad from "../services/curso/cursoLoad";
 
 export const CourseContext = createContext({});
 
@@ -8,8 +10,10 @@ export default function CourseProvider({ children }) {
 
   const getCourses = async () => {
     try {
-      const response = await CourseService.getAllCourses();
-      setAllCourses(response.data);
+
+      let cursos = await cursoLoad()
+      setAllCourses(cursos);
+
     } catch (error) {
       console.log(error);
     }
@@ -17,8 +21,8 @@ export default function CourseProvider({ children }) {
 
   const getCourseById = async (id) => {
     try {
-      const response = await CourseService.getCourse(id);
-      return response.data;
+      const response = await cursoFind(id);
+      return response;
     } catch (error) {
       console.log(error);
     }

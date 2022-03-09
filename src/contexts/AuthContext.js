@@ -61,6 +61,8 @@ export default function AuthProvider({ children }) {
     setRole("USER");
     localStorage.removeItem("@presper-daher:token");
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.reload();
   }
 
   useEffect(() => {

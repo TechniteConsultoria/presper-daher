@@ -17,6 +17,7 @@ import loadUser from "../../services/user/loadUser";
 import { token } from "../../services/api";
 import updateUser from "../../services/user/updateUser";
 import { toast } from "react-toastify";
+import uploadImage from "../../services/imagem/upload";
 
 const axios = require("axios").default;
 
@@ -37,12 +38,6 @@ function Perfil(props) {
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
-
-  const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    // props.handleFile(fileUploaded);
-    setPic(fileUploaded);
-  };
   
   async function handleLoadUser(){
     const loggedInUser = await loadUser(token)
@@ -53,29 +48,32 @@ function Perfil(props) {
     }
 
     setUser(loggedInUser);
-    
+
+    setName(loggedInUser.name || loggedInUser.fistName)
+    setEmail(loggedInUser.email)
+    setPhone(loggedInUser.telefone)
+    setProfession(loggedInUser.profissao)
+    setBio(loggedInUser.bio)
+    setPic(loggedInUser.imagemUrl)
+    setPhone(loggedInUser.telefone)
 
   }
 
   async function handleUpdateUser(){
     const id = user.id;
     const data = {
-      name:       name       || user.name,
-      email:      email      || user.email,
-      phone:      phone      || user.phone,
-      profession: profession || user.profession,
-      bio:        bio        || user.bio,
-      pic:        pic        || user.pic,
+      // email:         email      || user.email,
+      fullName:         name       || user.fullName,
+      fistName:         name       || user.fistName,
+      telefone:         phone      || user.telefone,
+      profissao:        profession || user.profissao,
+      bio:              bio        || user.bio,
+      imagemUrl:        pic        || user.imagemUrl,
     };
-
-    console.log(data);
-    console.log(user);
 
     try {
       //uses token from localStorage, which is setted in login and singup
-      let updatedUser = await updateUser(id, data)
-
-      
+      await updateUser(id, data)
     }
 
     catch (error) {
@@ -96,6 +94,15 @@ function Perfil(props) {
 
   // useEffect(() => {}, [user]);
 
+  async function handleUploadImage(image){
+    if (image.type.includes('image')) {
+      uploadImage(image, setPic)
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
+
   return (
     <>
       <Container>
@@ -109,16 +116,25 @@ function Perfil(props) {
             </Row>
           </div>
           <hr></hr>
+            <h4
+            style={
+              {
+                textAlign: 'center'
+              }
+            }
+            >{email}</h4>
           <div className="container-content">
             <div className="pic-section">
-              <Image className="img" roundedCircle src={user.pic}></Image>
+              <Image className="img" roundedCircle src={pic}></Image>
               <button className="btn" onClick={handleClick}>
                 Editar <BsPencilFill />
               </button>
               <Form.Control
                 type="file"
                 ref={hiddenFileInput}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleUploadImage(e.target.files[0])
+                }}
                 style={{ display: "none" }}
               />
             </div>
@@ -133,7 +149,7 @@ function Perfil(props) {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    defaultValue={user.name}
+                    defaultValue={name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </Form.Group>
@@ -141,14 +157,14 @@ function Perfil(props) {
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
                 >
-                  <Form.Label column sm="5">
+                  {/* <Form.Label column sm="5">
                     Email
                   </Form.Label>
                   <Form.Control
                     type="email"
                     defaultValue={user.email}
                     onChange={(e) => setEmail(e.target.value)}
-                  />
+                  /> */}
                 </Form.Group>
                 <Form.Group
                   className="mb-3"
@@ -167,7 +183,7 @@ function Perfil(props) {
                     type="text"
                     name="phoneNumber"
                     mask="(11) 11111-1111"
-                    value={user.phone}
+                    value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
                 </Form.Group>
@@ -180,7 +196,7 @@ function Perfil(props) {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    defaultValue={user.profession}
+                    defaultValue={profession}
                     onChange={(e) => setProfession(e.target.value)}
                   />
                 </Form.Group>
@@ -195,7 +211,7 @@ function Perfil(props) {
                   <Form.Control
                     as="textarea"
                     rows={4}
-                    defaultValue={user.bio}
+                    defaultValue={bio}
                     onChange={(e) => setBio(e.target.value)}
                   />
                 </Form.Group>
