@@ -61,16 +61,16 @@ function ShoppingCart() {
         {cart.length > 0 ? (
           <div className="container-content">
             <div className="container-prods">
-              {cart?.map((prod, id) => {
+              {cart?.map(({produto, quantidade}, id) => {
                 return (
                   <ProductCard
                     key={id}
-                    title={prod.title}
-                    author={prod.author}
-                    category={prod.category}
-                    price={prod.price}
+                    title={produto.nome}
+                    author={produto.autor}
+                    // category={produto.id}
+                    price={produto.preco}
                     onClick={() => {
-                      removeItemFromCart(prod.id);
+                      removeItemFromCart(produto.id);
                       isProdRemoved(true);
                     }}
                   />
