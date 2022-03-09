@@ -16,16 +16,24 @@ import emptyCart from "../../assets/empty-cart.svg";
 import { useCart } from "../../contexts/CartContext";
 
 import "./ShoppingCart.styles.css";
+import loadCart from "../../services/carrinho/loadCart";
 
 function ShoppingCart() {
+  const [cart, setCart] = useState([]);
   const [prodRemoved, isProdRemoved] = useState(false);
-  const { cart, removeItemFromCart, getTotalAmount } = useCart();
+  const [displayedCart, setDisplayedCart] = useState(false);
+  const { removeItemFromCart, getTotalAmount } = useCart();
 
-  useEffect(() => {
-    setTimeout(() => {
-      isProdRemoved(false);
-    }, 6000);
-  }, [cart]);
+  async function getCart(){
+    let loadedCart = await loadCart()
+    setCart(loadedCart)
+  }
+
+  useEffect(
+    () => {
+      getCart()
+    }, []
+  )
 
   const navigate = useNavigate();
   const GoToCheckOut = () => {
@@ -83,7 +91,7 @@ function ShoppingCart() {
                 <hr />
                 <div className="card-total-container">
                   <div id="total-title">Total</div>
-                  <div id="total-amount">R$ {getTotalAmount()}</div>
+                  <div id="total-amount">R$ {async () => await getTotalAmount()}</div>
                 </div>
 
                 <button className="buy-btn" onClick={GoToCheckOut}>
