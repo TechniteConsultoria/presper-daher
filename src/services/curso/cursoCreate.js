@@ -18,7 +18,7 @@ export default async function cursoCreate(data) {
         responseHandler(response.status, mensagemOk, mensagemNaoOK)
         if (response.status == 200) {
           //first check the http response, returning the result to user
-          return 'ok'
+          return response.status
         }
 
       })
