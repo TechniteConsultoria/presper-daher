@@ -13,7 +13,7 @@ export const useCoursePage = () => {
   const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] =
     useState(false);
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
@@ -30,11 +30,12 @@ export const useCoursePage = () => {
   const createCourse = async () => {
     const body = {
       // courseImage: image,
-      title: title,
-      author: author,
-      price: price,
-      category: category,
-      description: description,
+      nome: title,
+      autor: author,
+      preco: price,
+      categoriaId: category,
+      descricao: description,
+      imagemUrl: image,
       videos: videosList,
       // videos: videos,
     };
