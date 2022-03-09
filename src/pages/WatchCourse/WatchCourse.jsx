@@ -20,6 +20,10 @@ import {
 
 import { Tabs, Tab, Container } from "react-bootstrap";
 
+import getIdFromUrl from '../../utils/getIdFromUrl'
+import cursoLoad from "../../services/curso/cursoLoad";
+import cursoFind from "../../services/curso/cursoFind";
+
 function WatchCourse() {
   const mock = {
     id: 1,
@@ -47,15 +51,24 @@ function WatchCourse() {
     setVideo(video);
   }
 
+  async function handleLoadCursoModulo(){
+    let id  = getIdFromUrl('/watch-course/')
+    console.log(id);
+    let product = await cursoFind(id)
+    console.log(product)
+
+  }
+
   useEffect(() => {
     setVideos(mock.videos);
+    handleLoadCursoModulo()
   }, []);
 
   return (
     <>
       <div className="player-container">
         <Player poster="/assets/poster.png">
-          <source src="http://peach.themazzone.com/durian/movies/sintel-1024-surround.mp4" />
+          <source src="http://localhost:8142/api/file/download?privateUrl=tenant/883fa309-da4f-4300-85d5-bb59af61a8ac/produto/imagem1/video3.mp4" />
           {/* <source src="http://mirrorblender.top-ix.org/movies/sintel-1024-surround.mp4" /> */}
           {/* <source src={video.link} /> */}
 
