@@ -14,6 +14,7 @@ import cursoUpdate from "../../services/curso/cursoUpdate";
 import loadCategorias from "../../services/categoria/loadCategorias";
 import uploadImage from "../../services/imagem/upload";
 import DeleteCourseModal from "./DeleteCourseModal";
+import { toast } from "react-toastify";
 
 // TODO - formatar data.videos antes de submeter
 
@@ -125,6 +126,31 @@ function EditCourseModal(props) {
   )
 
   console.log(formatPrice(props.course.preco))
+
+
+  async function handleUploadImage(image){
+    if (image.type.includes('image')) {
+      
+      uploadImage(image, setImage)
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
+
+  async function handleUploadVideo(image){
+    if (image.type.includes('mp4')) {
+      
+      let videoPath = await uploadImage(image, setNewVideo)
+
+      handleAddNewVideos(videoPath);
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
   /*
   
   Line 272:29:  'setDeleteVideoModalShow' is not defined  no-undef
@@ -240,7 +266,7 @@ function EditCourseModal(props) {
               <Form.Label column>Selecionar nova imagem</Form.Label>
               <Form.Control
                 type="file"
-                onChange={(e) => setImage(e.target.file)}
+                onChange={(e) => handleUploadImage(e.target.files[0])}
               />
             </Form.Group>
 
