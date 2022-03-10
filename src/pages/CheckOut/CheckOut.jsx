@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CartContext } from "../../contexts/CartContext";
+import { CartContext, useCart } from "../../contexts/CartContext";
 import "react-credit-cards/es/styles-compiled.css";
 import "./CheckOut.style.css";
 
@@ -17,7 +17,9 @@ import { useCreditCard } from "../../contexts/CreditCardContext";
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
   const { getCreditCards, creditCardList } = useCreditCard();
+  const { removeItemFromCart, getTotalAmount,  getCart } = useCart();
   const [showAddCardForm, setShowAddCardForm] = useState(false);
+  const [amount, setAmount] = useState([]);
 
   const [result, setResult] = useState({
     operation: "",
@@ -35,12 +37,22 @@ function CartCheckOut() {
     });
   };
 
-  const { cart, getTotalAmount } = useContext(CartContext);
+  async function handleGetCart(){
+    let loadedCart = await getCart()
+    console.log(loadedCart)
+    setProds(loadedCart)
 
-  const [prods, setProds] = useState(cart);
+    let totalAmount = await getTotalAmount()
+    setAmount(totalAmount)
+  }
+
+  const [prods, setProds] = useState([]);
+
   useEffect(() => {
-    setProds(cart);
-  }, [cart]);
+  handleGetCart() 
+  }, []);
+
+  
 
   return (
     <>
@@ -106,16 +118,18 @@ function CartCheckOut() {
             {prods?.map((prod, idx) => {
               return (
                 <div className="card-prod-list" key={idx}>
-                  <div id="prod-author"> Autor(a): {prod.author} </div>
-                  <div id="prod-title"> Curso: {prod.title} </div>
-                  <div id="prod-price"> Valor: R$ {prod.price}</div>
+                  <div id="prod-author"> Autor(a):  { prod.produto.autor  } </div>
+                  <div id="prod-title">  Curso:     { prod.produto.nome   } </div>
+                  <div id="prod-price">  Valor: R$  { prod.produto.preco  } </div>
                 </div>
               );
             })}
             <hr />
             <div className="card-total-container">
               <div id="total-title">Total</div>
-              <div id="total-amount">R$ {getTotalAmount()}</div>
+              <div id="total-amount">R$ {
+                amount
+              }</div>
             </div>
             <Link to="/">
               <Button id="btn-checkout"> Finalizar Compra </Button>
