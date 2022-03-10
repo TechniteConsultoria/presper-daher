@@ -109,15 +109,15 @@ function Home() {
 
   //todo -> pegando da FAKE API, precisa mudar!
   async function getComments() {
-    const url =
-      "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setTestimonialsList(res.data);
-      }
-    });
+    // const url =
+    //   "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
+    // axios.get(url).then((res) => {
+    //   if (res.status === 200) {
+    //     setTestimonialsList(res.data);
+    //   }
+    // });
     let perguntas = await loadPergunta()
-    // setTestimonialsList(perguntas)
+    setTestimonialsList(perguntas)
   }
 
   useEffect(async () => {
