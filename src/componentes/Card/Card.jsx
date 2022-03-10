@@ -3,8 +3,6 @@ import { Card } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import { formatPrice } from "../../utils/format";
 
-import "../Card/Card.style.css";
-
 export default class CardComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -24,32 +22,48 @@ export default class CardComponent extends React.Component {
     return (
       <>
         <Card
-          id="card"  
+          style={{
+            width: "14rem",
+            margin: "16px",
+            height: "auto",
+            borderRadius: "4px 4px 4px 4px",
+            boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
+            marginTop: "16px",
+            cursor: "pointer",
+            objectFit: "cover",
+          }}
           onClick={this.state.onClick}
         >
           <Card.Img
-            id="card-img"
             variant="top"
             src={this.state.img}
+            style={{ borderRadius: "4px 4px 0px 0px", height: "120px" }}
           />
           <Card.Body>
-            <Card.Title class="card-title-size">
+            <Card.Title style={{ fontSize: "14px" }}>
               {this.state.title}
             </Card.Title>
-            <Card.Text class="card-font-size">
+            <Card.Text style={{ fontSize: "12px" }}>
               {this.state.author}
             </Card.Text>
-            <Card.Text class="card-font-size">
+            <Card.Text style={{ fontSize: "12px" }}>
               {this.state.sold} vendidos
             </Card.Text>
 
-            <div 
-            id="card-div"
-
+            <div
+              style={{
+                justifyContent: "space-between",
+                display: "flex",
+                alignItems: "center",
+              }}
             >
               <ReactStars value={this.state.rating} edit={false} size={18} />
               <Card.Text
-              id="card-text"
+                style={{
+                  fontSize: "16px",
+                  color: "#6CB1CF",
+                  fontWeight: "600",
+                }}
               >
                 {formatPrice(this.state.price)}
               </Card.Text>
