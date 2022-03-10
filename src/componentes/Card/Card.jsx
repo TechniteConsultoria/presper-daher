@@ -22,47 +22,32 @@ export default class CardComponent extends React.Component {
     return (
       <>
         <Card
-          style={{
-            width: "14rem",
-            margin: "16px",
-            height: "auto",
-            borderRadius: "4px 4px 4px 4px",
-            boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
-            marginTop: "16px",
-            cursor: "pointer",
-          }}
+          id="card"  
           onClick={this.state.onClick}
         >
           <Card.Img
+            id="card-img"
             variant="top"
             src={this.state.img}
-            style={{ borderRadius: "4px 4px 0px 0px", height: "120px" }}
           />
           <Card.Body>
-            <Card.Title style={{ fontSize: "14px" }}>
+            <Card.Title class="card-title-size">
               {this.state.title}
             </Card.Title>
-            <Card.Text style={{ fontSize: "12px" }}>
+            <Card.Text class="card-font-size">
               {this.state.author}
             </Card.Text>
-            <Card.Text style={{ fontSize: "12px" }}>
+            <Card.Text class="card-font-size">
               {this.state.sold} vendidos
             </Card.Text>
 
-            <div
-              style={{
-                justifyContent: "space-between",
-                display: "flex",
-                alignItems: "center",
-              }}
+            <div 
+            id="card-div"
+
             >
               <ReactStars value={this.state.rating} edit={false} size={18} />
               <Card.Text
-                style={{
-                  fontSize: "16px",
-                  color: "#6CB1CF",
-                  fontWeight: "600",
-                }}
+              id="card-text"
               >
                 {formatPrice(this.state.price)}
               </Card.Text>
