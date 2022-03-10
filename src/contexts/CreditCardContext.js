@@ -15,6 +15,7 @@ export default function CreditCardProvider({ children }) {
     try {
       let response = await cartaoLoadFilter('user', id)
       setCreditCardList(response);
+      return response
     } catch (error) {
       console.log(error);
     }
