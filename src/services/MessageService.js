@@ -1,9 +1,12 @@
 import { ApiService } from "../services/ApiService";
+import sendEmailPergunta from "./email/sendEmailPergunta";
 
 class MessageService {
   async createMessage(body) {
     try {
-      const response = await ApiService.post("/message", body);
+      console.log("body")
+      console.log(body)
+      const response = await sendEmailPergunta(body);
       return response;
     } catch (error) {
       return error;
