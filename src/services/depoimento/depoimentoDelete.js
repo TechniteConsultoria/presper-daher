@@ -3,7 +3,7 @@ import { api, apiWithTenantAndWithToken } from "../api";
 
 export default async function depoimentoDelete(depoimentoId) {
   return await api
-    .delete(`depoimento/${depoimentoId}`, {
+    .delete(`comentario/${depoimentoId}`, {
       params: {
         id: depoimentoId,
       },

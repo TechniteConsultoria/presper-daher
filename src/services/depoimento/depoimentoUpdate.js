@@ -9,7 +9,7 @@ import servidorErrorMessage from "../../utils/servidorErrorMessage";
 
 export default async function depoimentoUpdate(data, id) {
   return api
-    .put(`depoimento/${id}`, {
+    .put(`comentario/${id}`, {
       data,
     })
     .then((response) => {
