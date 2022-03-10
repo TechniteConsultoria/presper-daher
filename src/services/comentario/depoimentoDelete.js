@@ -10,9 +10,11 @@ export default async function depoimentoDelete(depoimentoId) {
     })
     .then((response) => {
       // console.log(response)
-      let depoimentoData = response.data;
+      // let depoimentoData = response.data;
+
       toast.success("Excluido com sucesso!");
       // location.reload(true)
-      return depoimentoData;
+      // return depoimentoData;
+      return response.status;
     });
 }
