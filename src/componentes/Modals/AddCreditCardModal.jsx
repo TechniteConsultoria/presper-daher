@@ -6,6 +6,8 @@ import MaskedInput from "react-maskedinput";
 
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+import cartaoCreate from "../../services/cartao/cartaoCreate";
+import { id } from "../../services/api";
 
 const axios = require("axios").default;
 
@@ -22,18 +24,26 @@ function AddCreditCardModal(props) {
   const { result, ...rest } = props;
 
   async function handleSubmit() {
+    /*
+    There's missed from this page:
+    'tipo',
+    'nomeTitular',
+    'apelido',
+    'bandeira',          
+    'importHash',
+    */
+
+
     const data = {
-      number: number,
-      name: name,
-      expiry: expiry,
-      cvc: cvc,
+      apelido:     id,
+      numero:      number,
+      nomeTitular: name,
+      validade:    expiry,
+      cvv:         cvc,
     };
 
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
-    axios.post(url, data).then((res) => {
-      result(res.status);
-    });
-
+    let newCartao = await cartaoCreate(data)
+    console.log(newCartao)
     setNumber("");
     setName("");
     setExpiry("");
