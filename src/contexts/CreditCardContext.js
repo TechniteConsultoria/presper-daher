@@ -1,4 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import { id } from "../services/api";
+import cartaoLoadFilter from "../services/cartao/cartaoLoadFilter";
 import CreditCardService from "../services/CreditCardService";
 
 import { useAuth } from "./AuthContext";
@@ -11,9 +13,8 @@ export default function CreditCardProvider({ children }) {
 
   const getCreditCards = async () => {
     try {
-      const userId = user.id;
-      const response = await CreditCardService.getAllCreditCards(userId);
-      setCreditCardList(response.data);
+      let response = await cartaoLoadFilter('user', id)
+      setCreditCardList(response);
     } catch (error) {
       console.log(error);
     }
