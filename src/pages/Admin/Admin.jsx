@@ -11,6 +11,8 @@ import { BsFillArrowRightSquareFill } from "react-icons/bs";
 
 import { useAuth } from "../../contexts/AuthContext";
 
+import logo from "../../assets/project-logo.png"; 
+
 import "./Admin.style.css";
 
 function Admin() {
@@ -29,7 +31,7 @@ function Admin() {
         <Navbar expand={false}>
           <Container fluid>
             <Navbar.Toggle aria-controls="offcanvasNavbar" />
-            <Navbar.Brand href="#">Presper Daher</Navbar.Brand>
+            <img src={logo} alt="logo" id="navbar-logo" />
             <Navbar.Offcanvas
               id="offcanvasNavbar"
               aria-labelledby="offcanvasNavbarLabel"
