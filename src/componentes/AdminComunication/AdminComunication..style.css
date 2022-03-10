@@ -56,6 +56,15 @@
 
 .icon {
   cursor: pointer;
+  margin-right: 16px;
+}
+
+#visible:hover {
+  color: #14b8a6;
+}
+
+#delete:hover {
+  color: #dc3545;
 }
 
 .row {
