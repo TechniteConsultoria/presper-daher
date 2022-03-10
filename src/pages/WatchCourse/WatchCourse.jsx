@@ -33,7 +33,8 @@ function WatchCourse() {
   const [videos, setVideos] = useState([]);
 
   function setPlayVideo(newVideo) {
-    console.log(newVideo);
+    console.log("newVideo.url");
+    console.log(newVideo.url);
     setVideo(newVideo);
     
   }
@@ -58,7 +59,13 @@ function WatchCourse() {
     <>
       {video? (
         <div className="player-container">
-          <Player poster="/assets/poster.png">
+          <Player
+          poster="/assets/poster.png"
+          // ref={video.id}
+
+          autoPlay
+          muted
+          >
             {/* <source src="http://localhost:8142/api/file/download?privateUrl=tenant/883fa309-da4f-4300-85d5-bb59af61a8ac/produto/imagem1/video3.mp4" /> */}
             <source src={video.url} />
             <ControlBar>
