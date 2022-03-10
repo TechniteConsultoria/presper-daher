@@ -103,7 +103,7 @@ function Signup() {
                 }}
               />
 
-              <div className="form-check">
+              {/* <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -120,7 +120,7 @@ function Signup() {
                   Aceito receber emails com descontos e recomendações de
                   produtos
                 </label>
-              </div>
+              </div> */}
 
               <button
                 type="submit"
