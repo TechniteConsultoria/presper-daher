@@ -9,16 +9,18 @@ function CourseContent(props) {
   return (
     <>
       <ListGroup variant="flush">
-        {props.videos?.map((item, id) => {
+        {props?.videos.map((item, id) => {
+          // console.log("item")
+          // console.log(item)
           return (
             <ListGroup.Item key={id}>
               <div className="video-title-container">
                 <span id="icon-play" onClick={() => props.onClick(item)}>
                   <BsPlayCircle />
                 </span>
-                <span>{item.title || "Título"}</span>
+                <span>{item.titulo || "Título"}</span>
               </div>
-              <div>{item.time || "Duração"} min</div>
+              {/* <div>{item.time || "Duração"} min</div> */}
             </ListGroup.Item>
           );
         })}
