@@ -41,10 +41,30 @@ function ShoppingCart() {
   )
 
   const navigate = useNavigate();
-  const GoToCheckOut = () => {
-    // eslint-disable-next-line no-undef
-    navigate("/check-out");
-  };
+  
+  function handleGeneratePedidos(){
+      navigate("/check-out");
+    
+  }
+
+  function handleRemoveVisually(index){
+    let newCart = [...cart]
+
+    newCart.splice(index, 1)
+
+    setCart(newCart)
+
+  }
+
+  async  function  handleRemoveFromCart(id, index){
+    console.log(id);
+    await removeItemFromCart(id);
+
+    handleRemoveVisually(index)
+
+
+    isProdRemoved(true);
+  }
 
   return (
     <>
@@ -66,17 +86,17 @@ function ShoppingCart() {
         {cart.length > 0 ? (
           <div className="container-content">
             <div className="container-prods">
-              {cart?.map(({produto, quantidade}, id) => {
+              {cart?.map(({produto, quantidade, id}, index) => {
                 return (
                   <ProductCard
-                    key={id}
+                    key={index}
                     title={produto.nome}
                     author={produto.autor}
                     // category={produto.id}
                     price={produto.preco}
-                    onClick={() => {
-                      removeItemFromCart(produto.id);
-                      isProdRemoved(true);
+                    onClick={
+                      () => {
+                        handleRemoveFromCart(id, index)
                     }}
                   />
                 );
@@ -99,7 +119,7 @@ function ShoppingCart() {
                   <div id="total-amount"> {  formatPrice(amount)  }</div>
                 </div>
 
-                <button className="buy-btn" onClick={GoToCheckOut}>
+                <button className="buy-btn" onClick={handleGeneratePedidos}>
                   COMPRAR
                 </button>
               </div>
