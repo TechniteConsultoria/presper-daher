@@ -53,6 +53,7 @@ export const CartProvider = ({ children }) => {
         addItemToCart,
         removeItemFromCart,
         getTotalAmount,
+        getCart
       }}
     >
       {children}
