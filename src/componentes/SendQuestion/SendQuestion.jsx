@@ -15,8 +15,6 @@ function SendQuestion(props) {
       userId: "",
     };
 
-    console.log(data);
-
     setMessage("");
   }
 

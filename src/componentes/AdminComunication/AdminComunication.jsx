@@ -11,16 +11,16 @@ import {
   Badge,
 } from "react-bootstrap";
 
-import MessageModal from "../Modals/MessageModal";
-import { BsFillEyeFill } from "react-icons/bs";
-
-import { useCourse } from "../../contexts/CourseContext";
-import MessageService from "../../services/MessageService";
+import { BsFillEyeFill, BsTrashFill, BsFillEyeSlashFill } from "react-icons/bs";
 
 import "./AdminComunication..style.css";
 import mensagens from "../../data/mensagens";
 import cursos from "../../data/cursos";
 import loadPergunta from "../../services/pergunta/perguntaLoad";
+
+import deleteDepoimento from "../../services/comentario/depoimentoDelete.js";
+import updateDepoimento from "../../services/comentario/depoimentoUpdate.js";
+import loadCategorias from "../../services/categoria/loadCategorias.js";
 
 //*
 //TODO - 1. arrrumar os filtros
@@ -47,7 +47,6 @@ function Comunication() {
   //     buscarPor(buscarCurso);
   //   }, [buscarCurso]);
 
-  const { allCourses } = useCourse();
   const [messagesList, setMessagesList] = useState([]);
 
   const [page, setPage] = useState(1);
@@ -55,19 +54,9 @@ function Comunication() {
   const [totalItems, setTotalItems] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [updatedMsgId, setUpdatedMsgId] = useState("");
-
-  const [messageModalShow, setMessageModalShow] = useState(false);
-  const [message, setMessage] = useState({});
-
   const [classificar, setClassificar] = useState("Sem classificação");
   const [filtroStatus, setFiltroStatus] = useState("Sem filtro");
   const [filtroCurso, setFiltroCurso] = useState("Sem filtro");
-
-  useEffect(() => {
-    getCourses();
-    getMessages();
-  }, []);
 
   useEffect(() => {
     classificarPorData(classificar);
@@ -82,7 +71,7 @@ function Comunication() {
     // handleFiltro();
   }, [filtroCurso]);
 
-  //TODO não está funcionando
+  //TODO - FILTROS - não está funcionando
   function classificarPorData(classificar) {
     switch (classificar) {
       case "Mais antigas":
@@ -119,33 +108,6 @@ function Comunication() {
     } else setMessagesList(mensagens);
   }
 
-  // function handleFiltro() {
-  //   let list = mensagens;
-  //   if (filtroStatus !== "Sem filtro") {
-  //     list.filter((c) => c.status === filtroStatus);
-  //   }
-  //   if (filtroCurso !== "Sem filtro") {
-  //     setMessagesList(list.filter((c) => c.course === filtroCurso));
-  //   }
-
-  //   console.log(list);
-  //   setMessagesList(list);
-  // }
-
-  // function setMessageStatus(id) {
-  //   const data = {
-  //     msgId: id,
-  //     status: "read",
-  //   };
-
-  //   console.log(data);
-  // }
-
-  async function getCourses() {
-    //* req http
-    // setCourseList(courses);
-  }
-
   // async function getMessages(page) {
   //   const query = `?page=${page}`;
   //   let response;
@@ -169,71 +131,127 @@ function Comunication() {
   //   setMessagesList(msgs);
   // }
 
-  async function getMessages(page) {
-    const query = `?page=${page}`;
-    let questions;
-    try {
-      questions = await loadPergunta()
+  // async function updateMsgList() {
+  //   const query = `?page=${page}`;
+  //   try {
+  //     const response = await MessageService.getMessage(query);
+  //     const updatedList = response.data.data;
 
-    } catch (error) {
-      console.log(error);
-    }
+  //     setPage(Number(response.data.page));
+  //     setCurrentPage(Number(response.data.page));
+  //     setTotalItems(Number(response.data.total));
+  //     setLastPage(Number(response.data.last_page));
 
-    setMessagesList(questions);
+  //     setMessagesList(updatedList);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // * in progress
+  const mock = [
+    {
+      id: 1,
+      courseName: "Curso 1",
+      userName: "Usuário 1",
+      createdAt: "2022-03-01 18:53:24.015268",
+      visible: true,
+    },
+    {
+      id: 2,
+      courseName: "Curso 2",
+      userName: "Usuário 2",
+      createdAt: "2022-03-02 18:41:34.795849",
+      visible: false,
+    },
+    {
+      id: 3,
+      courseName: "Curso 3",
+      userName: "Usuário 3",
+      createdAt: "2022-02-03 18:40:43.438754",
+      visible: true,
+    },
+    {
+      id: 4,
+      courseName: "Curso 4",
+      userName: "Usuário 4",
+      createdAt: "2022-02-04 18:37:17.720362",
+      visible: false,
+    },
+    {
+      id: 5,
+      courseName: "Curso 5",
+      userName: "Usuário 5",
+      createdAt: "2022-02-05 18:24:00.154439",
+      visible: true,
+    },
+  ];
+
+  const [allTestimonials, setAllTestimonials] = useState([]);
+  const [testimonialsList, setTestimonialsList] = useState([]);
+  const [categoriesList, setCategoriesList] = useState([]);
+
+  async function getTestimonials() {
+    setAllTestimonials(mock);
+    setTestimonialsList(allTestimonials);
   }
 
-  async function setMsgStatus(id, status) {
-    if (status === "NEW") {
-      const body = {
-        messageId: id,
-        messageStatus: status,
-      };
-      try {
-        const response = await MessageService.updateMessageStatus(body);
-        console.log(response.status);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    return;
+  //* erro -> setFunction is not a function
+  async function getCategories() {
+    // const c = await loadCategorias();
+    // console.log(c);
+    // setCategoriesList(c);
   }
 
-  async function updateMsgList() {
-    const query = `?page=${page}`;
-    try {
-      const response = await MessageService.getMessage(query);
-      const updatedList = response.data.data;
-
-      setPage(Number(response.data.page));
-      setCurrentPage(Number(response.data.page));
-      setTotalItems(Number(response.data.total));
-      setLastPage(Number(response.data.last_page));
-
-      setMessagesList(updatedList);
-    } catch (error) {
-      console.log(error);
+  //* não está funcionando
+  function classificarPorData(classificar) {
+    switch (classificar) {
+      case "Mais antigas":
+        setTestimonialsList(
+          allTestimonials.sort((a, b) => {
+            return new Date(a.date) < new Date(b.date);
+          })
+        );
+        console.log("antigas", testimonialsList);
+        break;
+      case "Mais recentes":
+        setTestimonialsList(
+          allTestimonials.sort((a, b) => {
+            return new Date(a.date) > new Date(b.date);
+          })
+        );
+        console.log("recentes", testimonialsList);
+        break;
+      default:
+        setTestimonialsList(
+          allTestimonials.sort((a, b) => {
+            return new Date(a.date) > new Date(b.date);
+          })
+        );
+        console.log("default", testimonialsList);
+        break;
     }
   }
+
+  async function handleUpdate(status, id) {
+    const data = { visible: status };
+    updateDepoimento(data, id);
+  }
+
+  useEffect(() => {
+    getTestimonials();
+    getCategories();
+  }, []);
 
   return (
     <>
       <Container fluid className="container-admin">
-        <div className="container-item">
-          <Row className="row-title">
-            <Col>
-              <h2>Comunicação</h2>
-              <p>Visualize e gerencie as mensagens enviadas pelos alunos</p>
-            </Col>
-          </Row>
-        </div>
-
-        <hr></hr>
         <div className="container-item" id="mensagens-recebidas">
           <Row className="row-filtro">
             <Col>
               <Row>
-                <h2>Mensagens recebidas</h2>
-                <p>Visualize e edite seus cursos cadastrados</p>
+                <h2>Depoimentos</h2>
+                <p>Visualize e gerencie os depoimentos enviadas pelos alunos</p>
               </Row>
             </Col>
           </Row>
@@ -285,9 +303,8 @@ function Comunication() {
                     width: "200px",
                   }}
                 >
-                  {filtroStatus === "new" && "Novas"}
-                  {filtroStatus === "read" && "Visualizadas"}
-                  {filtroStatus === "answered" && "Respondidas"}
+                  {filtroStatus === "visible" && "Visível"}
+                  {filtroStatus === "not-visible" && "Não visível"}
                   {filtroStatus === "Sem filtro" && "Sem filtro"}
                 </Dropdown.Toggle>
 
@@ -295,14 +312,11 @@ function Comunication() {
                   <Dropdown.Item onClick={() => setFiltroStatus("Sem filtro")}>
                     Sem filtro
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFiltroStatus("new")}>
-                    Novas
+                  <Dropdown.Item onClick={() => setFiltroStatus("visible")}>
+                    Visível
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFiltroStatus("read")}>
-                    Visualizadas
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setFiltroStatus("answered")}>
-                    Respondidas
+                  <Dropdown.Item onClick={() => setFiltroStatus("not-visible")}>
+                    Não visível
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -362,41 +376,50 @@ function Comunication() {
                 </tr>
               </thead>
               <tbody>
-                {messagesList?.map((msg, id) => {
+                {testimonialsList?.map((t, id) => {
                   return (
                     <tr key={id}>
-                      <td>{msg.courseName || "Sem curso"}</td>
-                      <td>{msg.userName}</td>
+                      <td>{t.courseName || "Sem curso"}</td>
+                      <td>{t.userName}</td>
                       <td>
-                        {new Date(msg.updatedAt).toLocaleDateString("pt-BR")}
+                        {new Date(t.createdAt).toLocaleDateString("pt-BR")}
                       </td>
                       <td>
-                        {}
-                        {msg.status === "NEW" && (
-                          <Badge pill bg="warning">
-                            NOVA
-                          </Badge>
-                        )}
-                        {msg.status === "READ" && (
-                          <Badge pill bg="primary">
-                            VISUALIZADA
-                          </Badge>
-                        )}
-                        {msg.status === "ANSWERED" && (
+                        {t.visible ? (
                           <Badge pill bg="success">
-                            RESPONDIDA
+                            VISÍVEL
+                          </Badge>
+                        ) : (
+                          <Badge pill bg="warning">
+                            NÃO VISÍVEL
                           </Badge>
                         )}
                       </td>
                       <td>
-                        <BsFillEyeFill
+                        {t.visible ? (
+                          <BsFillEyeFill
+                            id="visible"
+                            className="icon"
+                            onClick={() => {
+                              handleUpdate(!t.visible, t.id);
+                              // updateMsgList();
+                            }}
+                          />
+                        ) : (
+                          <BsFillEyeSlashFill
+                            id="visible"
+                            className="icon"
+                            onClick={() => {
+                              handleUpdate(!t.visible, t.id);
+                              // updateMsgList();
+                            }}
+                          />
+                        )}
+                        <BsTrashFill
+                          id="delete"
                           className="icon"
                           onClick={() => {
-                            setMessage(msg);
-                            setMsgStatus(msg.id, msg.status);
-                            setMessageModalShow(true);
-                            setUpdatedMsgId(msg.id);
-                            updateMsgList();
+                            deleteDepoimento(t.id);
                           }}
                         />
                       </td>
@@ -410,22 +433,15 @@ function Comunication() {
 
         <div id="pagination-container" className="container-item">
           <Pagination
-            // hideDisabled
             activePage={currentPage}
             itemsCountPerPage={5}
             totalItemsCount={totalItems}
-            onChange={getMessages}
+            onChange={loadCategorias}
             itemClass="page-item"
             linkClass="page-link"
           />
         </div>
       </Container>
-
-      <MessageModal
-        show={messageModalShow}
-        onHide={() => setMessageModalShow(false)}
-        message={message}
-      />
     </>
   );
 }
