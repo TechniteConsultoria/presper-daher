@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import CourseService from "../services/CourseService";
 import cursoFind from "../services/curso/cursoFind";
+import cursoFindWithRelations from "../services/curso/cursoFindWithRelations";
 import cursoLoad from "../services/curso/cursoLoad";
 
 export const CourseContext = createContext({});
@@ -28,6 +29,15 @@ export default function CourseProvider({ children }) {
     }
   };
 
+  const getCourseByIdWithRelations = async (id) => {
+    try {
+      const response = await cursoFindWithRelations(id);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getCourses();
   }, []);
@@ -39,6 +49,7 @@ export default function CourseProvider({ children }) {
         setAllCourses,
         getCourses,
         getCourseById,
+        getCourseByIdWithRelations
       }}
     >
       {children}
@@ -48,12 +59,13 @@ export default function CourseProvider({ children }) {
 
 export function useCourse() {
   const context = useContext(CourseContext);
-  const { allCourses, setAllCourses, getCourses, getCourseById } = context;
+  const { allCourses, setAllCourses, getCourses, getCourseById, getCourseByIdWithRelations } = context;
 
   return {
     allCourses,
     setAllCourses,
     getCourses,
     getCourseById,
+    getCourseByIdWithRelations,
   };
 }
