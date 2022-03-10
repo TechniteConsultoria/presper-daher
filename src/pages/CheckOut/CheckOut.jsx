@@ -28,6 +28,7 @@ function CartCheckOut() {
 
   useEffect(() => {
     getCreditCards();
+    
   }, []);
 
   const getAddCards = (result) => {
@@ -78,12 +79,7 @@ function CartCheckOut() {
                     name="formHorizontalRadios"
                     id="formHorizontalRadios1"
                   />
-                  <Form.Check
-                    type="radio"
-                    label="Cartão 2 "
-                    name="formHorizontalRadios"
-                    id="formHorizontalRadios2"
-                  />
+                  
 
                   <Form.Check
                     type="radio"
@@ -105,7 +101,7 @@ function CartCheckOut() {
               {creditCardList?.map((card) => {
                 return (
                   <div key={card.id}>
-                    <p>{card.name}</p>
+                    <p> {card.name} </p>
                   </div>
                 );
               })}
