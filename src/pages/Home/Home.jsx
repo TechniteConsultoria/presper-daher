@@ -29,9 +29,9 @@ function Home() {
   const { allCourses } = useCourse();
   const { user } = useAuth();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name   , setName   ] = useState("");
+  const [email  , setEmail  ] = useState("");
+  const [phone  , setPhone  ] = useState("");
   const [message, setMessage] = useState("");
 
   const [msgSent, isMsgSent] = useState(false);
@@ -58,20 +58,17 @@ function Home() {
     }
   }
   const createMessage = async () => {
-    let userId = null;
-    if (user) userId = user.id;
     const body = {
-      userId,
-      userName: name,
-      userEmail: email,
-      userPhone: phone,
-      messageContent: message,
+      nome: name,
+      email: email,
+      telefone: phone,
+      emailContent: message,
     };
 
     try {
       const response = await MessageService.createMessage(body);
       isMsgSent(true);
-      if (response.status === 201) {
+      if (response.status === 200) {
         isMsgResult(true);
       } else {
         isMsgResult(false);
