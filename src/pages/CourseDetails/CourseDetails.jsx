@@ -20,20 +20,22 @@ function CourseDetails() {
   console.log(id)
 
   const { addItemToCart } = useCart();
-  const { getCourseById } = useCourse();
+  const { getCourseByIdWithRelations } = useCourse();
 
   const [course, setCourse] = useState();
 
   async function getCourse() {
-    const result = await getCourseById(id);
+    const result = await getCourseByIdWithRelations(id);
+    console.log(result)
+
     setCourse({
-      id:          result.id,
-      titulo:      result.titulo,
-      categoria:   result.id,
-      autor:       result.autor,
-      preco:       result.preco,
-      description: result.descricao,
-      imagemUrl:   result.imagemUrl
+      id:          result.produto.id,
+      titulo:      result.produto.nome,
+      categoria:   result.produto.id,
+      autor:       result.produto.autor,
+      preco:       result.produto.preco,
+      description: result.produto.descricao,
+      imagemUrl:   result.produto.imagemUrl
     });
   }
 
