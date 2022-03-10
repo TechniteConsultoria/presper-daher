@@ -13,12 +13,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { useCreditCard } from "../../contexts/CreditCardContext";
+import { formatPrice } from "../../utils/format";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
   const { getCreditCards, creditCardList } = useCreditCard();
   const { removeItemFromCart, getTotalAmount,  getCart } = useCart();
   const [showAddCardForm, setShowAddCardForm] = useState(false);
+  const [cards ,  setCards  ] = useState([]);
   const [amount, setAmount] = useState([]);
 
   const [result, setResult] = useState({
@@ -26,9 +28,16 @@ function CartCheckOut() {
     status: "",
   });
 
+  async function handleLoadCards(){
+    let userCards  = await getCreditCards();
+
+    console.log(userCards)
+
+    setCards(userCards)
+  }
+
   useEffect(() => {
-    getCreditCards();
-    
+    handleLoadCards()
   }, []);
 
   const getAddCards = (result) => {
@@ -73,12 +82,21 @@ function CartCheckOut() {
               <Form.Group as={Row} className="mb-3">
                 <Form.Label as="legend">Cartão de Crédito</Form.Label>
                 <Col sm={10}>
+
+                  {
+                  cards.map(
+                  (card) => (
                   <Form.Check
                     type="radio"
-                    label="Cartão 1"
+                    label={card.numero}
                     name="formHorizontalRadios"
-                    id="formHorizontalRadios1"
+                    id={card.id}
                   />
+                    )
+                  )
+                  }
+
+
                   
 
                   <Form.Check
@@ -123,13 +141,16 @@ function CartCheckOut() {
             <hr />
             <div className="card-total-container">
               <div id="total-title">Total</div>
-              <div id="total-amount">R$ {
-                amount
+              <div id="total-amount">{
+                formatPrice(amount)
               }</div>
             </div>
-            <Link to="/">
+            
+            <Button id="btn-checkout"> Finalizar Compra </Button>
+
+            {/* <Link to="/">
               <Button id="btn-checkout"> Finalizar Compra </Button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </Container>
