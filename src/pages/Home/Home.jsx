@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Container,
@@ -22,10 +22,19 @@ import "./Home.style.css";
 import cursoLoad from "../../services/curso/cursoLoad";
 import loadPergunta from "../../services/pergunta/perguntaLoad";
 import bannerLoad from "../../services/banner/bannerLoad";
+import { role } from "../../services/api";
 
 const axios = require("axios").default;
 
 function Home() {
+
+  const navigate = useNavigate();
+  useEffect(
+    () => {
+      // if(role == 'admin') navigate('/admin')
+    },[]
+  )
+
   const { allCourses } = useCourse();
   const { user } = useAuth();
 
@@ -43,7 +52,6 @@ function Home() {
   
   const [testimonialsList, setTestimonialsList] = useState([]);
 
-  const navigate = useNavigate();
 
   function handleClick(id) {
     navigate(`/course/${id}`);
