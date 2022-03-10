@@ -18,10 +18,9 @@ import mensagens from "../../data/mensagens";
 import cursos from "../../data/cursos";
 import loadPergunta from "../../services/pergunta/perguntaLoad";
 
-import updateDepoimento from "../../services/comentario/depoimentoUpdate.js";
+import deleteDepoimento from "../../services/depoimento/depoimentoDelete.js";
+import updateDepoimento from "../../services/depoimento/depoimentoUpdate.js";
 import loadCategorias from "../../services/categoria/loadCategorias.js";
-
-import DeleteTestimonialModal from "../../componentes/Modals/DeleteTestimonialModal";
 
 //*
 //TODO - 1. arrrumar os filtros
@@ -190,10 +189,7 @@ function Comunication() {
 
   const [allTestimonials, setAllTestimonials] = useState([]);
   const [testimonialsList, setTestimonialsList] = useState([]);
-
-  const [testimonialId, setTestimonialId] = useState("");
-
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [categoriesList, setCategoriesList] = useState([]);
 
   async function getTestimonials() {
     setAllTestimonials(mock);
@@ -260,7 +256,7 @@ function Comunication() {
             </Col>
           </Row>
         </div>
-        {/* <Container className="container-filtro">
+        <Container className="container-filtro">
           <div className="filtro-item">
             <Row>
               <Form.Label column sm="8">
@@ -363,7 +359,7 @@ function Comunication() {
               </Dropdown>
             </Row>
           </div>
-        </Container> */}
+        </Container>
 
         <br />
 
@@ -406,6 +402,7 @@ function Comunication() {
                             className="icon"
                             onClick={() => {
                               handleUpdate(!t.visible, t.id);
+                              // updateMsgList();
                             }}
                           />
                         ) : (
@@ -414,6 +411,7 @@ function Comunication() {
                             className="icon"
                             onClick={() => {
                               handleUpdate(!t.visible, t.id);
+                              // updateMsgList();
                             }}
                           />
                         )}
@@ -421,8 +419,7 @@ function Comunication() {
                           id="delete"
                           className="icon"
                           onClick={() => {
-                            setTestimonialId(t.id);
-                            setShowDeleteModal(true);
+                            deleteDepoimento(t.id);
                           }}
                         />
                       </td>
@@ -445,14 +442,6 @@ function Comunication() {
           />
         </div>
       </Container>
-
-      <DeleteTestimonialModal
-        show={showDeleteModal}
-        onHide={() => {
-          setShowDeleteModal(false);
-        }}
-        testimonialId={testimonialId}
-      />
     </>
   );
 }
