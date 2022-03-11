@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
 import "./Signup.styles.css";
-
-const axios = require("axios").default;
+import { toast } from "react-toastify";
+import cadastro from "../../services/user/cadastro";
+import LoadingGif from "../../componentes/LoadingGif";
 
 function Signup() {
   const [nome, setNome] = useState("");
@@ -15,45 +16,28 @@ function Signup() {
   const [submit, isSubmit] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
+  const [loading,   setLoading  ] = useState(false);
 
   const navigate = useNavigate();
 
   async function handleSubmit() {
-    if (submit && senha === confirmaSenha) {
-      const data = {
-        name: nome,
-        email: email,
-        password: senha,
-        subscribe: inscricao,
-        role: "user",
-      };
+    isSubmit(true);
+    setLoading(true)
+
+    if (senha === confirmaSenha) {
+    }
       try {
-        const urlGET =
-          "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-        axios.get(urlGET).then((res) => {
-          // TODO: apenas para development
-          const user = res.data.find(({ email }) => email === data.email);
-          if (user !== undefined) {
-            setShowAlert(true);
-            setTimeout(() => {
-              setShowAlert(false);
-            }, 6000);
-          } else {
-            const url =
-              "https://fake-api-json-server-presper.herokuapp.com/usuarios";
-            axios.post(url, data).then((res) => {
-              if (res.status === 201) {
-                navigate("/");
-              }
-            });
-          }
-          // TODO: apenas para development
-        });
+        let isOk = await cadastro(nome, email, senha, "1");
+        if (isOk == "ok") {
+          toast.success("OK!");
+          navigate("/");
+        } else console.log("erro?");
       } catch (error) {
         console.error(error);
       }
       isSubmit(false);
-    }
+
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -66,7 +50,7 @@ function Signup() {
         <section>
           <div className="card p-5">
             <h2 className="title-card">Sign up</h2>
-            {/* <p className="subtitle">Dados para realizar o cadastro:</p> */}
+
             {submit && senha !== confirmaSenha && (
               <Alert variant="danger">As senhas são inválidas!</Alert>
             )}
@@ -81,7 +65,6 @@ function Signup() {
               className="row g-3 d-flex flex-column"
               onSubmit={(e) => {
                 e.preventDefault();
-                isSubmit(true);
                 handleSubmit();
               }}
             >
@@ -126,7 +109,7 @@ function Signup() {
                 }}
               />
 
-              <div className="form-check">
+              {/* <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -135,7 +118,6 @@ function Signup() {
                   onChange={() => setInscricao(!inscricao)}
                   style={{
                     border: "1px solid #14B8A6",
-                    // backgroundColor: "#14B8A6",
                     backgroundColor: `${inscricao ? "#14B8A6" : ""}`,
                   }}
                 ></input>
@@ -144,20 +126,23 @@ function Signup() {
                   Aceito receber emails com descontos e recomendações de
                   produtos
                 </label>
-              </div>
+              </div> */}
 
               <button
                 type="submit"
                 className="btn btn-primary btn-lg"
                 style={{ background: "#14B8A6", border: "none" }}
               >
-                Acessar
+                {
+                loading == false ? ('Acessar') : <LoadingGif/>
+                }
+
               </button>
 
+            </form>
               <a href="/login" style={{ color: "#14B8A6" }}>
                 Já tem uma conta? Faça o Login
               </a>
-            </form>
           </div>
         </section>
       </div>

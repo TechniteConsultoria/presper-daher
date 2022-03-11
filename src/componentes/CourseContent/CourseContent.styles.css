@@ -1,0 +1,21 @@
+.list-group-flush > .list-group-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* text-align: center; */
+}
+
+.video-title-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+#icon-play {
+  cursor: pointer;
+  color: #14b8a6;
+}
+
+#icon-play:hover {
+  color: #14b8a5b6;
+}

@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  BsPersonCircle,
-  BsFillBarChartLineFill,
   BsFillCollectionPlayFill,
   BsFillChatLeftFill,
+  BsTagsFill,
+  BsFillBarChartLineFill,
 } from "react-icons/bs";
 
 export const AdminNavbarData = [
@@ -25,10 +25,17 @@ export const AdminNavbarData = [
     link: "/admin/comunicacao",
     cod: 3,
   },
-  // {
-  //   title: "Desempenho",
-  //   icon: <BsFillBarChartLineFill />,
-  //   link: "/admin/desenpenho",
-  //   cod: 4,
-  // },
+  {
+    title: "Banners",
+    icon: <BsFillBarChartLineFill />,
+    link: "/admin/banners",
+    cod: 4,
+
+  },
+  {
+    title: "Categorias",
+    icon: <BsTagsFill />,
+    link: "/admin/categoria",
+    cod: 5,
+  },
 ];

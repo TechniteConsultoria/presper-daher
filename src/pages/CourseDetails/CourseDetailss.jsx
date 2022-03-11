@@ -7,7 +7,7 @@ import RatingCard from "../../componentes/RatingCard/RatingCard";
 import { Button, Container, Row, Col, ListGroup } from "react-bootstrap";
 import { BsFillAwardFill, BsFillCameraVideoFill } from "react-icons/bs";
 
-import { CartContext } from "../../contexts/CartContext/CartContext";
+import { CartContext } from "../../contexts/CartContext";
 
 const axios = require("axios").default;
 

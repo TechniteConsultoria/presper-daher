@@ -9,7 +9,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 // import "./App.css";
 // import "./css/login.css";
 // import "./css/signup.css";
-import { CartProvider } from "./contexts/CartContext/CartContext";
+import { CartProvider } from "./contexts/CartContext";
 // import "./css/navbar.css";
 
 function tik() {

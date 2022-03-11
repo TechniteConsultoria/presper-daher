@@ -1,0 +1,18 @@
+.player-container {
+  margin-bottom: 32px;
+}
+
+.tab-container .nav-link {
+  font-size: 16px;
+  color: #000;
+}
+
+.tab-container .nav-link.active {
+  color: #14b8a6;
+}
+
+.video-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}

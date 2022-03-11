@@ -12,8 +12,9 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Cards from "react-credit-cards";
+import cartaoLoadFilter from "../../services/cartao/cartaoLoadFilter";
+import { id } from "../../services/api";
 
-const axios = require("axios").default;
 
 function MyPaymentInfo() {
   const [addCreditCardModalShow, setAddCreditCardModalShow] = useState(false);
@@ -31,13 +32,11 @@ function MyPaymentInfo() {
   });
 
   async function getCreditCards() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setCerditCardsList(res.data);
-      }
-    });
-  }
+      let userCartoes = await cartaoLoadFilter('user', id)
+      console.log(userCartoes)
+      setCerditCardsList(userCartoes);
+    };
+  
 
   const getDeleteResult = (result) => {
     return setResult({
@@ -53,15 +52,22 @@ function MyPaymentInfo() {
     });
   };
 
+  // getCreditCards();
+
+
   useEffect(() => {
-    getCreditCards();
-    setTimeout(() => {
-      setResult({
-        operation: "",
-        status: "",
-      });
-    }, 6000);
-  }, [result]);
+    getCreditCards()
+  }, []);
+
+  
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setResult({
+  //       operation: "",
+  //       status: "",
+  //     });
+  //   }, 6000);
+  // }, [result]);
 
   return (
     <>
@@ -125,10 +131,10 @@ function MyPaymentInfo() {
                   >
                     <Cards
                       id="credit-card"
-                      number={c.number}
-                      name={c.name}
-                      expiry={c.expiry}
-                      cvc={c.cvc}
+                      number={c.numero}
+                      name={c.nomeTitular}
+                      expiry={c.validade}
+                      cvc={c.cvv}
                       focused={
                         showCvc && cardNumber === c.number ? "cvc" : null
                       }

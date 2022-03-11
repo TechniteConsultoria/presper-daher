@@ -11,6 +11,13 @@
   text-decoration: none;
 }
 
+#navbar-logo{
+  width: 1.5em;
+  height: 1.5em;
+  margin-right:1.5em;
+}
+
+
 #link {
   color: black;
 }

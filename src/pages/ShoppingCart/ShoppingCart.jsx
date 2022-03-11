@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../contexts/CartContext/CartContext";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import { CartContext } from "../../contexts/CartContext/CartContext";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,21 +13,58 @@ import ProductCard from "../../componentes/ProductCard/ProductCard";
 
 import emptyCart from "../../assets/empty-cart.svg";
 
+import { useCart } from "../../contexts/CartContext";
+
 import "./ShoppingCart.styles.css";
+import loadCart from "../../services/carrinho/loadCart";
+import { formatPrice } from "../../utils/format";
 
 function ShoppingCart() {
+  const [cart, setCart] = useState([]);
+  const [amount, setAmount] = useState([]);
   const [prodRemoved, isProdRemoved] = useState(false);
-  const { cart, removeItemFromCart, getCart, getTotalAmount } =
-    useContext(CartContext);
+  const [displayedCart, setDisplayedCart] = useState(false);
+  const { removeItemFromCart, getTotalAmount } = useCart();
 
-  const [prods, setProds] = useState(cart);
+  async function getCart(){
+    let loadedCart = await loadCart()
+    setCart(loadedCart)
 
-  useEffect(() => {
-    setProds(cart);
-    setTimeout(() => {
-      isProdRemoved(false);
-    }, 6000);
-  }, [cart]);
+    let totalAmount = await getTotalAmount()
+    setAmount(totalAmount)
+  }
+
+  useEffect(
+    () => {
+      getCart()
+    }, []
+  )
+
+  const navigate = useNavigate();
+  
+  function handleGeneratePedidos(){
+      navigate("/check-out");
+    
+  }
+
+  function handleRemoveVisually(index){
+    let newCart = [...cart]
+
+    newCart.splice(index, 1)
+
+    setCart(newCart)
+
+  }
+
+  async  function  handleRemoveFromCart(id, index){
+    console.log(id);
+    await removeItemFromCart(id);
+
+    handleRemoveVisually(index)
+
+
+    isProdRemoved(true);
+  }
 
   return (
     <>
@@ -46,20 +83,20 @@ function ShoppingCart() {
           )}
         </div>
         <hr />
-        {prods.length > 0 ? (
+        {cart.length > 0 ? (
           <div className="container-content">
             <div className="container-prods">
-              {prods?.map((prod, id) => {
+              {cart?.map(({produto, quantidade, id}, index) => {
                 return (
                   <ProductCard
-                    key={id}
-                    title={prod.title}
-                    author={prod.author}
-                    category={prod.category}
-                    price={prod.price}
-                    onClick={() => {
-                      removeItemFromCart(prod.id);
-                      isProdRemoved(true);
+                    key={index}
+                    title={produto.nome}
+                    author={produto.autor}
+                    // category={produto.id}
+                    price={produto.preco}
+                    onClick={
+                      () => {
+                        handleRemoveFromCart(id, index)
                     }}
                   />
                 );
@@ -68,21 +105,23 @@ function ShoppingCart() {
             <div className="container-checkout">
               <div className="checkout-card">
                 <div className="card-title">Checkout</div>
-                {prods?.map((prod, idx) => {
+                {cart?.map(({ produto }, idx) => {
                   return (
                     <div className="card-prod-list" key={idx}>
-                      <div id="prod-title">{prod.title}</div>
-                      <div id="prod-price">R$ {prod.price}</div>
+                      <div id="prod-title">{produto.nome}</div>
+                      <div id="prod-price">{ formatPrice(produto.preco) }</div>
                     </div>
                   );
                 })}
                 <hr />
                 <div className="card-total-container">
                   <div id="total-title">Total</div>
-                  <div id="total-amount">R$ {getTotalAmount()}</div>
+                  <div id="total-amount"> {  formatPrice(amount)  }</div>
                 </div>
 
-                <button className="buy-btn">COMPRAR</button>
+                <button className="buy-btn" onClick={handleGeneratePedidos}>
+                  COMPRAR
+                </button>
               </div>
             </div>
           </div>

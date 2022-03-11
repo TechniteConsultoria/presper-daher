@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Container,
@@ -10,28 +10,52 @@ import {
   Alert,
 } from "react-bootstrap";
 
-import MaskedInput from "react-maskedinput";
 
+
+import MaskedInput from "react-maskedinput";
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
 
+import { useCourse } from "../../contexts/CourseContext";
+import { useAuth } from "../../contexts/AuthContext";
+import MessageService from "../../services/MessageService";
+
 import "./Home.style.css";
+import cursoLoad from "../../services/curso/cursoLoad";
+import loadPergunta from "../../services/pergunta/perguntaLoad";
+import bannerLoad from "../../services/banner/bannerLoad";
+import { role } from "../../services/api";
+import LoadingGif from "../../componentes/LoadingGif";
 
 const axios = require("axios").default;
 
 function Home() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+
+  const navigate = useNavigate();
+  useEffect(
+    () => {
+      if(role == 'admin') navigate('/admin')
+    },[]
+  )
+
+  const { allCourses } = useCourse();
+  const { user } = useAuth();
+
+  const [name   , setName   ] = useState("");
+  const [email  , setEmail  ] = useState("");
+  const [phone  , setPhone  ] = useState("");
   const [message, setMessage] = useState("");
 
   const [msgSent, isMsgSent] = useState(false);
   const [msgResult, isMsgResult] = useState(false);
 
-  const [coursesList, setCoursesList] = useState([]);
-  const [testimonialsList, setTestimonialsList] = useState([]);
+  const [coursesList,     setCoursesList    ] = useState([]);
 
-  const navigate = useNavigate();
+  const [bannerList,      setBannerList     ] = useState([]);
+  
+  const [testimonialsList, setTestimonialsList] = useState([]);
+  const [loading,   setLoading  ] = useState(false);
+
 
   function handleClick(id) {
     navigate(`/course/${id}`);
@@ -39,62 +63,83 @@ function Home() {
 
   async function handleSubmit() {
     const data = {
-      name: name,
-      email: email,
-      phone: phone,
+      name:    name,
+      email:   email,
+      phone:   phone,
       message: message,
+    }
+  }
+  
+  const createMessage = async () => {
+    const body = {
+      nome: name,
+      email: email,
+      telefone: phone,
+      emailContent: message,
     };
 
-    const url =
-      "https://fake-api-json-server-presper.herokuapp.com/fale-conosco-mensagens";
-
     try {
-      axios.post(url, data).then((res) => {
-        isMsgSent(true);
-        if (res.status === 201) {
-          isMsgResult(true);
-        } else {
-          isMsgResult(false);
-        }
-      });
+      setLoading(true)
+
+      const response = await MessageService.createMessage(body);
+      isMsgSent(true);
+      if (response.status === 200) {
+        isMsgResult(true);
+      } else {
+        isMsgResult(false);
+      }
+      setLoading(false)
     } catch (error) {
       console.error(error);
     }
 
     setName("");
     setEmail("");
+    setPhone("");
     setMessage("");
-    isMsgSent(false);
   }
-
   async function getCourses() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setCoursesList(res.data);
-      }
-    });
+
+    let cursos = await cursoLoad()
+
+    setCoursesList(cursos)
   }
 
+  async function getBanners(){
+    let banner = await bannerLoad()
+
+    setBannerList(banner)
+  }
+  // setTimeout(() => {
+  //     isMsgSent(false);
+  //   }, 6000);
+  // };
+
+  //todo -> pegando da FAKE API, precisa mudar!
   async function getComments() {
-    const url =
-      "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
-    axios.get(url).then((res) => {
-      if (res.status === 200) {
-        setTestimonialsList(res.data);
-      }
-    });
+    // const url =
+    //   "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
+    // axios.get(url).then((res) => {
+    //   if (res.status === 200) {
+    //     setTestimonialsList(res.data);
+    //   }
+    // });
+    let perguntas = await loadPergunta()
+    setTestimonialsList(perguntas)
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     setName("");
     setEmail("");
     setMessage("");
     isMsgSent(false);
 
-    getCourses();
     getComments();
+    getBanners();
+    getCourses()
+
   }, []);
+
 
   return (
     <>
@@ -102,51 +147,35 @@ function Home() {
         <Container fluid className="carousel-container">
           <Row>
             <Carousel fade className="carousel">
+              {
+              bannerList.map(({ imagemUrl, titulo, descricao, nome}) => (
               <Carousel.Item>
                 <img
                   className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2018/07/15/10/44/dna-3539309_1280.jpg"
-                  alt="First slide"
-                />
-                <Carousel.Caption>
-                  <h3>First slide label</h3>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2016/11/10/02/47/blood-1813410_1280.jpg"
-                  alt="Second slide"
+                  src={imagemUrl}
+                  alt={nome}
                 />
 
                 <Carousel.Caption>
-                  <h3>Second slide label</h3>
+                  <h3>
+                    {
+                    titulo
+                    }
+                  </h3>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    {
+                      descricao
+                    }
                   </p>
                 </Carousel.Caption>
               </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://cdn.pixabay.com/photo/2016/11/30/12/17/cells-1872666_1280.jpg"
-                  alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                  <h3>Third slide label</h3>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
+              ) )
+              }
             </Carousel>
           </Row>
         </Container>
+
+
         <br />
         <Container>
           <div className="container-item">
@@ -171,11 +200,12 @@ function Home() {
                   }}
                 >
                   <CardComponent
-                    img={item.img}
-                    title={item.title}
-                    author={item.author}
+                    key={item.id}
+                    img={item.imagemUrl}
+                    title={item.nome}
+                    author={item.autor}
                     rating={item.rating}
-                    price={item.price}
+                    price={item.preco}
                     sold={item.sold}
                   />
                 </Link>
@@ -198,9 +228,9 @@ function Home() {
                 <Row key={item.id}>
                   <Col>
                     <CommentsCard
-                      img={item.img}
-                      author={item.author}
-                      text={item.text}
+                      img={item.user.imagemUrl}
+                      author={item.user.name}
+                      text={item.comentario}
                       onClick={() =>
                         console.log("Clicou no card de ID:", item.id)
                       }
@@ -221,10 +251,9 @@ function Home() {
           <div className="contact-us-container">
             <div id="form">
               <Form
-                // action="submit"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleSubmit();
+                  createMessage();
                 }}
               >
                 <Form.Group className="mb-3">
@@ -251,7 +280,7 @@ function Home() {
                     required
                   />
                 </Form.Group>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label column sm="2">
                     Telefone
                   </Form.Label>
@@ -263,6 +292,7 @@ function Home() {
                     placeholder="(xx) xxxxx-xxxx"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
+                    required
                   />
                 </Form.Group>
                 <Form.Group
@@ -289,7 +319,9 @@ function Home() {
                   }}
                   type="submit"
                 >
-                  Enviar
+                   {
+                    loading == false ? ('Enviar') : <LoadingGif/>
+                  }
                 </Button>
               </Form>
               <br />

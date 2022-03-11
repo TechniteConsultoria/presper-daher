@@ -1,5 +1,4 @@
-import "./CourseDetails.styles.css";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import ReactStars from "react-rating-stars-component";
@@ -7,52 +6,107 @@ import RatingCard from "../../componentes/RatingCard/RatingCard";
 import { Button, Container, Row, Col, ListGroup, Image } from "react-bootstrap";
 import { BsFillAwardFill, BsFillCameraVideoFill } from "react-icons/bs";
 
-import { CartContext } from "../../contexts/CartContext/CartContext";
+import { useCart } from "../../contexts/CartContext";
+import { useCourse } from "../../contexts/CourseContext";
+
+import "./CourseDetails.styles.css";
+import { formatPrice } from "../../utils/format";
+import comentarioCreate from "../../services/comentario/comentarioCreate";
+import comentarioLoadFiler from "../../services/comentario/comentarioLoadFiler";
 
 const axios = require("axios").default;
 
 function CourseDetails() {
   const { id } = useParams();
 
-  const [course, setCourse] = useState({});
+  console.log(id)
 
-  const { addItemToCart } = useContext(CartContext);
+  const { addItemToCart } = useCart();
+  const { getCourseByIdWithRelations } = useCourse();
+
+  const [course,   setCourse  ] = useState();
+  const [comments, setComments] = useState();
+
+  let somas = null
+  let qttd = null
+
+  if (course?.somatoriaAvaliacoes == null || undefined) {
+    somas = 0
+  } else {
+    somas = course?.somatoriaAvaliacoes
+  }
+
+  if (course?.quantidadeAvaliacoes == null || undefined) {
+    qttd = 0
+  } else {
+    qttd = course?.quantidadeAvaliacoes
+  }
+
+  const rating = somas / qttd
 
   async function getCourse() {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cursos";
-    axios.get(`${url}/${id}`).then((res) => {
-      if (res.status === 200) setCourse(res.data);
+    const result = await getCourseByIdWithRelations(id);
+    console.log(result)
+
+    setCourse({
+      id:          result.produto.id,
+      titulo:      result.produto.nome,
+      categoria:   result.produto.id,
+      autor:       result.produto.autor,
+      preco:       result.produto.preco,
+      description: result.produto.descricao,
+      descricao:   result.produto.descricao,
+      imagemUrl:   result.produto.imagemUrl,
+      videos:      result.produtoModulo
     });
+  }
+
+  async function getComment(){
+    let prodComments = await comentarioLoadFiler(id)
+
+    setComments(prodComments)
+    console.log(prodComments)
   }
 
   useEffect(() => {
     getCourse();
   }, []);
 
+  useEffect(() => {
+    getComment();
+  }, []);
+
+  
+
   return (
     <>
       <div className="head-container">
         <Container id="course-info">
           <div className="info-container">
-            <h2>{course.title}</h2>
-            <h5>{course.category}</h5>
-            <h6>{course.author}</h6>
+            <h2>{course?.titulo}</h2>
+            <h5>{course?.id}</h5>
+            <h6>{course?.autor}</h6>
             <h6>
               <div className="certificate-container">
                 <BsFillAwardFill size="1em" style={{ color: "#CFB53B" }} />{" "}
                 Certificado
               </div>
             </h6>
-            <ReactStars value={course.rating} edit={false} size={18} />
-            <h6>999 vendidos</h6>
+            <ReactStars value={rating} edit={false} size={18} />
+            <h6>{course?.volumeVendas != null ? course?.volumeVendas : 0} vendidos</h6>
 
             <h6 style={{ fontSize: "24px", color: "#6CB1CF" }}>
-              R$ {course.price}
+              { formatPrice(Number( course?.preco )) }
             </h6>
           </div>
           <div className="img-btn-container">
-            <Image src={course.img} id="course-img" />
-            <Button id="btn-add-cart" onClick={() => addItemToCart(course)}>
+            <Image src={course?.imagemUrl} id="course-img" />
+            <Button id="btn-add-cart" onClick={async () => {
+              await addItemToCart(course) 
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000);
+            }}>
               Adicionar ao carrinho
             </Button>
           </div>
@@ -62,7 +116,7 @@ function CourseDetails() {
         <div className="content-item">
           <Col>
             <h2>Descrição</h2>
-            <p>{course.description}</p>
+            <p>{course?.descricao}</p>
           </Col>
         </div>
         <div className="content-item">
@@ -76,10 +130,10 @@ function CourseDetails() {
               numbered
               style={{ maxWidth: "540px" }}
             >
-              {course.videos?.map((item, id) => {
+              {course?.videos?.map((item, id) => {
                 return (
                   <ListGroup.Item id="list-item" as="li" key={id}>
-                    {item} <BsFillCameraVideoFill />
+                    Aula { id + 1 } <BsFillCameraVideoFill />
                   </ListGroup.Item>
                 );
               })}
@@ -91,13 +145,13 @@ function CourseDetails() {
             <h2>Avaliações</h2>
             <p>Veja o que estão falando sobre esse curso</p>
 
-            {course.ratingComents?.map((item) => (
+            {comments?.map((item) => (
               <Row>
                 <Col key={item.id}>
                   <RatingCard
-                    img={item.img}
-                    author={item.author}
-                    text={item.text}
+                    img={item.user.imagemUrl}
+                    author={item.user.name}
+                    text={item.comentario}
                     rating={item.rating}
                   />
                 </Col>

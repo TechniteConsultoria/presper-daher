@@ -1,0 +1,10 @@
+.share-course-header {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+.react-share__ShareButton {
+  margin-right: 16px;
+}

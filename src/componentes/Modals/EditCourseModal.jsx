@@ -1,54 +1,96 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Alert } from "react-bootstrap";
+import { useCoursePage } from "../../services/Hooks/CoursePageHook";
+import { BsFillTrashFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
 
-import { BsFillTrashFill } from "react-icons/bs";
+import { formatPrice } from "../../utils/format";
+import IntlCurrencyInput from "react-intl-currency-input"
+
+import currencyConfig from "../../utils/currenryConfig";
+import cursoUpdate from "../../services/curso/cursoUpdate";
+import loadCategorias from "../../services/categoria/loadCategorias";
+import uploadImage from "../../services/imagem/upload";
+import DeleteCourseModal from "./DeleteCourseModal";
+import { toast } from "react-toastify";
 
 // TODO - formatar data.videos antes de submeter
 
 function EditCourseModal(props) {
-  const [resultEditCourseModalShow, setResultEditCourseModalShow] =
-    useState(false);
-
-  const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
-
+  
   const oldVideos = props.course.videos;
+  
+  // const [image, setImage] = useState(props.course.imagemUrl);
+  // const [title, setTitle] = useState(props.course.nome);
+  // const [author, setAuthor] = useState(props.course.autor);
+  // const [price, setPrice] = useState(props.course.preco);
+  // const [category, setCategory] = useState(props.course.categoria);
+  // const [description, setDescription] = useState(props.course.descricao);
+  const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
+  const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.preco));
+  const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] = useState(false)
 
-  const [image, setImage] = useState(props.course.img);
-  const [title, setTitle] = useState(props.course.title);
-  const [author, setAuthor] = useState(props.course.author);
-  const [price, setPrice] = useState(props.course.price);
-  const [category, setCategory] = useState(props.course.category);
-  const [description, setDescription] = useState(props.course.description);
+  const {
+    image,
+    setImage,
+    title,
+    setTitle,
+    author,
+    setAuthor,
+    price,
+    setPrice,
+    category,
+    setCategory,
+    description,
+    setDescription,
+    videos,
+    setVideos,
+    videosErrors,
+    setVideosErrors,
+    updateCourse,
+    resultEditCourseModalShow,
+    setResultEditCourseModalShow,
+    // resultDeleteCourseModalShow,
+    // setResultDeleteCourseModalShow,
+    result,
+  } = useCoursePage();
 
   const [videosList, setVideosList] = useState(props.course.videos);
-
   const [newVideos, setNewVideos] = useState([]);
+  const [newVideo,  setNewVideo] = useState();
   const [videoToDelete, setVideoToDelete] = useState("");
-  const [videosErrors, setVideosErrors] = useState([]);
+  // const [videosErrors, setVideosErrors] = useState([]);
+  const [categorias,              setCategorias  ]      = useState([]);
+
+  // const [videosErrors, setVideosErrors] = useState([]);
 
   useEffect(() => {
     setVideosList(oldVideos);
   }, [oldVideos]);
 
   function handleSubmit() {
+
     const data = {
       id: props.course.id,
-      img: image || props.course.img,
-      title: title || props.course.title,
-      author: author || props.course.author,
-      price: price || props.course.price,
-      category: category || props.course.category,
-      description: description || props.course.description,
+      imagemUrl: image || props.course.imagemUrl,
+      nome: title || props.course.nome,
+      autor: author || props.course.autor,
+      preco: price || props.course.preco,
+      categoriaId: category || props.course.categoriaId,
+      descricao: description || props.course.descricao,
       videos: newVideos,
     };
-    console.log(data);
+    console.log(data)
+
+    cursoUpdate(data, props.course.id)
+
     setResultEditCourseModalShow(true);
   }
 
   function handleAddNewVideos(data) {
+
     let errors = [];
     let files = [];
     for (let i = 0; i < data.length; i++) {
@@ -59,6 +101,63 @@ function EditCourseModal(props) {
     setVideosErrors(errors);
   }
 
+  const handleChangePriceOfProduct = (event, value, maskedValue) => {
+    event.preventDefault();
+
+    setPrice(value);                   // value without mask (ex: 1234.56)
+    setHandleChangePrice(maskedValue); // masked value (ex: R$1234,56)
+  };
+
+  async function getCategories(){
+    try {
+      await loadCategorias(setCategorias);
+    }
+    
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(
+    () => {
+
+      getCategories()
+    },[]
+  )
+
+  console.log(formatPrice(props.course.preco))
+
+
+  async function handleUploadImage(image){
+    if (image.type.includes('image')) {
+      
+      uploadImage(image, setImage)
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
+
+  async function handleUploadVideo(image){
+    if (image.type.includes('mp4')) {
+      
+      let videoPath = await uploadImage(image, setNewVideo)
+
+      handleAddNewVideos(videoPath);
+
+    }
+    else {
+      toast.error('Arquivo inválido!')
+    }
+  }
+  /*
+  
+  Line 272:29:  'setDeleteVideoModalShow' is not defined  no-undef
+  Line 392:15:  'deleteVideoModalShow' is not defined     no-undef
+  Line 393:23:  'setDeleteVideoModalShow' is not defined  no-undef
+
+  */
   return (
     <>
       <Modal {...props} centered animation={false}>
@@ -79,7 +178,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.title}
+                defaultValue={props.course.nome}
                 onChange={(e) => setTitle(e.target.value)}
                 required
               />
@@ -90,11 +189,22 @@ function EditCourseModal(props) {
                 Categoria
               </Form.Label>
               <Form.Control
-                type="text"
-                defaultValue={props.course.category}
+                as="select"
+                defaultValue={props.course.categoriaId}
                 onChange={(e) => setCategory(e.target.value)}
                 required
-              />
+              >
+                {
+                  categorias.map(
+                    (category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.nome}
+                      </option>
+                    )
+                  )
+                }
+
+              </Form.Control>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -103,7 +213,7 @@ function EditCourseModal(props) {
               </Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={props.course.author}
+                defaultValue={props.course.autor}
                 onChange={(e) => setAuthor(e.target.value)}
                 required
               />
@@ -113,12 +223,19 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Preço
               </Form.Label>
-              <Form.Control
+              {/* <Form.Control
                 type="float"
                 min={0.0}
-                defaultValue={props.course.price}
+                defaultValue={props.course.preco}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+              /> */}
+               <IntlCurrencyInput 
+                  className="currencyInput"
+                  currency="BRL" 
+                  config={currencyConfig}
+                  value={handleChangePrice}
+                  onChange={handleChangePriceOfProduct} 
               />
             </Form.Group>
 
@@ -132,7 +249,7 @@ function EditCourseModal(props) {
               <Form.Control
                 as="textarea"
                 rows={3}
-                defaultValue={props.course.description}
+                defaultValue={props.course.descricao}
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
@@ -142,14 +259,14 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Imagem
               </Form.Label>
-              <Form.Control readOnly defaultValue={props.course.img} required />
+              <Form.Control readOnly defaultValue={props.course.imagemUrl} required />
             </Form.Group>
 
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label column>Selecionar nova imagem</Form.Label>
               <Form.Control
                 type="file"
-                onChange={(e) => setImage(e.target.file)}
+                onChange={(e) => handleUploadImage(e.target.files[0])}
               />
             </Form.Group>
 
@@ -202,10 +319,12 @@ function EditCourseModal(props) {
               <Form.Control
                 type="file"
                 multiple
-                onChange={(e) => {
+                onChange={async (e) => {
+                  let video = e.target.file
+                  console.log(video)
                   console.log(e.target.files);
-                  // setNewVideos(e.target.files);
-                  handleAddNewVideos(e.target.files);
+                  await uploadImage(e.target.files, setNewVideo)
+                  handleAddNewVideos(newVideo);
                 }}
               />
             </Form.Group>
@@ -252,9 +371,12 @@ function EditCourseModal(props) {
                 border: "1px solid rgb(108, 117, 125, 0.3)",
                 color: "#000",
               }}
-              onClick={props.onHide}
+              onClick={() => {
+                setResultDeleteCourseModalShow(true);
+                props.onHide();
+              }}
             >
-              Ocultar curso
+              Remover curso
             </Button>
 
             <Button
@@ -290,7 +412,13 @@ function EditCourseModal(props) {
         show={resultEditCourseModalShow}
         onHide={() => setResultEditCourseModalShow(false)}
         course={props.course}
-        result={"not-okay"}
+        result={result}
+      />
+
+      <DeleteCourseModal
+        show={resultDeleteCourseModalShow}
+        onHide={() => setResultDeleteCourseModalShow(false)}
+        course={props.course}
       />
 
       <DeleteVideoModal
