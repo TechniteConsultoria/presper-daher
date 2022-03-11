@@ -30,6 +30,7 @@ function WatchCourse() {
 
   const [key, setKey] = useState("content");
   const [video, setVideo] = useState('');
+  const [prodId, setProdId] = useState('');
   const [videos, setVideos] = useState([]);
 
   function setPlayVideo(newVideo) {
@@ -97,13 +98,13 @@ function WatchCourse() {
             <CourseContent videos={videos} onClick={setPlayVideo} />
           </Tab>
           <Tab className="tab-link" eventKey="rate" title="Avaliar">
-            <RateThisCourse courseId={video.id} />
+            <RateThisCourse courseId={videos[0]?.id} />
           </Tab>
           <Tab className="tab-link" eventKey="doubts" title="Dúvidas">
-            <SendQuestion courseId={video.id} />
+            <SendQuestion courseId={videos[0]?.id} />
           </Tab>
           <Tab className="tab-link" eventKey="share" title="Compartilhar">
-            <ShareCourse courseId={video.id} />
+            <ShareCourse courseId={videos[0]?.id} />
           </Tab>
         </Tabs>
       </Container>
