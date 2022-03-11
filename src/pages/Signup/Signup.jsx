@@ -5,6 +5,7 @@ import Alert from "react-bootstrap/Alert";
 import "./Signup.styles.css";
 import { toast } from "react-toastify";
 import cadastro from "../../services/user/cadastro";
+import LoadingGif from "../../componentes/LoadingGif";
 
 function Signup() {
   const [nome, setNome] = useState("");
@@ -15,11 +16,16 @@ function Signup() {
   const [submit, isSubmit] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
+  const [loading,   setLoading  ] = useState(false);
 
   const navigate = useNavigate();
 
   async function handleSubmit() {
-    if (submit && senha === confirmaSenha) {
+    isSubmit(true);
+    setLoading(true)
+
+    if (senha === confirmaSenha) {
+    }
       try {
         let isOk = await cadastro(nome, email, senha, "1");
         if (isOk == "ok") {
@@ -30,7 +36,8 @@ function Signup() {
         console.error(error);
       }
       isSubmit(false);
-    }
+
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -58,7 +65,6 @@ function Signup() {
               className="row g-3 d-flex flex-column"
               onSubmit={(e) => {
                 e.preventDefault();
-                isSubmit(true);
                 handleSubmit();
               }}
             >
@@ -127,13 +133,16 @@ function Signup() {
                 className="btn btn-primary btn-lg"
                 style={{ background: "#14B8A6", border: "none" }}
               >
-                Acessar
+                {
+                loading == false ? ('Acessar') : <LoadingGif/>
+                }
+
               </button>
 
+            </form>
               <a href="/login" style={{ color: "#14B8A6" }}>
                 Já tem uma conta? Faça o Login
               </a>
-            </form>
           </div>
         </section>
       </div>
