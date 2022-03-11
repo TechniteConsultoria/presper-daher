@@ -11,6 +11,8 @@ import { useCourse } from "../../contexts/CourseContext";
 
 import "./CourseDetails.styles.css";
 import { formatPrice } from "../../utils/format";
+import comentarioCreate from "../../services/comentario/comentarioCreate";
+import comentarioLoadFiler from "../../services/comentario/comentarioLoadFiler";
 
 const axios = require("axios").default;
 
@@ -22,7 +24,8 @@ function CourseDetails() {
   const { addItemToCart } = useCart();
   const { getCourseByIdWithRelations } = useCourse();
 
-  const [course, setCourse] = useState();
+  const [course,   setCourse  ] = useState();
+  const [comments, setComments] = useState();
 
   async function getCourse() {
     const result = await getCourseByIdWithRelations(id);
@@ -35,13 +38,28 @@ function CourseDetails() {
       autor:       result.produto.autor,
       preco:       result.produto.preco,
       description: result.produto.descricao,
-      imagemUrl:   result.produto.imagemUrl
+      descricao:   result.produto.descricao,
+      imagemUrl:   result.produto.imagemUrl,
+      videos:      result.produtoModulo
     });
+  }
+
+  async function getComment(){
+    let prodComments = await comentarioLoadFiler(id)
+
+    setComments(prodComments)
+    console.log(prodComments)
   }
 
   useEffect(() => {
     getCourse();
   }, []);
+
+  useEffect(() => {
+    getComment();
+  }, []);
+
+  
 
   return (
     <>
@@ -93,7 +111,7 @@ function CourseDetails() {
               {course?.videos?.map((item, id) => {
                 return (
                   <ListGroup.Item id="list-item" as="li" key={id}>
-                    {item} <BsFillCameraVideoFill />
+                    Aula { id + 1 } <BsFillCameraVideoFill />
                   </ListGroup.Item>
                 );
               })}
@@ -105,13 +123,13 @@ function CourseDetails() {
             <h2>Avaliações</h2>
             <p>Veja o que estão falando sobre esse curso</p>
 
-            {course?.ratingComents?.map((item) => (
+            {comments?.map((item) => (
               <Row>
                 <Col key={item.id}>
                   <RatingCard
-                    img={item.imagemUrl}
-                    author={item.autor}
-                    text={item.text}
+                    img={item.user.imagemUrl}
+                    author={item.user.name}
+                    text={item.comentario}
                     rating={item.rating}
                   />
                 </Col>
