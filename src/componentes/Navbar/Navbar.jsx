@@ -178,8 +178,6 @@ import { BsFillCartFill } from "react-icons/bs";
 import { useCart } from "../../contexts/CartContext";
 import { CartContext } from "../../contexts/CartContext";
 import { useAuth } from "../../contexts/AuthContext";
-
-
 // useEffect(
   //   () => {
     //     setIsLogged(token)
@@ -193,8 +191,10 @@ import "../Navbar/Navbar.style.css";
 import logo from "../../assets/project-logo.png";
 import loadCategorias from "../../services/categoria/loadCategorias";
 import { token, role } from "../../services/api";
+import ComboBox from "./comboBox.jsx";
 
 
+import cursoLoad from "../../services/curso/cursoLoad";
 
 function NavbarComponent() {
   const { cart } = useCart();
@@ -203,7 +203,7 @@ function NavbarComponent() {
   
   const [ isLogged, setIsLogged ] = useState("");
   const [categorias, setCategorias] = useState([]);
-  
+  const [coursesList2, setCoursesList2] = useState([]);
   
   async function getCategories(){
     try {
@@ -220,7 +220,12 @@ function NavbarComponent() {
     setCartLoaded(loadedCart)
   }
 
+  async function getCourses() {
 
+    let cursos = await cursoLoad()
+    // console.log(cursos)
+    setCoursesList2(cursos)
+  }
 
   // useEffect(() => {
   //   console.log(role);
@@ -232,7 +237,7 @@ function NavbarComponent() {
       getCategories()
 
       handleLoadCart()
-
+      getCourses()
     },[]
   )
 
@@ -263,14 +268,19 @@ function NavbarComponent() {
                     })}
                   </NavDropdown>
                   <Form>
-                    <FormControl
+                    {/* <FormControl
                       type="search"
                       placeholder="Pesquisar cursos"
                       className="me-2"
                       aria-label="Search"
                       id="search-bar"
                       onKeyPress={() => console.log("Searching...")}
-                    />
+                      autoComplete='true'
+                    /> */}
+                    
+                    
+                    <ComboBox placeholder="Pesquisar cursos" data={coursesList2}/>
+                   
                   </Form>
 
                   <Nav.Link
@@ -280,7 +290,7 @@ function NavbarComponent() {
                   >
                     <BsFillCartFill style={{ fontSize: "24px" }} />
                     <span id="cart-count">
-                      {cartLoaded.length === null ? 0 : cartLoaded.length}
+                      {cartLoaded?.length === null ? 0 : cartLoaded?.length}
                     </span>
                   </Nav.Link>
 

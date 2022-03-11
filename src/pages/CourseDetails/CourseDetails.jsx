@@ -84,7 +84,12 @@ function CourseDetails() {
           </div>
           <div className="img-btn-container">
             <Image src={course?.imagemUrl} id="course-img" />
-            <Button id="btn-add-cart" onClick={() => addItemToCart(  course )}>
+            <Button id="btn-add-cart" onClick={async () => {
+              await addItemToCart(course) 
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000);
+            }}>
               Adicionar ao carrinho
             </Button>
           </div>
