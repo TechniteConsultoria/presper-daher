@@ -30,14 +30,13 @@ export default class CardComponent extends React.Component {
             boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
             marginTop: "16px",
             cursor: "pointer",
-            objectFit: "cover",
           }}
           onClick={this.state.onClick}
         >
           <Card.Img
             variant="top"
             src={this.state.img}
-            style={{ borderRadius: "4px 4px 0px 0px", height: "120px" }}
+            style={{ borderRadius: "4px 4px 0px 0px", height: "10em", objectFit: "cover", }}
           />
           <Card.Body>
             <Card.Title style={{ fontSize: "14px" }}>
