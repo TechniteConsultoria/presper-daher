@@ -4,7 +4,7 @@ import { api } from '../api'
 
 
 export default async function deleteAllFromCart(id){
-  const response = await api.delete(`carrinhoProdutoDestroyByEmpresa/${id}}`)
+  const response = await api.delete(`carrinhoProdutoDestroyByUser/${id}}`)
   .then(
     (response) => {
       let status = response.status
