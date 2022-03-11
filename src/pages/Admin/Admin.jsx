@@ -14,16 +14,20 @@ import { useAuth } from "../../contexts/AuthContext";
 import logo from "../../assets/project-logo.png"; 
 
 import "./Admin.style.css";
+import { role } from "../../services/api";
 
 function Admin() {
   const navigate = useNavigate();
 
+  useEffect(
+    () => {
+      // if(role !== 'admin') navigate('/login')
+    },[]
+  )
+
   const [showPage, setShowPage] = useState(2);
   const { user, logout } = useAuth();
 
-  // useEffect(() => {
-  //   if (user === null || user.role !== "admin") navigate("/login");
-  // }, [showPage, user]);
 
   return (
     <>
