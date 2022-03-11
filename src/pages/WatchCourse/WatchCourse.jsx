@@ -28,15 +28,22 @@ import LoadingGif from "../../componentes/LoadingGif";
 
 function WatchCourse() {
 
-  const [key, setKey] = useState("content");
-  const [video, setVideo] = useState('');
+  const [key   , setKey   ] = useState("content");
+  const [video , setVideo ] = useState('');
   const [prodId, setProdId] = useState('');
+  const [index , setIndex ] = useState(0);
   const [videos, setVideos] = useState([]);
 
-  function setPlayVideo(newVideo) {
+  function setPlayVideo(newVideo, newIndex) {
     console.log("newVideo.url");
     console.log(newVideo.url);
+
+    console.log("newIndex");
+    console.log(newIndex);
+
     setVideo(newVideo);
+
+    setIndex(newIndex)
     
   }
 
@@ -59,26 +66,35 @@ function WatchCourse() {
   return (
     <>
       {video? (
-        <div className="player-container">
-          <Player
-          poster="/assets/poster.png"
-          // ref={video.id}
 
-          autoPlay
-          muted
-          >
-            {/* <source src="http://localhost:8142/api/file/download?privateUrl=tenant/883fa309-da4f-4300-85d5-bb59af61a8ac/produto/imagem1/video3.mp4" /> */}
-            <source src={video.url} />
-            <ControlBar>
-              <ReplayControl seconds={10} order={1.1} />
-              <ForwardControl seconds={30} order={1.2} />
-              <CurrentTimeDisplay order={4.1} />
-              <TimeDivider order={4.2} />
-              <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
-              <VolumeMenuButton disabled />
-            </ControlBar>
-          </Player>
-        </div>
+        videos.map(
+          (video, videoIndex) => (
+            index == videoIndex ? (
+          <div
+            className="player-container"
+            >
+              <Player
+              poster="/assets/poster.png"
+              // ref={video.id}
+
+              // autoPlay
+              muted
+              >
+                {/* <source src="http://localhost:8142/api/file/download?privateUrl=tenant/883fa309-da4f-4300-85d5-bb59af61a8ac/produto/imagem1/video3.mp4" /> */}
+                <source src={video.url} />
+                <ControlBar>
+                  <ReplayControl seconds={10} order={1.1} />
+                  <ForwardControl seconds={30} order={1.2} />
+                  <CurrentTimeDisplay order={4.1} />
+                  <TimeDivider order={4.2} />
+                  <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
+                  <VolumeMenuButton disabled />
+                </ControlBar>
+              </Player>
+            </div>
+            ) : false
+          )
+        )
       ):(
         <LoadingGif/>
       )}
