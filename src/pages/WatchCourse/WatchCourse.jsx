@@ -75,9 +75,6 @@ function WatchCourse() {
             >
               <Player
               poster="/assets/poster.png"
-              // ref={video.id}
-
-              // autoPlay
               muted
               >
                 {/* <source src="http://localhost:8142/api/file/download?privateUrl=tenant/883fa309-da4f-4300-85d5-bb59af61a8ac/produto/imagem1/video3.mp4" /> */}
@@ -88,7 +85,7 @@ function WatchCourse() {
                   <CurrentTimeDisplay order={4.1} />
                   <TimeDivider order={4.2} />
                   <PlaybackRateMenuButton rates={[5, 2, 1, 0.5, 0.1]} order={7.1} />
-                  <VolumeMenuButton disabled />
+                  <VolumeMenuButton />
                 </ControlBar>
               </Player>
             </div>
