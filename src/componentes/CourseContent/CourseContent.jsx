@@ -15,7 +15,7 @@ function CourseContent(props) {
           return (
             <ListGroup.Item key={id}>
               <div className="video-title-container">
-                <span id="icon-play" onClick={() => props.onClick(item)}>
+                <span id="icon-play" onClick={() => props.onClick(item, id)}>
                   <BsPlayCircle />
                 </span>
                 <span>{item.titulo || "Título"}</span>
