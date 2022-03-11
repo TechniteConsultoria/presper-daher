@@ -25,6 +25,7 @@ import cursoLoad from "../../services/curso/cursoLoad";
 import loadPergunta from "../../services/pergunta/perguntaLoad";
 import bannerLoad from "../../services/banner/bannerLoad";
 import { role } from "../../services/api";
+import LoadingGif from "../../componentes/LoadingGif";
 
 const axios = require("axios").default;
 
@@ -53,6 +54,7 @@ function Home() {
   const [bannerList,      setBannerList     ] = useState([]);
   
   const [testimonialsList, setTestimonialsList] = useState([]);
+  const [loading,   setLoading  ] = useState(false);
 
 
   function handleClick(id) {
@@ -77,6 +79,8 @@ function Home() {
     };
 
     try {
+      setLoading(true)
+
       const response = await MessageService.createMessage(body);
       isMsgSent(true);
       if (response.status === 200) {
@@ -84,6 +88,7 @@ function Home() {
       } else {
         isMsgResult(false);
       }
+      setLoading(false)
     } catch (error) {
       console.error(error);
     }
@@ -314,7 +319,9 @@ function Home() {
                   }}
                   type="submit"
                 >
-                  Enviar
+                   {
+                    loading == false ? ('Enviar') : <LoadingGif/>
+                  }
                 </Button>
               </Form>
               <br />
