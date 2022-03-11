@@ -35,9 +35,10 @@ function App() {
         <CourseProvider>
           <CreditCardProvider>
             <div>
-              {location.pathname === "/login" ||
-              location.pathname === "/signup" ||
-              location.pathname === "/admin" ? null : (
+              {location.pathname === "/login"  ||
+               location.pathname === "/signup" ||
+               location.pathname === "/admin"  ? 
+                null : (
                 <Header />
               )}
             </div>
@@ -54,18 +55,18 @@ function App() {
             />
 
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/course-details/:id" element={<CourseDetails />} />
-              <Route path="/shopping-cart" element={<ShoppingCart />} />
-              <Route path="/perfil" element={<Perfil />} />
-              <Route path="/my-courses" element={<MyCourses />} />
-              <Route path="/my-certificates" element={<MyCertificates />} />
-              <Route path="/my-payment-info" element={<MyPaymentInfo />} />
-              <Route path="/check-out" element={<CartCheckOut />} />
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/watch-course/:id" element={<WatchCourse />} />
+              <Route path="/"                    element={<Home />}          />
+              <Route path="/login"               element={<Login />}         />
+              <Route path="/signup"              element={<Signup />}        />
+              <Route path="/course-details/:id"  element={<CourseDetails />} />
+              <Route path="/shopping-cart"       element={<ShoppingCart />}  />
+              <Route path="/perfil"              element={<Perfil />}        />
+              <Route path="/my-courses"          element={<MyCourses />}     />
+              <Route path="/my-certificates"     element={<MyCertificates />}/>
+              <Route path="/my-payment-info"     element={<MyPaymentInfo />} />
+              <Route path="/check-out"           element={<CartCheckOut />}  />
+              <Route path="/admin"               element={<Admin />}         />
+              <Route path="/watch-course/:id"    element={<WatchCourse />}   />
             </Routes>
 
             <div>
