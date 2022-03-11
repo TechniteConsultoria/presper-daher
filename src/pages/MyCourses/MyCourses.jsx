@@ -13,6 +13,8 @@ import MyCoursesCardComponent from "../../componentes/MyCoursesCard/MyCoursesCar
 
 import cursos from "../../data/cursos";
 import categorias from "../../data/categorias";
+import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
+import { id } from "../../services/api";
 
 function MyCourses() {
   const [classificar, setClassificar] = useState("Título: A a Z");
@@ -21,14 +23,14 @@ function MyCourses() {
 
   const [courseList, setCourseList] = useState([]);
 
-  useEffect(() => {
-    classificarPor(classificar);
-    filtrarPor(filtro);
-  }, [classificar, filtro]);
+  // useEffect(() => {
+  //   classificarPor(classificar);
+  //   filtrarPor(filtro);
+  // }, [classificar, filtro]);
 
-  useEffect(() => {
-    buscarPor(buscarCurso);
-  }, [buscarCurso]);
+  // useEffect(() => {
+  //   buscarPor(buscarCurso);
+  // }, [buscarCurso]);
 
   function classificarPor(classificar) {
     let sortedList = [];
@@ -72,6 +74,16 @@ function MyCourses() {
       })
     );
   }
+  async function handleListCourses(){
+    let clientCourses = await clienteProdutoCertificado.list()
+    setCourseList(clientCourses)
+  }
+
+  useEffect(
+    () => {
+      handleListCourses()
+    }, []
+  )
 
   return (
     <>

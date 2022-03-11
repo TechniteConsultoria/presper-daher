@@ -8,12 +8,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import CertificateCard from "../../componentes/CertificateCard/CertificateCard";
+import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
 
 import "./MyCertificates.styles.css";
 
 import cursos from "../../data/cursos";
 
 function MyCertificates() {
+
   const certificates = cursos;
 
   const [classificar, setClassificar] = useState("Título: A a Z");
@@ -22,14 +24,14 @@ function MyCertificates() {
 
   const [certificatesList, setCertificatesList] = useState([]);
 
-  useEffect(() => {
-    classificarPor(classificar);
-    filtrarPor(filtro);
-  }, [classificar, filtro]);
+  // useEffect(() => {
+  //   classificarPor(classificar);
+  //   filtrarPor(filtro);
+  // }, [classificar, filtro]);
 
-  useEffect(() => {
-    buscarPor(buscarCurso);
-  }, [buscarCurso]);
+  // useEffect(() => {
+  //   buscarPor(buscarCurso);
+  // }, [buscarCurso]);
 
   function classificarPor(classificar) {
     let sortedList = [];
@@ -73,6 +75,20 @@ function MyCertificates() {
       })
     );
   }
+
+  async function handleListCourses(){
+    let clientCourses = await clienteProdutoCertificado.listWithFilter('isActive', 1)
+    setCertificatesList(clientCourses)
+  }
+
+
+  // useEffect(
+  //   () => {
+  //     handleListCourses()
+  //   }, []
+  // )
+
+  
   return (
     <>
       <Container>

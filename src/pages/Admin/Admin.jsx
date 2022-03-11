@@ -21,7 +21,7 @@ function Admin() {
 
   useEffect(
     () => {
-      // if(role !== 'admin') navigate('/login')
+      if(role !== 'admin') navigate('/login')
     },[]
   )
 

@@ -6,22 +6,26 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import ReactStars from "react-rating-stars-component";
+import comentarioCreate from "../../services/comentario/comentarioCreate";
+import { id } from "../../services/api";
 
 function RateThisCourse(props) {
   const [rateValue, setRateValue] = useState(0);
   const [testimonial, setTestimonial] = useState("");
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const data = {
-      courseId: props.courseId,
-      rateValue: rateValue,
-      testimonial: testimonial,
+      // cir: props.courseId,
+      comentario: testimonial,
+      produtoId:  props.courseId,
+      userId:     id,
     };
 
-    console.log(data);
+    console.log(data)
+    await comentarioCreate(data)
 
-    setRateValue(0);
     setTestimonial("");
+    setRateValue(0);
   }
 
   return (
