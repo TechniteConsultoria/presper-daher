@@ -10,6 +10,8 @@ import {
   Alert,
 } from "react-bootstrap";
 
+
+
 import MaskedInput from "react-maskedinput";
 import CardComponent from "../../componentes/Card/Card";
 import CommentsCard from "../../componentes/CommentsCard/CommentsCard";
@@ -220,9 +222,9 @@ function Home() {
                 <Row key={item.id}>
                   <Col>
                     <CommentsCard
-                      img={item.img}
-                      author={item.author}
-                      text={item.text}
+                      img={item.user.imagemUrl}
+                      author={item.user.name}
+                      text={item.comentario}
                       onClick={() =>
                         console.log("Clicou no card de ID:", item.id)
                       }
