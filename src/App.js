@@ -4,6 +4,7 @@ import Signup from "./pages/Signup/Signup.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Home from "./pages/Home/Home.jsx";
 import CourseDetails from "./pages/CourseDetails/CourseDetails.jsx";
+import Category from "./pages/CourseCategory/CourseCategory.jsx";
 // import Navbar from "./componentes/Navbar/Navbar.jsx";
 import Header from "./componentes/Header/Header.jsx";
 import Footer from "./componentes/Footer/Footer.jsx";
@@ -59,6 +60,7 @@ function App() {
               <Route path="/login"               element={<Login />}         />
               <Route path="/signup"              element={<Signup />}        />
               <Route path="/course-details/:id"  element={<CourseDetails />} />
+              <Route path="/course-category" element={<Category />} />
               <Route path="/shopping-cart"       element={<ShoppingCart />}  />
               <Route path="/perfil"              element={<Perfil />}        />
               <Route path="/my-courses"          element={<MyCourses />}     />
