@@ -27,6 +27,23 @@ function CourseDetails() {
   const [course,   setCourse  ] = useState();
   const [comments, setComments] = useState();
 
+  let somas = null
+  let qttd = null
+
+  if (course?.somatoriaAvaliacoes == null || undefined) {
+    somas = 0
+  } else {
+    somas = course?.somatoriaAvaliacoes
+  }
+
+  if (course?.quantidadeAvaliacoes == null || undefined) {
+    qttd = 0
+  } else {
+    qttd = course?.quantidadeAvaliacoes
+  }
+
+  const rating = somas / qttd
+
   async function getCourse() {
     const result = await getCourseByIdWithRelations(id);
     console.log(result)
@@ -75,8 +92,8 @@ function CourseDetails() {
                 Certificado
               </div>
             </h6>
-            <ReactStars value={course?.rating} edit={false} size={18} />
-            <h6>999 vendidos</h6>
+            <ReactStars value={rating} edit={false} size={18} />
+            <h6>{course?.volumeVendas != null ? course?.volumeVendas : 0} vendidos</h6>
 
             <h6 style={{ fontSize: "24px", color: "#6CB1CF" }}>
               { formatPrice(Number( course?.preco )) }
