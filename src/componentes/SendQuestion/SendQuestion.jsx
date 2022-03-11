@@ -1,19 +1,28 @@
 import "./SendQuestion.styles.css";
 import React, { useState } from "react";
 
+import { id } from "../../services/api"
+
+
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import comentarioCreate from "../../services/comentario/comentarioCreate";
 
 function SendQuestion(props) {
   const [message, setMessage] = useState("");
 
-  function handleSubmit() {
+  async function handleSubmit() {
+
     const data = {
-      id: props.courseId,
-      message: message,
-      userId: "",
+      // cir: props.courseId,
+      comentario: message,
+      produtoId:  props.courseId,
+      userId:     id,
     };
+
+    console.log(data)
+    await comentarioCreate(data)
 
     setMessage("");
   }
