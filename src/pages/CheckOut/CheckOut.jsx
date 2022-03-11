@@ -14,6 +14,9 @@ import Form from "react-bootstrap/Form";
 
 import { useCreditCard } from "../../contexts/CreditCardContext";
 import { formatPrice } from "../../utils/format";
+import { api, id } from "../../services/api";
+import { toast } from "react-toastify";
+import createPedidoWithFatura from "../../services/pedido/createPedidoWithFatura";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
@@ -31,7 +34,6 @@ function CartCheckOut() {
   async function handleLoadCards(){
     let userCards  = await getCreditCards();
 
-    console.log(userCards)
 
     setCards(userCards)
   }
@@ -49,6 +51,7 @@ function CartCheckOut() {
 
   async function handleGetCart(){
     let loadedCart = await getCart()
+    console.log("loadedCart")
     console.log(loadedCart)
     setProds(loadedCart)
 
@@ -62,7 +65,42 @@ function CartCheckOut() {
   handleGetCart() 
   }, []);
 
+
+
   
+  async function deletarCarrinho() {
+    const deletarCarrinho = await api.delete(`carrinhoProduto-all/${id}`) 
+    console.log(deletarCarrinho)
+    return deletarCarrinho
+  }
+  // deletarCarrinho()
+
+  async function handleGeneratePedidos(cart){
+
+    let formatedProd = {
+      produtos: [],
+     }
+
+    cart.map(
+      (cartProp) =>  {
+        cartProp.produto.quantidade = cartProp.quantidade
+        formatedProd.produtos.push(cartProp.produto)
+        } 
+    )
+    let isPedidoGenerated = await createPedidoWithFatura(formatedProd)
+    
+    if (!isPedidoGenerated){
+      toast.error("Erro...")
+      return
+    }
+
+
+
+    let deletedAllCart = await deletarCarrinho()
+
+    if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
+
+  }
 
   return (
     <>
@@ -146,7 +184,11 @@ function CartCheckOut() {
               }</div>
             </div>
             
-            <Button id="btn-checkout"> Finalizar Compra </Button>
+            <Button
+            onClick={
+              () => handleGeneratePedidos(prods)
+            }
+            id="btn-checkout"> Finalizar Compra </Button>
 
             {/* <Link to="/">
               <Button id="btn-checkout"> Finalizar Compra </Button>
