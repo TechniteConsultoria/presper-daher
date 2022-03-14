@@ -284,13 +284,8 @@ function NavbarComponent() {
                    
                   </Form>
 
-<<<<<<< HEAD
                   <Link
                     to="/presper/shopping-cart"
-=======
-                  <Nav.Link
-                    href="/shopping-cart"
->>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                     style={{ justifyContent: "center" }}
                     id="cart-link"
                   >
@@ -305,10 +300,6 @@ function NavbarComponent() {
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
-<<<<<<< HEAD
-=======
-                          href={`/perfil`}
->>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -318,10 +309,6 @@ function NavbarComponent() {
                           </Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
-<<<<<<< HEAD
-=======
-                          href={`/my-courses`}
->>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -329,10 +316,6 @@ function NavbarComponent() {
                           >Meus Cursos</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
-<<<<<<< HEAD
-=======
-                          href={`/my-certificates`}
->>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -342,10 +325,6 @@ function NavbarComponent() {
 
                         </NavDropdown.Item>
                         <NavDropdown.Item
-<<<<<<< HEAD
-=======
-                          href={`/my-payment-info`}
->>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
