@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./Signup.styles.css";
 import { toast } from "react-toastify";

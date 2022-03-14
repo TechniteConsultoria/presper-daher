@@ -3,6 +3,8 @@ import React, {  useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 import { FormControl, Form } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+
 
 function ComboBox(props) {
   // const [filteredData, setFilteredData] = useState([]);
@@ -63,9 +65,9 @@ function ComboBox(props) {
               }
             })?.map((value, key) => {  
               return (
-                <a className="dataItem" href={`/course-details/${value.id}`} key={key} rel="noreferrer">
+                <Link className="dataItem" to={`/course-details/${value.id}`} key={key} rel="noreferrer">
                   <p>{value.nome} </p>
-                </a>
+                </Link>
               );
             })}
           </div>
