@@ -3,6 +3,8 @@ import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { useNavigate, Link } from "react-router-dom";
+
 
 import "./Login.styles.css";
 
@@ -138,12 +140,12 @@ function Login() {
               Acessar
             </Button>
 
-            <a href="/" style={{ color: "#14B8A6" }}>
+            <Link to="/presper" style={{ color: "#14B8A6" }}>
               Esqueceu a senha?
-            </a>
-            <a href="/signup" style={{ color: "#14B8A6" }}>
+            </Link>
+            <Link to="/presper/signup" style={{ color: "#14B8A6" }}>
               Não possui uma conta? Registre-se
-            </a>
+            </Link>
           </form>
         </div>
       </section>
