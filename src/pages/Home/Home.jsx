@@ -175,6 +175,14 @@ function Home() {
           </Row>
         </Container>
 
+        <h1>
+          <Link
+          to={`/presper/signup`}
+          >
+          CADASTRO
+          </Link>
+        </h1>
+
 
         <br />
         <Container>
