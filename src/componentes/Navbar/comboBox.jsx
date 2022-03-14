@@ -63,7 +63,7 @@ function ComboBox(props) {
               }
             })?.map((value, key) => {  
               return (
-                <a className="dataItem" href={`/course-details/${value.id}`} key={key} rel="noreferrer">
+                <a className="dataItem" href={`/presper/course-details/${value.id}`} key={key} rel="noreferrer">
                   <p>{value.nome} </p>
                 </a>
               );

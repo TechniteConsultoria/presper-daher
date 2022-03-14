@@ -138,10 +138,10 @@ function Login() {
               Acessar
             </Button>
 
-            <a href="/" style={{ color: "#14B8A6" }}>
+            <a href="/presper/" style={{ color: "#14B8A6" }}>
               Esqueceu a senha?
             </a>
-            <a href="/signup" style={{ color: "#14B8A6" }}>
+            <a href="/presper/signup" style={{ color: "#14B8A6" }}>
               Não possui uma conta? Registre-se
             </a>
           </form>
