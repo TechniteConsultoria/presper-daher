@@ -249,7 +249,7 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-            <Navbar.Brand href={`/presper/`} id="nav-brand">
+            <Navbar.Brand href={`/`} id="nav-brand">
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
 
@@ -260,7 +260,7 @@ function NavbarComponent() {
                     {categorias.map((item) => {
                       return (
                         <li key={item.id}>
-                          <NavDropdown.Item href={`/presper/`} id="categories-items">
+                          <NavDropdown.Item href={`/`} id="categories-items">
                             {item.nome}
                           </NavDropdown.Item>
                         </li>
@@ -284,7 +284,7 @@ function NavbarComponent() {
                   </Form>
 
                   <Nav.Link
-                    href="/presper/shopping-cart"
+                    href="/shopping-cart"
                     style={{ justifyContent: "center" }}
                     id="cart-link"
                   >
@@ -298,25 +298,25 @@ function NavbarComponent() {
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
-                          href={`/presper/perfil`}
+                          href={`/perfil`}
                           id="minhaconta-items"
                         >
                           Perfil
                         </NavDropdown.Item>
                         <NavDropdown.Item
-                          href={`/presper/my-courses`}
+                          href={`/my-courses`}
                           id="minhaconta-items"
                         >
                           Meus Cursos
                         </NavDropdown.Item>
                         <NavDropdown.Item
-                          href={`/presper/my-certificates`}
+                          href={`/my-certificates`}
                           id="minhaconta-items"
                         >
                           Certificados
                         </NavDropdown.Item>
                         <NavDropdown.Item
-                          href={`/presper/my-payment-info`}
+                          href={`/my-payment-info`}
                           id="minhaconta-items"
                         >
                           Formas de Pagamento
@@ -332,14 +332,14 @@ function NavbarComponent() {
                   ) : (
                     <>
                       <Nav.Link
-                        href="/presper/signup"
+                        href="/signup"
                         className="nav-link"
                         id="signup-link"
                       >
                         Cadastre-se
                       </Nav.Link>
                       <Nav.Link
-                        href="/presper/login"
+                        href="/login"
                         className="nav-link"
                         id="login-link"
                       >
@@ -351,7 +351,7 @@ function NavbarComponent() {
                   
                   {role === "admin" && (
                     <NavDropdown title="Admin" id="basic-nav-dropdown">
-                      <NavDropdown.Item href={`/presper/admin`} id="minhaconta-items">
+                      <NavDropdown.Item href={`/admin`} id="minhaconta-items">
                         Certificados
                       </NavDropdown.Item>
                       <NavDropdown.Item
