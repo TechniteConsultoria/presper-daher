@@ -34,7 +34,7 @@ function Home() {
   const navigate = useNavigate();
   useEffect(
     () => {
-      // if(role == 'admin') navigate('/presper/admin')
+      // if(role == 'admin') navigate('/admin')
     },[]
   )
 
@@ -203,7 +203,7 @@ function Home() {
                   key={item.id}
                   id="card-link"
                   to={{
-                    pathname:`/presper/course-details/${item.id}`,
+                    pathname:`/course-details/${item.id}`,
                     state: { course: item },
                   }}
                 >

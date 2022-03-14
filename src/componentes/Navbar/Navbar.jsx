@@ -250,7 +250,7 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-            <Navbar.Brand href={`/presper/`} id="nav-brand">
+            <Navbar.Brand href={`/`} id="nav-brand">
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
 
@@ -261,7 +261,7 @@ function NavbarComponent() {
                     {categorias.map((item) => {
                       return (
                         <li key={item.id}>
-                          <NavDropdown.Item href={`/presper/`} id="categories-items">
+                          <NavDropdown.Item href={`/`} id="categories-items">
                             {item.nome}
                           </NavDropdown.Item>
                         </li>
@@ -284,8 +284,13 @@ function NavbarComponent() {
                    
                   </Form>
 
+<<<<<<< HEAD
                   <Link
                     to="/presper/shopping-cart"
+=======
+                  <Nav.Link
+                    href="/shopping-cart"
+>>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                     style={{ justifyContent: "center" }}
                     id="cart-link"
                   >
@@ -300,6 +305,10 @@ function NavbarComponent() {
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
+<<<<<<< HEAD
+=======
+                          href={`/perfil`}
+>>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -309,6 +318,10 @@ function NavbarComponent() {
                           </Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
+<<<<<<< HEAD
+=======
+                          href={`/my-courses`}
+>>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -316,6 +329,10 @@ function NavbarComponent() {
                           >Meus Cursos</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
+<<<<<<< HEAD
+=======
+                          href={`/my-certificates`}
+>>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -325,6 +342,10 @@ function NavbarComponent() {
 
                         </NavDropdown.Item>
                         <NavDropdown.Item
+<<<<<<< HEAD
+=======
+                          href={`/my-payment-info`}
+>>>>>>> 23c64a1000ec2c932cbbe1d16f2d02c9ff2a070e
                           id="minhaconta-items"
                           >
                           <Link
@@ -342,14 +363,14 @@ function NavbarComponent() {
                   ) : (
                     <>
                       <Nav.Link
-                        href="/presper/signup"
+                        href="/signup"
                         className="nav-link"
                         id="signup-link"
                       >
                         Cadastre-se
                       </Nav.Link>
                       <Nav.Link
-                        href="/presper/login"
+                        href="/login"
                         className="nav-link"
                         id="login-link"
                       >
@@ -361,7 +382,7 @@ function NavbarComponent() {
                   
                   {role === "admin" && (
                     <NavDropdown title="Admin" id="basic-nav-dropdown">
-                      <NavDropdown.Item href={`/presper/admin`} id="minhaconta-items">
+                      <NavDropdown.Item href={`/admin`} id="minhaconta-items">
                         Certificados
                       </NavDropdown.Item>
                       <NavDropdown.Item
