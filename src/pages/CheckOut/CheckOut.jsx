@@ -17,6 +17,7 @@ import { formatPrice } from "../../utils/format";
 import { api, id } from "../../services/api";
 import { toast } from "react-toastify";
 import createPedidoWithFatura from "../../services/pedido/createPedidoWithFatura";
+import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
@@ -82,24 +83,30 @@ function CartCheckOut() {
      }
 
     cart.map(
+
       (cartProp) =>  {
         cartProp.produto.quantidade = cartProp.quantidade
         formatedProd.produtos.push(cartProp.produto)
         } 
     )
-    let isPedidoGenerated = await createPedidoWithFatura(formatedProd)
+
+    let pedidoGenerated = await createPedidoWithFatura(formatedProd)
     
-    if (!isPedidoGenerated){
+    if (!pedidoGenerated){
       toast.error("Erro...")
       return
     }
-
-
 
     let deletedAllCart = await deletarCarrinho()
 
     if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
 
+
+    // create a array to make a map in backend 
+    console.log(formatedProd)
+
+    let a  = await clienteProdutoCertificado.create(formatedProd)
+    console.log(a);
   }
 
   return (

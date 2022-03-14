@@ -34,7 +34,7 @@ function Home() {
   const navigate = useNavigate();
   useEffect(
     () => {
-      if(role == 'admin') navigate('/admin')
+      // if(role == 'admin') navigate('/admin')
     },[]
   )
 

@@ -8,7 +8,7 @@ export default async function createPedidoWithFatura(data) {
     // produtos no carrinho é o próprio rows do carrinho!
     data.compradorUserId = id
   
-    let pedido = await api.post(`pedido`, data )
+    let pedido = await api.post(`pedido`, data ).then(res => res.data)
 
     let pedidoId = pedido.id
   

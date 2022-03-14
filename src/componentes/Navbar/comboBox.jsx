@@ -8,9 +8,9 @@ function ComboBox(props) {
   // const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
   // const [dataList, setDataList] = useState("");
-  console.log(props)
+  // console.log(props)
   const dataList = props.data
-  console.log(dataList)
+  // console.log(dataList)
 
   // useEffect(() => {
   //   setDataList(data)
