@@ -32,8 +32,6 @@ function App() {
   const location = useLocation();
 
   return (
-    <BrowserRouter>
-      <CartProvider>
         <AuthProvider>
           <CourseProvider>
             <CreditCardProvider>
@@ -82,8 +80,7 @@ function App() {
             </CreditCardProvider>
           </CourseProvider>
         </AuthProvider>
-      </CartProvider>
-    </BrowserRouter>
+
   );
 }
 
