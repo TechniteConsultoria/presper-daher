@@ -99,7 +99,8 @@ function CartCheckOut() {
 
     let deletedAllCart = await deletarCarrinho()
 
-    if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
+    // if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
+
 
 
     // create a array to make a map in backend 

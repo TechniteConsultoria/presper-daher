@@ -56,19 +56,19 @@ function App() {
             />
 
             <Routes>
-              <Route path="/"                    element={<Home />}          />
-              <Route path="/login"               element={<Login />}         />
-              <Route path="/signup"              element={<Signup />}        />
-              <Route path="/course-details/:id"  element={<CourseDetails />} />
-              <Route path="/course-category" element={<Category />} />
-              <Route path="/shopping-cart"       element={<ShoppingCart />}  />
-              <Route path="/perfil"              element={<Perfil />}        />
-              <Route path="/my-courses"          element={<MyCourses />}     />
-              <Route path="/my-certificates"     element={<MyCertificates />}/>
-              <Route path="/my-payment-info"     element={<MyPaymentInfo />} />
-              <Route path="/check-out"           element={<CartCheckOut />}  />
-              <Route path="/admin"               element={<Admin />}         />
-              <Route path="/watch-course/:id"    element={<WatchCourse />}   />
+              <Route exact path="/"                    element={<Home />}          />
+              <Route exact path="/login"               element={<Login />}         />
+              <Route exact path="/signup"              element={<Signup />}        />
+              <Route exact path="/course-details/:id"  element={<CourseDetails />} />
+              <Route exact path="/course-category"     element={<Category />} />
+              <Route exact path="/shopping-cart"       element={<ShoppingCart />}  />
+              <Route exact path="/perfil"              element={<Perfil />}        />
+              <Route exact path="/my-courses"          element={<MyCourses />}     />
+              <Route exact path="/my-certificates"     element={<MyCertificates />}/>
+              <Route exact path="/my-payment-info"     element={<MyPaymentInfo />} />
+              <Route exact path="/check-out"           element={<CartCheckOut />}  />
+              <Route exact path="/admin"               element={<Admin />}         />
+              <Route exact path="/watch-course/:id"    element={<WatchCourse />}   />
             </Routes>
 
             <div>

@@ -3,6 +3,8 @@ import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import { useNavigate, Link } from "react-router-dom";
+
 
 import "./Login.styles.css";
 
@@ -19,11 +21,15 @@ function Login() {
 
   // const [showAlert, setShowAlert] = useState(false);
 
+  const navigate = useNavigate();
+  
   async function handleSubmit() {
+    
+
     try {
 
       let isOk = await login(email, senha)
-      isOk == 'ok' ? window.location.pathname = '' : toast.error("Login incorreto!")
+      isOk == 'ok' ? navigate("") : toast.error("Login incorreto!")
 
     }
     catch (error) {
@@ -76,7 +82,7 @@ function Login() {
             }}
           >
             <br />
-            <button
+            {/* <button
               className="btn btn-lg"
               id="social-login"
               onClick={(e) => {
@@ -97,7 +103,7 @@ function Login() {
             >
               <Image src={facebook} alt="google-log" className="logo" />{" "}
               Continuar com Facebook
-            </button>
+            </button> */}
             <br />
             <input
               type="email"
@@ -138,12 +144,12 @@ function Login() {
               Acessar
             </Button>
 
-            <a href="/" style={{ color: "#14B8A6" }}>
+            <Link to="/presper" style={{ color: "#14B8A6" }}>
               Esqueceu a senha?
-            </a>
-            <a href="/signup" style={{ color: "#14B8A6" }}>
+            </Link>
+            <Link to="signup" style={{ color: "#14B8A6" }}>
               Não possui uma conta? Registre-se
-            </a>
+            </Link>
           </form>
         </div>
       </section>

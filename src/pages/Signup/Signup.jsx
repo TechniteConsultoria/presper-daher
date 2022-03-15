@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./Signup.styles.css";
 import { toast } from "react-toastify";
@@ -30,7 +30,7 @@ function Signup() {
         let isOk = await cadastro(nome, email, senha, "1");
         if (isOk == "ok") {
           toast.success("OK!");
-          navigate("/");
+          navigate("");
         } else console.log("erro?");
       } catch (error) {
         console.error(error);
@@ -140,9 +140,9 @@ function Signup() {
               </button>
 
             </form>
-              <a href="/login" style={{ color: "#14B8A6" }}>
+              <Link to="/login" style={{ color: "#14B8A6" }}>
                 Já tem uma conta? Faça o Login
-              </a>
+              </Link>
           </div>
         </section>
       </div>

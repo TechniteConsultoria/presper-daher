@@ -43,7 +43,7 @@ function ShoppingCart() {
   const navigate = useNavigate();
   
   function handleGeneratePedidos(){
-      navigate("/check-out");
+      navigate("check-out");
     
   }
 
@@ -137,7 +137,7 @@ function ShoppingCart() {
               <div className="card-text">
                 Você não possui nenhum produto adicionado ao seu carrinho.
               </div>
-              <Link to="/">
+              <Link to="">
                 <Button id="card-button">Comprar agora</Button>
               </Link>
             </div>

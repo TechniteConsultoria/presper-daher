@@ -175,6 +175,14 @@ function Home() {
           </Row>
         </Container>
 
+        <h1>
+          <Link
+          to={`signup`}
+          >
+          CADASTRO
+          </Link>
+        </h1>
+
 
         <br />
         <Container>
@@ -195,7 +203,7 @@ function Home() {
                   key={item.id}
                   id="card-link"
                   to={{
-                    pathname: `/course-details/${item.id}`,
+                    pathname:`course-details/${item.id}`,
                     state: { course: item },
                   }}
                 >

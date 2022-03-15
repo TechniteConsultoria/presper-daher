@@ -195,6 +195,7 @@ import ComboBox from "./comboBox.jsx";
 
 
 import cursoLoad from "../../services/curso/cursoLoad";
+import { Link } from "react-router-dom";
 
 function NavbarComponent() {
   const { cart } = useCart();
@@ -249,7 +250,7 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-            <Navbar.Brand href="/" id="nav-brand">
+            <Navbar.Brand href={`/presper`} id="nav-brand">
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
 
@@ -283,43 +284,55 @@ function NavbarComponent() {
                    
                   </Form>
 
-                  <Nav.Link
-                    href="/shopping-cart"
+                  <Link
+                    to="shopping-cart"
                     style={{ justifyContent: "center" }}
                     id="cart-link"
                   >
                     <BsFillCartFill style={{ fontSize: "24px" }} />
-                    <span id="cart-count">
-                      {cartLoaded?.length === null ? 0 : cartLoaded?.length}
-                    </span>
-                  </Nav.Link>
+                      <span id="cart-count">
+                        {cartLoaded?.length === null ? 0 : cartLoaded?.length}
+                      </span>
+
+                  </Link>
 
                   {token ? (
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
-                          href={`/perfil`}
                           id="minhaconta-items"
-                        >
+                          >
+                          <Link
+                          to={`perfil`}
+                          >
                           Perfil
+                          </Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
-                          href={`/my-courses`}
                           id="minhaconta-items"
-                        >
-                          Meus Cursos
+                          >
+                          <Link
+                          to={`my-courses`}
+                          >
+                            Meus Cursos
+                          </Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
-                          href={`/my-certificates`}
                           id="minhaconta-items"
-                        >
-                          Certificados
+                          >
+                          <Link
+                          to={`my-certificates`}
+                          >
+                            Certificados
+                          </Link>
+
                         </NavDropdown.Item>
                         <NavDropdown.Item
-                          href={`/my-payment-info`}
                           id="minhaconta-items"
-                        >
-                          Formas de Pagamento
+                          >
+                          <Link
+                          to={`my-payment-info`}
+                          >Formas de Pagamento</Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
                           id="minhaconta-items"
@@ -332,18 +345,30 @@ function NavbarComponent() {
                   ) : (
                     <>
                       <Nav.Link
-                        href="/signup"
+                        // href="/signup"
+                        href="#"
                         className="nav-link"
                         id="signup-link"
                       >
-                        Cadastre-se
+
+                        <Link
+                          to="signup"
+                        >
+                          Cadastre-se
+                        </Link>
                       </Nav.Link>
                       <Nav.Link
-                        href="/login"
+                        // href="/login"
+                        href="#"
                         className="nav-link"
                         id="login-link"
                       >
-                        Fazer Login
+                        <Link
+                        to="login"
+                        
+                        >
+                          Fazer Login
+                        </Link>
                       </Nav.Link>
                     </>
                   )}
