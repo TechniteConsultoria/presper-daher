@@ -43,7 +43,7 @@ function ShoppingCart() {
   const navigate = useNavigate();
   
   function handleGeneratePedidos(){
-      navigate("check-out");
+      navigate("/check-out");
     
   }
 
