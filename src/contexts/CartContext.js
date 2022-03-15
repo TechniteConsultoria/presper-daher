@@ -12,11 +12,15 @@ export const CartContext = createContext({});
 
 export const CartProvider = ({ children }) => {
 
-
   async function addItemToCart(prodData) {
 
     let loadedCart =  await getCart() 
-    return await addInCart(prodData, loadedCart, 1 )
+    
+    await addInCart(prodData, loadedCart, 1 )
+    
+    let formatedList = await getCart()
+
+    setCart(formatedList);
   }
 
   async function removeItemFromCart(prodData) {
@@ -24,7 +28,7 @@ export const CartProvider = ({ children }) => {
     await deleteProductOfCart(prodData)
     
     let formatedList = await getCart()
-    
+
     setCart(formatedList);
   }
 
@@ -36,14 +40,11 @@ export const CartProvider = ({ children }) => {
 
   async function getCart() {
     if(!token) return []
+
     return await loadCart();
   }
 
   const [cart, setCart] = useState(getCart);
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
 
   return (
     <CartContext.Provider
