@@ -1,6 +1,17 @@
 .container-my-courses {
 }
 
+.resetLink{
+    color: inherit;
+    text-decoration: inherit; /* no underline */
+}
+
+.resetLink:hover{
+  color: inherit;
+  text-decoration: inherit; /* no underline */
+}
+
+
 .container-filtro {
   display: flex;
   flex-direction: row;
