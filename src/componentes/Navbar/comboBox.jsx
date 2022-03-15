@@ -65,8 +65,14 @@ function ComboBox(props) {
               }
             })?.map((value, key) => {  
               return (
-                <Link className="dataItem" to={`/course-details/${value.id}`} key={key} rel="noreferrer">
-                  <p>{value.nome} </p>
+                <Link 
+                className="dataItem"
+                to={`/presper/course-details/${value.id}`}
+                key={key}
+                rel="noreferrer"
+                onClick={() => setWordEntered("")}
+                >
+                  <p> {value.nome} </p>
                 </Link>
               );
             })}
