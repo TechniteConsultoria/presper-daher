@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import CardComponent from "../../componentes/Card/Card";
 
 
+// import productFindWithFilter from "../../services/productFindWithFilter"
 import cursoLoad from "../../services/curso/cursoLoad";
 import bannerLoad from "../../services/banner/bannerLoad";
 
@@ -14,11 +15,21 @@ import "../CourseCategory/CourseCategory.style.css";
 function Category (){
 
 
-// falta essa parte do filtro de acordo com o curso
+// falta essa parte do filtro de acordo com o curso pesquisado
+// o search precisa ser redirecionado para essa página 
 
-//async function loadCategorias(){}
 
-//useEffect(() => {})
+{/* async function loadCategorias(){
+
+  let id  = getIdFromUrl('/course-category/')
+    console.log(id);
+
+
+
+     useEffect(() => {
+    loadCategorias()
+  }, []);
+}*/ }
 
 const [coursesList,     setCoursesList    ] = useState([]);
 const [bannerList,      setBannerList     ] = useState([]);
@@ -67,7 +78,7 @@ useEffect(async () => {
                   }}
                 >
                   <CardComponent
-                    key={item.id}
+                    filter={item.id}
                     img={item.imagemUrl}
                     title={item.nome}
                     author={item.autor}
