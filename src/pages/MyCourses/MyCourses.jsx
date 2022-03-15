@@ -15,6 +15,7 @@ import cursos from "../../data/cursos";
 import categorias from "../../data/categorias";
 import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
 import { id } from "../../services/api";
+import { Link } from "react-router-dom";
 
 function MyCourses() {
   const [classificar, setClassificar] = useState("Título: A a Z");
@@ -74,7 +75,8 @@ function MyCourses() {
       })
     );
   }
-  async function handleListCourses(){
+  
+  async function  handleListCourses(){
     let clientCourses = await clienteProdutoCertificado.list()
     setCourseList(clientCourses)
   }
@@ -195,17 +197,22 @@ function MyCourses() {
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
             {courseList?.map((item) => (
-              <MyCoursesCardComponent
-                key={item.id}
-                img={item.img}
-                title={item.title}
-                author={item.author}
-                rating={item.rating}
-                onClick={() => {
-                  //   setCourse(item);
-                  //   showEditCourseModal(true);
-                }}
-              />
+              <Link
+              to={`/watch-course/${item.produto.id}`}
+              className="resetLink"
+              >
+                <MyCoursesCardComponent
+                  key={item.id}
+                  img={item.produto.imagemUrl}
+                  title={item.produto.nome}
+                  author={item.produto.autor}
+                  rating={item.produto.somatoriaDeAvaliacoes}
+                  onClick={() => {
+                    //   setCourse(item);
+                    //   showEditCourseModal(true);
+                  }}
+                />
+              </Link>
             ))}
           </div>
         </div>
