@@ -26,7 +26,7 @@ import ComboBox from "./comboBox.jsx";
 import cursoLoad from "../../services/curso/cursoLoad";
 
 function NavbarComponent() {
-  const { cart } = useCart();
+  const { cart, update } = useCart();
   const [cartLoaded, setCartLoaded] = useState([]);
   const { user, logout } = useAuth();
   
@@ -68,6 +68,12 @@ function NavbarComponent() {
       handleLoadCart()
       getCourses()
     },[]
+  )
+
+  useEffect(
+    () => {
+      handleLoadCart()
+    },[cart]
   )
 
   return (
@@ -122,7 +128,10 @@ function NavbarComponent() {
                     <ComboBox placeholder="Pesquisar cursos" data={coursesList2}/>
                    
                   </Form>
-
+            {/*================================================================================
+                                          AQUI
+               ================================================================================
+            */}
                   <Nav.Link
                     href="/shopping-cart"
                     style={{ justifyContent: "center" }}
