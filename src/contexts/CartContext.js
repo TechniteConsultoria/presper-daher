@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { token } from "../services/api";
+import { id, token } from "../services/api";
 import addInCart from "../services/carrinho/addInCart";
+import deleteAllFromCart from "../services/carrinho/deleteAllFromCart";
 import deleteProductOfCart from "../services/carrinho/deleteProductOfCart";
 import loadCart from "../services/carrinho/loadCart";
 
@@ -38,6 +39,15 @@ export const CartProvider = ({ children }) => {
     return makeSumToCarrinho(cart);
   }
 
+  async function deleteAllCart() {
+
+    let userId = id 
+    await deleteAllFromCart(userId)
+
+    let formatedList = await getCart()
+    setCart(formatedList);
+  }
+
   async function getCart() {
     if(!token) return []
 
@@ -54,7 +64,8 @@ export const CartProvider = ({ children }) => {
         addItemToCart,
         removeItemFromCart,
         getTotalAmount,
-        getCart
+        getCart,
+        deleteAllCart
       }}
     >
       {children}
@@ -64,7 +75,7 @@ export const CartProvider = ({ children }) => {
 
 export function useCart() {
   const context = useContext(CartContext);
-  const { cart, addItemToCart, removeItemFromCart, getTotalAmount, getCart } = context;
+  const { cart, addItemToCart, removeItemFromCart, getTotalAmount, getCart, deleteAllCart } = context;
 
-  return { cart, addItemToCart, removeItemFromCart, getTotalAmount, getCart };
+  return { cart, addItemToCart, removeItemFromCart, getTotalAmount, getCart, deleteAllCart };
 }
