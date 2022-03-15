@@ -10,9 +10,14 @@ import { BsFillPencilFill } from "react-icons/bs";
 
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
 
-const axios = require("axios").default;
+import { useCategory } from "../../contexts/CategoryContext";
+
 
 function Category() {
+
+  const { allCategorys } = useCategory();
+
+
   const [showCreateCategoryModal, isShowCreateCategoryModal] = useState(false);
   const [showEditCategoryModal, isShowEditCategoryModal] = useState(false);
   const [categoriesList, setCategoriesList] = useState([]);
@@ -20,7 +25,8 @@ function Category() {
 
   async function getCategories() {
     try {
-      await loadCategorias(setCategoriesList);
+      let categoryList = await allCategorys
+      setCategoriesList(categoryList)
     }
     catch (error) {
       console.error(error);
@@ -29,7 +35,7 @@ function Category() {
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [allCategorys]);
 
   return (
     <>
@@ -79,8 +85,9 @@ function Category() {
                 </tr>
               </thead>
               <tbody>
-                {categoriesList?.map((cat, id) => {
-                  return (
+                {
+                categoriesList == allCategorys ? (
+                  categoriesList?.map((cat, id) => (
                     <tr key={id}>
                       <td>{cat.nome}</td>
 
@@ -100,8 +107,33 @@ function Category() {
                         />
                       </td>
                     </tr>
-                  );
-                })}
+                  )
+                )
+                ) : (
+                  categoriesList?.map((cat, id) => (
+                    <tr key={id}>
+                      <td>{cat.nome}</td>
+
+                      <td>
+                        {new Date(cat.createdAt).toLocaleDateString("pt-BR")}
+                      </td>
+
+                      <td className="icons-column">
+                        <BsFillPencilFill
+                          className="icon"
+                          id="icon-edit"
+                          onClick={() => {
+                            setCategory(cat);
+                            isShowEditCategoryModal(true);
+                            console.log(category);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  )
+                )
+                )
+                }
               </tbody>
             </Table>
           </Container>
