@@ -125,7 +125,11 @@ function Perfil(props) {
             >{email}</h4>
           <div className="container-content">
             <div className="pic-section">
-              <Image className="img" roundedCircle src={pic}></Image>
+              <Image className="img" style={
+                {
+                  objectFit: 'cover'
+                }
+              } roundedCircle src={pic}></Image>
               <button className="btn" onClick={handleClick}>
                 Editar <BsPencilFill />
               </button>
