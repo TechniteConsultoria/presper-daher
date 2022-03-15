@@ -69,8 +69,6 @@ function App() {
               <Route exact path="/check-out"           element={<CartCheckOut />}  />
               <Route exact path="/admin"               element={<Admin />}         />
               <Route exact path="/watch-course/:id"    element={<WatchCourse />}   />
-              <Route exact path="/cursos"              element={<Courses />}   />
-              <Route exact path="/cursosteste"              element={<CoursesTeste />}   />
             </Routes>
 
             <div>
