@@ -22,7 +22,7 @@ import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
   const { getCreditCards, creditCardList } = useCreditCard();
-  const { removeItemFromCart, getTotalAmount,  getCart } = useCart();
+  const { removeItemFromCart, getTotalAmount,  getCart, deleteAllCart } = useCart();
   const [showAddCardForm, setShowAddCardForm] = useState(false);
   const [cards ,  setCards  ] = useState([]);
   const [amount, setAmount] = useState([]);
@@ -69,11 +69,6 @@ function CartCheckOut() {
 
 
   
-  async function deletarCarrinho() {
-    const deletarCarrinho = await api.delete(`carrinhoProduto-all/${id}`) 
-    console.log(deletarCarrinho)
-    return deletarCarrinho
-  }
   // deletarCarrinho()
 
   async function handleGeneratePedidos(cart){
@@ -97,17 +92,13 @@ function CartCheckOut() {
       return
     }
 
-    let deletedAllCart = await deletarCarrinho()
+    let deletedAllCart =  await deleteAllCart()
 
-    // if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
-
-
-
+    
     // create a array to make a map in backend 
-    console.log(formatedProd)
-
-    let a  = await clienteProdutoCertificado.create(formatedProd)
-    console.log(a);
+    await clienteProdutoCertificado.create(formatedProd)
+    
+    if(deletedAllCart) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado, mas sem fatura :(")
   }
 
   return (
