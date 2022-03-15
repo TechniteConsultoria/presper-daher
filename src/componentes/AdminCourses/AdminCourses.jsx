@@ -50,6 +50,15 @@ function Courses() {
     getCourses();
     getCategories()
   }, []);
+
+  useEffect(() => {
+    getCourses();
+  }, [allCourses]);
+  
+
+  useEffect(() => {
+    console.log("njkovcnsakvbnasdfjnbdkfjanbojidfnblkdfmvblksd  mvp[çlsdmbvkefbnedonbódnmbb[dqfkcmfbodefbjdnfbbokmsd[pvms[cpopmvdofqnboidvfnbókdfnboioiefennboiefnboeifnbeflmb[lwdm,v[plwdmv[plwdmvósddfonbódsifnbóidf vposd,VCCÁSD,CVŚdlkfaqṕ,")
+  }, [allCourses]);
   
 
   function classificarPor(classificar) {
@@ -116,8 +125,8 @@ function Courses() {
 
   async function getCourses() {
     try {
-      let courses = await cursoLoad();
-      setCourseList(courses);
+      let coursesList = await allCourses
+      setCourseList(coursesList)
     }
 
     catch (error) {
@@ -283,7 +292,28 @@ function Courses() {
               />
             ))} */}
 
-            {courseList?.map((item) => (
+          {
+            allCourses == courseList ? (
+              courseList.map((item) => (
+                <>
+                <CardComponent
+                  key={item.id}
+                  img={item.imagemUrl}
+                  title={item.nome}
+                  author={item.autor}
+                  rating={item.rating}
+                  price={item.preco}
+                  sold={item.sold}
+                  onClick={() => {
+                    setCourse(item);
+                    console.log(item)
+                    showEditCourseModal(true);
+                  }}
+                />
+                </>
+              ))
+            ):(
+            courseList.map((item) => (
               <CardComponent
                 key={item.id}
                 img={item.imagemUrl}
@@ -298,7 +328,9 @@ function Courses() {
                   showEditCourseModal(true);
                 }}
               />
-            ))}
+            )
+          ))
+          }
           </div>
         </div>
       </Container>
