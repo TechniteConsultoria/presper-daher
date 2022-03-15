@@ -175,14 +175,6 @@ function Home() {
           </Row>
         </Container>
 
-        <h1>
-          <Link
-          to={`signup`}
-          >
-          CADASTRO
-          </Link>
-        </h1>
-
 
         <br />
         <Container>
