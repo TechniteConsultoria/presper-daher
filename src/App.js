@@ -56,20 +56,20 @@ function App() {
             />
 
             <Routes>
-              <Route exact path="/"                            element={<Home />}          />
-              <Route exact path="/presper/"                    element={<Home />}          />
-              <Route exact path="/presper/login"               element={<Login />}         />
-              <Route exact path="/presper/signup"              element={<Signup />}        />
-              <Route exact path="/presper/course-details/:id"  element={<CourseDetails />} />
-              <Route exact path="/presper/course-category"     element={<Category />} />
-              <Route exact path="/presper/shopping-cart"       element={<ShoppingCart />}  />
-              <Route exact path="/presper/perfil"              element={<Perfil />}        />
-              <Route exact path="/presper/my-courses"          element={<MyCourses />}     />
-              <Route exact path="/presper/my-certificates"     element={<MyCertificates />}/>
-              <Route exact path="/presper/my-payment-info"     element={<MyPaymentInfo />} />
-              <Route exact path="/presper/check-out"           element={<CartCheckOut />}  />
-              <Route exact path="/presper/admin"               element={<Admin />}         />
-              <Route exact path="/presper/watch-course/:id"    element={<WatchCourse />}   />
+              <Route exact path="/"                            element={() => <Home />}          />
+              <Route exact path="/presper/"                    element={() => <Home />}          />
+              <Route exact path="/presper/login"               element={() => <Login />}         />
+              <Route exact path="/presper/signup"              element={() => <Signup />}        />
+              <Route exact path="/presper/course-details/:id"  element={() => <CourseDetails />} />
+              <Route exact path="/presper/course-category"     element={() => <Category />} />
+              <Route exact path="/presper/shopping-cart"       element={() => <ShoppingCart />}  />
+              <Route exact path="/presper/perfil"              element={() => <Perfil />}        />
+              <Route exact path="/presper/my-courses"          element={() => <MyCourses />}     />
+              <Route exact path="/presper/my-certificates"     element={() => <MyCertificates />}/>
+              <Route exact path="/presper/my-payment-info"     element={() => <MyPaymentInfo />} />
+              <Route exact path="/presper/check-out"           element={() => <CartCheckOut />}  />
+              <Route exact path="/presper/admin"               element={() => <Admin />}         />
+              <Route exact path="/presper/watch-course/:id"    element={() => <WatchCourse />}   />
             </Routes>
 
             <div>
