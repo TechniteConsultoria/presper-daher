@@ -18,7 +18,11 @@ import { toast } from "react-toastify";
 
 // TODO - formatar data.videos antes de submeter
 
+import { useCourse } from "../../contexts/CourseContext";
+
 function EditCourseModal(props) {
+  const { allCourses, updateCourse } = useCourse();
+
   
   const oldVideos = props.course.videos;
   
@@ -49,7 +53,7 @@ function EditCourseModal(props) {
     setVideos,
     videosErrors,
     setVideosErrors,
-    updateCourse,
+    // updateCourse,
     resultEditCourseModalShow,
     setResultEditCourseModalShow,
     // resultDeleteCourseModalShow,
@@ -70,7 +74,7 @@ function EditCourseModal(props) {
     setVideosList(oldVideos);
   }, [oldVideos]);
 
-  function handleSubmit() {
+  async function handleSubmit() {
 
     const data = {
       id: props.course.id,
@@ -84,9 +88,10 @@ function EditCourseModal(props) {
     };
     console.log(data)
 
-    cursoUpdate(data, props.course.id)
+    // cursoUpdate(data, props.course.id)
+    await updateCourse(props.course.id, data)
 
-    setResultEditCourseModalShow(true);
+    // setResultEditCourseModalShow(true);
   }
 
   function handleAddNewVideos(data) {
