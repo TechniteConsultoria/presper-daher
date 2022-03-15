@@ -20,9 +20,15 @@ export default async function login(email, password) {
      responseHandler(response.status, messageOk, messageNotOk )
       if (response.status == 200) {
 
-        await loadUser(response.data)
+        let userData = await loadUser(response.data)
         handleLocalStorageEmailAndPassword(email, password)
-        return 'ok'
+
+        console.log("response.data")
+        console.log( response.data )
+
+        console.log( "userData.tenants[0].roles[0]" )
+        console.log(  userData.tenants[0].roles[0] )
+        return        userData.tenants[0].roles[0]
       }
     })
      .catch((error) => {

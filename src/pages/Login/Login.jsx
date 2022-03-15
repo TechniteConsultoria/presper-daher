@@ -3,7 +3,7 @@ import { useLoginPage } from "../../services/Hooks/LoginPageHook";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 import "./Login.styles.css";
@@ -20,26 +20,6 @@ function Login() {
   const [lembrarSenha, setLembrarSenha] = useState(false);
 
   // const [showAlert, setShowAlert] = useState(false);
-
-  const navigate = useNavigate();
-  
-  async function handleSubmit() {
-    
-
-    try {
-
-      let isOk = await login(email, senha)
-      isOk == 'ok' ? navigate("") : toast.error("Login incorreto!")
-
-    }
-    catch (error) {
-
-      toast.error(error)
-      console.error(error);
-
-    }
-  }
-
 
   useEffect(() => {
     setShowAlert(false);

@@ -57,8 +57,11 @@ export const useLoginPage = () => {
   const login = async () => {
     try {
       
-      let isOk = await loginUser(email, password)
-      isOk == 'ok' ? navigate("") : toast.error("Login incorreto!")
+      let role = await loginUser(email, password)
+
+      if(role == 'admin') navigate("/admin")
+      else if(role == 'pessoa') navigate("/")
+      else toast.error("Login incorreto!")
 
     }
     catch (error) {
