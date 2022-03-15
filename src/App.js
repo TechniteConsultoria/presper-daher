@@ -56,6 +56,7 @@ function App() {
             />
 
             <Routes>
+              <Route exact path="/"                            element={<Home />}          />
               <Route exact path="/presper/"                    element={<Home />}          />
               <Route exact path="/presper/login"               element={<Login />}         />
               <Route exact path="/presper/signup"              element={<Signup />}        />
