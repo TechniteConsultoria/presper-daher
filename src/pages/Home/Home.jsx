@@ -203,7 +203,7 @@ function Home() {
                   key={item.id}
                   id="card-link"
                   to={{
-                    pathname:`/course-details/${item.id}`,
+                    pathname:`/presper/course-details/${item.id}`,
                     state: { course: item },
                   }}
                 >
