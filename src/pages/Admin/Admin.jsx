@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import { AdminNavbarData } from "../../componentes/AdminNavbar/AdminNavbarData";
 import Courses from "../../componentes/AdminCourses/AdminCourses";
@@ -35,7 +35,9 @@ function Admin() {
         <Navbar expand={false}>
           <Container fluid>
             <Navbar.Toggle aria-controls="offcanvasNavbar" />
-            <img src={logo} alt="logo" id="navbar-logo" />
+            <Link to="/">
+              <img src={logo} alt="logo" id="navbar-logo" />
+            </Link>
             <Navbar.Offcanvas
               id="offcanvasNavbar"
               aria-labelledby="offcanvasNavbarLabel"
