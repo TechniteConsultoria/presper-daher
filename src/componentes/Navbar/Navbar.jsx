@@ -250,7 +250,7 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-            <Navbar.Brand href={`/presper`} id="nav-brand">
+            <Navbar.Brand href={`/`} id="nav-brand">
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
 
