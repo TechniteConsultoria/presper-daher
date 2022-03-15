@@ -30,7 +30,7 @@ function Signup() {
         let isOk = await cadastro(nome, email, senha, "1");
         if (isOk == "ok") {
           toast.success("OK!");
-          navigate("/");
+          navigate("/presper/");
         } else console.log("erro?");
       } catch (error) {
         console.error(error);

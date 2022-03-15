@@ -56,9 +56,9 @@ export const useLoginPage = () => {
 
   const login = async () => {
     try {
-
+      
       let isOk = await loginUser(email, password)
-      isOk == 'ok' ? window.location.pathname = '' : toast.error("Login incorreto!")
+      isOk == 'ok' ? navigate("/presper/") : toast.error("Login incorreto!")
 
     }
     catch (error) {

@@ -21,11 +21,15 @@ function Login() {
 
   // const [showAlert, setShowAlert] = useState(false);
 
+  const navigate = useNavigate();
+  
   async function handleSubmit() {
+    
+
     try {
 
       let isOk = await login(email, senha)
-      isOk == 'ok' ? window.location.pathname = '' : toast.error("Login incorreto!")
+      isOk == 'ok' ? navigate("/presper/") : toast.error("Login incorreto!")
 
     }
     catch (error) {
@@ -78,7 +82,7 @@ function Login() {
             }}
           >
             <br />
-            <button
+            {/* <button
               className="btn btn-lg"
               id="social-login"
               onClick={(e) => {
@@ -99,7 +103,7 @@ function Login() {
             >
               <Image src={facebook} alt="google-log" className="logo" />{" "}
               Continuar com Facebook
-            </button>
+            </button> */}
             <br />
             <input
               type="email"
