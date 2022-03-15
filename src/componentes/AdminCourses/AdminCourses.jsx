@@ -54,11 +54,7 @@ function Courses() {
   useEffect(() => {
     getCourses();
   }, [allCourses]);
-  
 
-  useEffect(() => {
-    console.log("njkovcnsakvbnasdfjnbdkfjanbojidfnblkdfmvblksd  mvp[çlsdmbvkefbnedonbódnmbb[dqfkcmfbodefbjdnfbbokmsd[pvms[cpopmvdofqnboidvfnbókdfnboioiefennboiefnboeifnbeflmb[lwdm,v[plwdmv[plwdmvósddfonbódsifnbóidf vposd,VCCÁSD,CVŚdlkfaqṕ,")
-  }, [allCourses]);
   
 
   function classificarPor(classificar) {
