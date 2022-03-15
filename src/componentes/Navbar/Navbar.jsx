@@ -28,7 +28,7 @@ import cursoLoad from "../../services/curso/cursoLoad";
 function NavbarComponent() {
   const { cart } = useCart();
   const [cartLoaded, setCartLoaded] = useState([]);
-  const { user, logout, role } = useAuth();
+  const { user, logout } = useAuth();
   
   const [ isLogged, setIsLogged ] = useState("");
   const [categorias, setCategorias] = useState([]);
@@ -70,7 +70,6 @@ function NavbarComponent() {
     },[]
   )
 
-
   return (
     <>
       <div>
@@ -78,9 +77,21 @@ function NavbarComponent() {
           <Container fluid="md" id="container-nav">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-            <Navbar.Brand href="/" id="nav-brand">
+            {/* <Navbar.Brand href="/" id="nav-brand">
+              <img src={logo} alt="logo" id="navbar-logo" />
+            </Navbar.Brand> */}
+
+            {
+            role == 'admin' ? (
+              <Navbar.Brand href="/admin" id="nav-brand">
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
+            ) : (
+              <Navbar.Brand href="/" id="nav-brand">
+              <img src={logo} alt="logo" id="navbar-logo" />
+            </Navbar.Brand>
+            )
+            }
 
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="navbar-items ">
@@ -123,7 +134,8 @@ function NavbarComponent() {
                     </span>
                   </Nav.Link>
 
-                  {token ? (
+                  {
+                  token ? (
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
@@ -176,9 +188,8 @@ function NavbarComponent() {
                       </Nav.Link>
                     </>
                   )}
-
-                  
-                  {role === "admin" && (
+                  {
+                  role === "admin" && (
                     <NavDropdown title="Admin" id="basic-nav-dropdown">
                       <NavDropdown.Item href={`/admin`} id="minhaconta-items">
                         Certificados
@@ -190,7 +201,8 @@ function NavbarComponent() {
                         Sair
                       </NavDropdown.Item>
                     </NavDropdown>
-                  )}
+                  )
+                  }
                 </Nav>
               </div>
             </Navbar.Collapse>
