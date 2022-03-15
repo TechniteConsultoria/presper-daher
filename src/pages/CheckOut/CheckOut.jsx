@@ -17,6 +17,7 @@ import { formatPrice } from "../../utils/format";
 import { api, id } from "../../services/api";
 import { toast } from "react-toastify";
 import createPedidoWithFatura from "../../services/pedido/createPedidoWithFatura";
+import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
@@ -96,9 +97,13 @@ function CartCheckOut() {
 
 
 
-    let deletedAllCart = await deletarCarrinho()
+    // let deletedAllCart = await deletarCarrinho()
 
-    if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
+    // if(deletarCarrinho) toast.success("Pedido Gerado, carrinho apagado mas sem fatura :(")
+
+    let a = await clienteProdutoCertificado.create(formatedProd)
+
+    console.log(a)
 
   }
 
