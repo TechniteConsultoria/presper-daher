@@ -4,7 +4,7 @@ import CourseService from "../CourseService";
 import { useCourse } from "../../contexts/CourseContext";
 
 export const useCoursePage = () => {
-  const { getCourses, isUpdated } = useCourse();
+  const { getCourses, isUpdated, createCourses } = useCourse();
 
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
@@ -28,7 +28,7 @@ export const useCoursePage = () => {
   const [result, setResult] = useState(null);
 
   const createCourse = async () => {
-    const body = {
+    const data = {
       // courseImage: image,
       nome: title,
       autor: author,
@@ -41,15 +41,17 @@ export const useCoursePage = () => {
     };
     // const courseImage = image;
 
-    console.log(body)
+    console.log(data)
 
     try {
-      const response = await CourseService.createCourse(body);
-      setResult(response);
+      // const response = await CourseService.createCourse(body);
+      const response = await createCourses(data);
+      console.log(response)
+      // setResult(response);
     } catch (error) {
       console.error(error);
     }
-    setCourse(body);
+    setCourse(data);
     setResultCreateCourseModalShow(true);
     setVideosErrors([]);
     getCourses();
@@ -59,7 +61,7 @@ export const useCoursePage = () => {
     const body = data;
     try {
       const response = await CourseService.updateCourse(id, body);
-      setResult(response.status);
+      // setResult(response.status);
       isUpdated(true);
     } catch (error) {
       console.error(error);
