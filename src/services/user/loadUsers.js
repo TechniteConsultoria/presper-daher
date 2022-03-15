@@ -7,8 +7,6 @@ export default async function loadUsers(filter, valor){
     return await api.get(`user`).then(
     // await api.get(`empresa?`).then(
         (res) => {
-            // console.log(res)
-            console.log(res.data.rows)
             return res.data.rows
         }
     

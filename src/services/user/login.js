@@ -22,12 +22,6 @@ export default async function login(email, password) {
 
         let userData = await loadUser(response.data)
         handleLocalStorageEmailAndPassword(email, password)
-
-        console.log("response.data")
-        console.log( response.data )
-
-        console.log( "userData.tenants[0].roles[0]" )
-        console.log(  userData.tenants[0].roles[0] )
         return        userData.tenants[0].roles[0]
       }
     })

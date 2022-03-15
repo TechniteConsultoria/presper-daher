@@ -4,8 +4,6 @@ import responseHandler from '../../utils/responseHandler'
 
 
 export default async function createPedido(produtoDoFornecedor){ 
-    console.log("produtoDoFornecedor")
-    console.log(produtoDoFornecedor)
     return await api.post('pedido', { data: produtoDoFornecedor  })
     .then(
         (response) => {

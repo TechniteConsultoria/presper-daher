@@ -7,7 +7,6 @@ export default async function cartaoLoadFilter(filter, value){
     return await api.get(`cartao?filter%5B${filter}%5D=${value}`)
           .then((response) => {
             let cartaoData = response.data.rows
-            console.log(cartaoData)
             return cartaoData
           });
   }

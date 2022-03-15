@@ -9,7 +9,6 @@ export default async function comentarioDelete(comentarioId){
         id: comentarioId,
       }
     }).then((response) => {
-            console.log(response)
             let comentarioData = response.data
             toast.success("Excluido com sucesso!")
             return comentarioData

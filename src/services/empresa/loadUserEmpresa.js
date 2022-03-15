@@ -14,8 +14,5 @@ export default async function loadUserEmpresa(token) {
 
     let empresaData  = empresaReq.data
 
-    console.log("empresaReq.data")
-    console.log(empresaReq.data)
-
     return await empresaData
   }

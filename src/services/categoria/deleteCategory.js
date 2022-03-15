@@ -12,7 +12,6 @@ export default async function deleteCategory(id){
             let mensagemNaoOK = 'Algo deu errado :('
 
             responseHandler(status, mensagemOk, mensagemNaoOK)
-            console.log(res)
         }
     
     )

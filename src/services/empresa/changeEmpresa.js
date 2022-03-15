@@ -8,8 +8,6 @@ export default async function changeEmpresa(id, data){
     console.log(data)
     return await api.put(`empresa/${id}`, data).then(
         (res) => {
-            console.log(data)
-            console.log(res)
             let status = res.status;
             // let mensagemOk = 'Em modificada com sucesso :)';
             // let mensagemNaoOK = 'Algo deu errado :(';

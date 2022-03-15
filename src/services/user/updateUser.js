@@ -14,7 +14,7 @@ export default async function updateUser(id, data) {
     return api.put(`user/${id}`, { data } )
 
       .then((response) => {
-        console.log(response)
+        // console.log(response)
 
         let mensagemOk = 'Opa, recebemos sua alteração! :)'
 

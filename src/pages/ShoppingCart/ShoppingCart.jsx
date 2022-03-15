@@ -57,7 +57,6 @@ function ShoppingCart() {
   }
 
   async  function  handleRemoveFromCart(id, index){
-    console.log(id);
     await removeItemFromCart(id);
 
     handleRemoveVisually(index)

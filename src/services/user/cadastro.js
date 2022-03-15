@@ -22,7 +22,6 @@ export default async function cadastro(name, email, password, role, invitationTo
       tenantId:        tenantId
       })
       .then((response) => {
-        console.log(response)
 
         let mensagemOk = 'Opa, recebemos o seu registro :)'
 

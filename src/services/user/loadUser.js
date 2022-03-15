@@ -17,7 +17,6 @@ export default async function loadUser(token) {
       timeout: 50000,
     })
     .then(response => {
-      console.log(response.data)
       return response.data;
     })
 
