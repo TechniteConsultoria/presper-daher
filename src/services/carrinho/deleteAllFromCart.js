@@ -4,12 +4,14 @@ import { api } from '../api'
 
 
 export default async function deleteAllFromCart(id){
-  const response = await api.delete(`carrinhoProdutoDestroyByUser/${id}}`)
+  const response = await api.delete(`carrinhoProduto-all/${id}`) 
   .then(
     (response) => {
       let status = response.status
-      responseHandler(status,"Produto adicionado ao carrinho com sucesso!",  "Erro na adição do produto")
-      if(response.status == 200){
+      let messageOk = "Produtos removidos do carrinho com sucesso!"
+      let messageNotOk = "Erro nas remoções dos produtos"
+      responseHandler( status, messageOk,  messageNotOk )
+        if(response.status == 200){
         return response.data
       }
       else if(response.status == 500){
