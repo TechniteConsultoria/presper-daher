@@ -110,21 +110,9 @@ function Home() {
 
     setBannerList(banner)
   }
-  // setTimeout(() => {
-  //     isMsgSent(false);
-  //   }, 6000);
-  // };
-
-  //todo -> pegando da FAKE API, precisa mudar!
+  
   async function getComments() {
-    // const url =
-    //   "https://fake-api-json-server-presper.herokuapp.com/depoimentos";
-    // axios.get(url).then((res) => {
-    //   if (res.status === 200) {
-    //     setTestimonialsList(res.data);
-    //   }
-    // });
-    let perguntas = await loadPergunta()
+    let perguntas = await loadPergunta('isDenunciado', 0)
     setTestimonialsList(perguntas)
   }
 
