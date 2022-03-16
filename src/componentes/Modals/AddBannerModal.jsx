@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, Row, Alert } from "react-bootstrap";
 import { toast } from "react-toastify";
-import bannerCreate from "../../services/banner/bannerCreate";
+// import bannerCreate from "../../services/banner/bannerCreate";
 import uploadImage from "../../services/imagem/upload";
 // import ResultCreateCourseModal from "./ResultCreateCourseModal";
 
-const axios = require("axios").default;
+import { useBanner } from "../../contexts/BannerContext";
+
 
 function AddBannerModal(props) {
+  const { allBanners, createBanners } = useBanner();
+
   const { result, ...rest } = props;
 
   const [imgFile, setImgFile] = useState({});
@@ -23,7 +26,7 @@ function AddBannerModal(props) {
       status: imgStatus,
     };
 
-    await bannerCreate(data)
+    await createBanners(data)
 
     setImgFile({});
     setImgTitle("");
