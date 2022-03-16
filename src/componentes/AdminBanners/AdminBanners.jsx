@@ -12,11 +12,14 @@ import {
   Form,
   FormControl,
 } from "react-bootstrap";
-import bannerLoad from "../../services/banner/bannerLoad";
 
-const axios = require("axios").default;
+
+import { useBanner } from "../../contexts/BannerContext";
 
 function Banners(props) {
+  const { allBanners } = useBanner();
+
+
   const [showAddBannerModal, isShowAddBannerModal] = useState(false);
 
   const [bannersList, setBannersList] = useState([]);
@@ -24,7 +27,7 @@ function Banners(props) {
   async function getBanners() {
     try {
       
-      let bannerData = await bannerLoad()
+      let bannerData = await allBanners
 
       setBannersList(bannerData);
       
@@ -35,7 +38,7 @@ function Banners(props) {
 
   useEffect(() => {
     getBanners();
-  }, []);
+  }, [allBanners]);
 
   return (
     <>
