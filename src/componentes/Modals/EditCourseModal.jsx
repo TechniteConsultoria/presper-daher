@@ -115,7 +115,8 @@ function EditCourseModal(props) {
 
   async function getCategories(){
     try {
-      await loadCategorias(setCategorias);
+      let categories = await loadCategorias();
+      setCategorias(categories)
     }
     
     catch (error) {

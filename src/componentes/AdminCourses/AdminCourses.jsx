@@ -132,8 +132,8 @@ function Courses() {
 
   async function getCategories(){
     try {
-      let categorias = await loadCategorias(setCategorias);
-      // setCategorias(categorias);
+      let categorias = await loadCategorias();
+      setCategorias(categorias);
     }
     
     catch (error) {
