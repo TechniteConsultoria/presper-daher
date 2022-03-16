@@ -18,7 +18,7 @@ import mensagens from "../../data/mensagens";
 import cursos from "../../data/cursos";
 import loadPergunta from "../../services/pergunta/perguntaLoad";
 
-import deleteDepoimento from "../../services/depoimento/depoimentoDelete.js";
+// import deleteComment from "../../services/depoimento/depoimentoDelete.js";
 import updateDepoimento from "../../services/depoimento/depoimentoUpdate.js";
 import loadCategorias from "../../services/categoria/loadCategorias.js";
 
@@ -29,7 +29,7 @@ import loadCategorias from "../../services/categoria/loadCategorias.js";
 import { useComment } from "../../contexts/CommentsContex";
 
 function Comunication() {
-  const { allComments, updateComment } = useComment();
+  const { allComments, updateComment, deleteComment } = useComment();
   
   const [messagesList, setMessagesList] = useState([]);
 
@@ -138,12 +138,25 @@ function Comunication() {
     }
   }
 
-  async function handleUpdate(status, id) {
-    const data = { isDenunciado: status };
+  async function handleUpdate(data, id) {
+    data.isDenunciado = !data.isDenunciado
 
     console.log(data)
 
-    updateComment(data, id);
+    updateComment(id, data);
+  }
+
+
+  async function handleDelete(id, index){
+    deleteComment(id, index)
+
+    let oldList = [...testimonialsList]
+    // let oldList = [...products]
+    oldList.splice(index, 1)
+    setTestimonialsList(oldList)
+
+
+    
   }
 
   useEffect(() => {
@@ -287,6 +300,10 @@ function Comunication() {
                 </tr>
               </thead>
               <tbody>
+
+                {
+                  console.log(testimonialsList == allComments )
+                }
                 {
                 testimonialsList == allComments ? (
                   testimonialsList?.map((t, id) => (
@@ -314,7 +331,7 @@ function Comunication() {
                             id="visible"
                             className="icon"
                             onClick={() => {
-                              handleUpdate(!t.visible, t.id);
+                              handleUpdate(t, t.id);
                               // updateMsgList();
                             }}
                           />
@@ -323,7 +340,7 @@ function Comunication() {
                             id="visible"
                             className="icon"
                             onClick={() => {
-                              handleUpdate(!t.visible, t.id);
+                              handleUpdate(t, t.id);
                               // updateMsgList();
                             }}
                           />
@@ -332,7 +349,7 @@ function Comunication() {
                           id="delete"
                           className="icon"
                           onClick={() => {
-                            deleteDepoimento(t.id);
+                            handleDelete(t.id, id);
                           }}
                         />
                       </td>
@@ -341,7 +358,7 @@ function Comunication() {
                 )
                 ):(
                   testimonialsList?.map((t, id) => (
-                    <tr key={id}>
+                    <tr key={t.id}>
                       {/* <td>{"hahahahaahahahah"}</td> */}
                       <td>{t.produto.nome || "Sem curso"}</td>
                       <td>{t.user.name}</td>
@@ -383,7 +400,7 @@ function Comunication() {
                           id="delete"
                           className="icon"
                           onClick={() => {
-                            deleteDepoimento(t.id);
+                            handleDelete(t.id, id);
                           }}
                         />
                       </td>
