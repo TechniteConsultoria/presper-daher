@@ -8,12 +8,14 @@ export const CategoryContext = createContext({});
 
 export default function CategoryProvider({ children }) {
 
+  const [allCategorys, setAllCategorys] = useState(getCategorys);
+
   async function getCategorys(){
     try {
       
 
       let categorias = await loadCategorias()
-      console.log(categorias)
+
 
       setAllCategorys(categorias);
 
@@ -24,8 +26,9 @@ export default function CategoryProvider({ children }) {
     }
   };
 
-  const createCategorys = async (data) => {
+  async function createCategorys(data) {
     try {
+      
       const response = await cadastrarCategory(data);
       
       await getCategorys()
@@ -37,9 +40,9 @@ export default function CategoryProvider({ children }) {
     }
   };
 
-  const updateCategory = async (id, data) => {
+  async function updateCategory(id, data) {
     try {
-      const response = await changeCategorias(data, id);
+      const response = await changeCategorias(id, data);
       
       await getCategorys()
       
@@ -50,7 +53,7 @@ export default function CategoryProvider({ children }) {
     }
   };
 
-  const deleteCategory = async (id) => {
+  async function  deleteCategory(id){
     try {
       const response = await deleteCategoria(id);
       
@@ -62,8 +65,6 @@ export default function CategoryProvider({ children }) {
       console.log(error);
     }
   };
-
-  const [allCategorys, setAllCategorys] = useState(getCategorys);
 
 
 
@@ -77,9 +78,9 @@ export default function CategoryProvider({ children }) {
         allCategorys,
         setAllCategorys,
         getCategorys,
+        createCategorys,
         updateCategory,
         deleteCategory,
-        createCategorys ,
       }}
     >
       {children}
