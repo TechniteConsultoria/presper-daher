@@ -15,22 +15,6 @@ import "../CourseCategory/CourseCategory.style.css";
 function Category (){
 
 
-// falta essa parte do filtro de acordo com o curso pesquisado
-// o search precisa ser redirecionado para essa página 
-
-
-{/* async function loadCategorias(){
-
-  let id  = getIdFromUrl('/course-category/')
-    console.log(id);
-
-
-
-     useEffect(() => {
-    loadCategorias()
-  }, []);
-}*/ }
-
 const [coursesList,     setCoursesList    ] = useState([]);
 const [bannerList,      setBannerList     ] = useState([]);
 

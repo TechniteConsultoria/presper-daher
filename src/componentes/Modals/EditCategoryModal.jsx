@@ -5,35 +5,36 @@ import ResultEditCategoryModal from "./ResultEditCategoryModal";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 import changeCategorias from "../../services/categoria/changeCategorias";
 
-const axios = require("axios").default;
+
+import { useCategory } from "../../contexts/CategoryContext";
+
 
 function EditCategoryModal(props) {
+  const { updateCategory } = useCategory();
+  
   const [showResultModal, isShowResultModal] = useState(false);
   const [showDeleteModal, isShowDeleteModal] = useState(false);
-  const [categoryName, setCategoryName] = useState("");
-  const [result, setResult] = useState("");
+  const [categoryName   , setCategoryName  ] = useState("");
+  const [result         , setResult        ] = useState("");
 
   async function handleSubmit() {
-    //* APENAS PARA DESENVOLVIMENTO ------>
-    // const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
+
     try {
       const id = props.category.id;
+
       const data = {
         nome: categoryName,
         updatedAt: Date.now(),
       };
-      // axios.put(`${url}/${id}`, data).then((res) => {
-      //   setResult(res.status);
-      //   isShowResultModal(true);
-      // });
 
-      let res = await changeCategorias(id, data)
+      console.log(id, data)
+      await updateCategory(id, data)
 
 
     } catch (error) {
       console.error(error);
     }
-    //* APENAS PARA DESENVOLVIMENTO ------>
+
   }
 
   useEffect(() => {}, []);
