@@ -6,12 +6,16 @@ import bannerUpdate from "../../services/banner/bannerUpdate";
 
 import "./BannerCard.styles.css";
 
+import { useBanner } from "../../contexts/BannerContext";
+
 function BannerCard(props) {
+  const { allBanners, deleteBanner, updateBanner } = useBanner();
+
 
   async function handleDeleteOne(id){
     console.log(id)
     console.log("clicou")
-    await bannerDelete(id)
+    await deleteBanner(id)
     
   }
 
@@ -34,7 +38,7 @@ function BannerCard(props) {
       status: newStatus
     }
 
-    bannerUpdate(data, props.id)
+    updateBanner(props.id, data)
   }
 
   return (
