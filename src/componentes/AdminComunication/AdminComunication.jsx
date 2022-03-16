@@ -300,10 +300,6 @@ function Comunication() {
                 </tr>
               </thead>
               <tbody>
-
-                {
-                  console.log(testimonialsList == allComments )
-                }
                 {
                 testimonialsList == allComments ? (
                   testimonialsList?.map((t, id) => (
