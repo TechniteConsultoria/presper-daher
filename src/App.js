@@ -11,7 +11,6 @@ import Footer from "./componentes/Footer/Footer.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
 
 // import Courses from "./componentes/Courses/Courses.jsx";
-import AdminCategoryTest from "./componentes/AdminCategoryTest/AdminCategory.jsx";
 
 import Perfil from "./pages/Perfil/Perfil.jsx";
 import MyCourses from "./pages/MyCourses/MyCourses.jsx";
@@ -70,7 +69,6 @@ function App() {
                 <Route exact path="/check-out"           element={<CartCheckOut />}  />
                 <Route exact path="/admin"               element={<Admin />}         />
                 <Route exact path="/watch-course/:id"    element={<WatchCourse />}   />
-                <Route exact path="/teste"               element={<AdminCategoryTest />}   />
               </Routes>
               <div>
                 {location.pathname === "/login" ||
