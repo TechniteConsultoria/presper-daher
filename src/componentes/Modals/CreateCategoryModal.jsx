@@ -1,38 +1,28 @@
 import { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import cadastrarCategory from "../../services/categoria/cadastrarCategory";
+// import cadastrarCategory from "../../services/categoria/cadastrarCategory";
 import ResultCreateCategoryModal from "./ResultCreateCategoryModal";
 
-const axios = require("axios").default;
+import { useCategory } from "../../contexts/CategoryContext";
+
 
 function CreateCategoryModal(props) {
+  const { allCategorys, createCategorys } = useCategory();
+  
   const [showResultModal, isShowResultModal] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [result, setResult] = useState(null);
-
+  
   async function handleSubmit() {
-    //* APENAS PARA DESENVOLVIMENTO ------>
-    const data = {
-      name: categoryName,
-      createdAt: Date.now(),
-    };
-    // const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
     try {
-      // axios.post(url, data).then((res) => {
-      //   setResult(res.status);
-      //   isShowResultModal(true);
-      // });
       let data = {
         nome: categoryName
       }
-
-      let res = await cadastrarCategory(data)
-      
+      await createCategorys(data)
     }
     catch (error) {
       console.error(error);
     }
-    //* APENAS PARA DESENVOLVIMENTO ------>
   }
 
   useEffect(() => {
