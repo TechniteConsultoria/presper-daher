@@ -55,13 +55,13 @@ export default function AuthProvider({ children }) {
   }
 
   function logout() {
-    setToken(null);
-    setUser(null);
-    setLoged(false);
-    setRole("USER");
-    localStorage.removeItem("@presper-daher:token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    // setToken(null);
+    // setUser(null);
+    // setLoged(false);
+    // setRole("USER");
+    // localStorage.removeItem("@presper-daher:token");
+    // localStorage.removeItem("user");
+    localStorage.clear()
     window.location.reload();
   }
 
