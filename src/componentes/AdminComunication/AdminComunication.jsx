@@ -26,27 +26,11 @@ import loadCategorias from "../../services/categoria/loadCategorias.js";
 //TODO - 1. arrrumar os filtros
 //* DONE - 2. fazer a integração consumindo os dados do back
 //*
+import { useComment } from "../../contexts/CommentsContex";
 
 function Comunication() {
-  // const [messageId, setMessageId] = useState("");
-  // const [messageStatus, setMessageStatus] = useState("");
-  // const courses = cursos;
-  // const [buscarCurso, setBuscarCurso] = useState("");
-  // const [createCourseModal, showCreateCourseModal] = useState(false);
-  // const [course, setCourse] = useState({});
-  // const [courseList, setCourseList] = useState([]);
-  // const [messagesList, setMessagesList] = useState([]);
-
-  //   useEffect(() => {
-  //     classificarPorData(classificar);
-  //     filtrarPor(filtroStatus);
-  //     console.log(classificar);
-  //   }, [classificar, filtroStatus]);
-
-  //   useEffect(() => {
-  //     buscarPor(buscarCurso);
-  //   }, [buscarCurso]);
-
+  const { allComments, updateComment } = useComment();
+  
   const [messagesList, setMessagesList] = useState([]);
 
   const [page, setPage] = useState(1);
@@ -108,102 +92,23 @@ function Comunication() {
     } else setMessagesList(mensagens);
   }
 
-  // async function getMessages(page) {
-  //   const query = `?page=${page}`;
-  //   let response;
-  //   try {
-  //     response = await MessageService.getMessage(query);
-  //     console.log(response);
-  //     setPage(Number(response.data.page));
-  //     setCurrentPage(Number(response.data.page));
-  //     setTotalItems(Number(response.data.total));
-  //     setLastPage(Number(response.data.last_page));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  //   const msgs = response.data.data.map((m) => {
-  //     const courseName = allCourses.find((c) => c.id === m.courseId);
-  //     let newObject = { ...m };
-  //     newObject.courseName = courseName || null;
-  //     return newObject;
-  //   });
-  //   setMessagesList(msgs);
-  // }
-
-  // async function updateMsgList() {
-  //   const query = `?page=${page}`;
-  //   try {
-  //     const response = await MessageService.getMessage(query);
-  //     const updatedList = response.data.data;
-
-  //     setPage(Number(response.data.page));
-  //     setCurrentPage(Number(response.data.page));
-  //     setTotalItems(Number(response.data.total));
-  //     setLastPage(Number(response.data.last_page));
-
-  //     setMessagesList(updatedList);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // * in progress
-  const mock = [
-    {
-      id: 1,
-      courseName: "Curso 1",
-      userName: "Usuário 1",
-      createdAt: "2022-03-01 18:53:24.015268",
-      visible: true,
-    },
-    {
-      id: 2,
-      courseName: "Curso 2",
-      userName: "Usuário 2",
-      createdAt: "2022-03-02 18:41:34.795849",
-      visible: false,
-    },
-    {
-      id: 3,
-      courseName: "Curso 3",
-      userName: "Usuário 3",
-      createdAt: "2022-02-03 18:40:43.438754",
-      visible: true,
-    },
-    {
-      id: 4,
-      courseName: "Curso 4",
-      userName: "Usuário 4",
-      createdAt: "2022-02-04 18:37:17.720362",
-      visible: false,
-    },
-    {
-      id: 5,
-      courseName: "Curso 5",
-      userName: "Usuário 5",
-      createdAt: "2022-02-05 18:24:00.154439",
-      visible: true,
-    },
-  ];
-
   const [allTestimonials, setAllTestimonials] = useState([]);
   const [testimonialsList, setTestimonialsList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
 
-  async function getTestimonials() {
-    setAllTestimonials(mock);
-    setTestimonialsList(allTestimonials);
-  }
+  // async function getTestimonials() {
+  //   setAllTestimonials(mock);
+  //   setTestimonialsList(allTestimonials);
+  // }
 
   //* erro -> setFunction is not a function
-  async function getCategories() {
-    // const c = await loadCategorias();
-    // console.log(c);
-    // setCategoriesList(c);
+  async function getComments() {
+    const c = await allComments;
+    console.log("c");
+    console.log(c);
+    setTestimonialsList(c);
   }
 
-  //* não está funcionando
   function classificarPorData(classificar) {
     switch (classificar) {
       case "Mais antigas":
@@ -234,14 +139,20 @@ function Comunication() {
   }
 
   async function handleUpdate(status, id) {
-    const data = { visible: status };
-    updateDepoimento(data, id);
+    const data = { isDenunciado: status };
+
+    console.log(data)
+
+    updateComment(data, id);
   }
 
   useEffect(() => {
-    getTestimonials();
-    getCategories();
+    getComments();
   }, []);
+
+  useEffect(() => {
+    getComments();
+  }, [allTestimonials]);
 
   return (
     <>
@@ -376,16 +287,18 @@ function Comunication() {
                 </tr>
               </thead>
               <tbody>
-                {testimonialsList?.map((t, id) => {
-                  return (
+                {
+                testimonialsList == allComments ? (
+                  testimonialsList?.map((t, id) => (
                     <tr key={id}>
-                      <td>{t.courseName || "Sem curso"}</td>
-                      <td>{t.userName}</td>
+                      {/* <td>{"hahahahaahahahah"}</td> */}
+                      <td>{t.produto.nome || "Sem curso"}</td>
+                      <td>{t.user.name}</td>
                       <td>
                         {new Date(t.createdAt).toLocaleDateString("pt-BR")}
                       </td>
                       <td>
-                        {t.visible ? (
+                        {!t.isDenunciado ? (
                           <Badge pill bg="success">
                             VISÍVEL
                           </Badge>
@@ -424,8 +337,63 @@ function Comunication() {
                         />
                       </td>
                     </tr>
-                  );
-                })}
+                  )
+                )
+                ):(
+                  testimonialsList?.map((t, id) => (
+                    <tr key={id}>
+                      {/* <td>{"hahahahaahahahah"}</td> */}
+                      <td>{t.produto.nome || "Sem curso"}</td>
+                      <td>{t.user.name}</td>
+                      <td>
+                        {new Date(t.createdAt).toLocaleDateString("pt-BR")}
+                      </td>
+                      <td>
+                        {!t.isDenunciado ? (
+                          <Badge pill bg="success">
+                            VISÍVEL
+                          </Badge>
+                        ) : (
+                          <Badge pill bg="warning">
+                            NÃO VISÍVEL
+                          </Badge>
+                        )}
+                      </td>
+                      <td>
+                        {t.visible ? (
+                          <BsFillEyeFill
+                            id="visible"
+                            className="icon"
+                            onClick={() => {
+                              handleUpdate(!t.visible, t.id);
+                              // updateMsgList();
+                            }}
+                          />
+                        ) : (
+                          <BsFillEyeSlashFill
+                            id="visible"
+                            className="icon"
+                            onClick={() => {
+                              handleUpdate(!t.visible, t.id);
+                              // updateMsgList();
+                            }}
+                          />
+                        )}
+                        <BsTrashFill
+                          id="delete"
+                          className="icon"
+                          onClick={() => {
+                            deleteDepoimento(t.id);
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  )
+                )
+                )
+
+                
+                }
               </tbody>
             </Table>
           </Container>
