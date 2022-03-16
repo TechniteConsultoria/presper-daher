@@ -85,6 +85,20 @@ export default function CourseProvider({ children }) {
     }
   };
 
+
+  const deleteOneCourse = async (id) => {
+    try {
+      const response = await cursoDelete(id);
+      
+      await getCourses()
+
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   const [allCourses, setAllCourses] = useState(getCourses);
 
 
@@ -104,6 +118,7 @@ export default function CourseProvider({ children }) {
         updateCourse,
         deleteCourse,
         createCourses ,
+        deleteOneCourse
       }}
     >
       {children}
@@ -113,7 +128,7 @@ export default function CourseProvider({ children }) {
 
 export function useCourse() {
   const context = useContext(CourseContext);
-  const { allCourses, setAllCourses, getCourses, getCourseById, getCourseByIdWithRelations, createCourses ,updateCourse, deleteCourse, } = context;
+  const { allCourses, setAllCourses, getCourses, getCourseById, getCourseByIdWithRelations, createCourses ,updateCourse, deleteCourse, deleteOneCourse } = context;
 
   return {
     allCourses,
@@ -124,5 +139,6 @@ export function useCourse() {
     createCourses ,
     updateCourse,
     deleteCourse,
+    deleteOneCourse
   };
 }
