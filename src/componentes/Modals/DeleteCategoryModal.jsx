@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import ResultDeleteCategoryModal from "./ResultDeleteCategoryModal";
 
-const axios = require("axios").default;
+import { useBanner } from "../../contexts/BannerContext";
 
 function DeleteCategoryModal(props) {
+  const { allBanners, deleteBanner } = useBanner();
+
+  // console.log("props")
+  // console.log(props)
+
   const [result, setResult] = useState("");
   const [showResultModal, isShowResultModal] = useState(false);
 
@@ -15,10 +21,7 @@ function DeleteCategoryModal(props) {
 
     const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
     try {
-      axios.delete(`${url}/${id}`).then((res) => {
-        setResult(res.status);
-        isShowResultModal(true);
-      });
+      await deleteBanner(id)
     } catch (error) {
       console.error(error);
     }
