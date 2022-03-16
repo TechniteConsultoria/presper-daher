@@ -11,7 +11,7 @@ import Footer from "./componentes/Footer/Footer.jsx";
 import Admin from "./pages/Admin/Admin.jsx";
 
 // import Courses from "./componentes/Courses/Courses.jsx";
-// import AdminNavbar from "./componentes/AdminNavbar/AdminNavbar.jsx";
+import AdminCategoryTest from "./componentes/AdminCategoryTest/AdminCategory.jsx";
 
 import Perfil from "./pages/Perfil/Perfil.jsx";
 import MyCourses from "./pages/MyCourses/MyCourses.jsx";
@@ -26,6 +26,7 @@ import WatchCourse from "./pages/WatchCourse/WatchCourse.jsx";
 import AuthProvider from "./contexts/AuthContext";
 import CourseProvider from "./contexts/CourseContext";
 import CreditCardProvider from "./contexts/CreditCardContext.js";
+import CategoryProvider from "./contexts/CategoryContext.js";
 
 function App() {
   const location = useLocation();
@@ -34,53 +35,53 @@ function App() {
     <div>
       <AuthProvider>
         <CourseProvider>
-          <CreditCardProvider>
-            <div>
-              {location.pathname === "/login"  ||
-               location.pathname === "/signup" ||
-               location.pathname === "/admin"  ? 
-                null : (
-                <Header />
-              )}
-            </div>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-            />
-
-            <Routes>
-              <Route exact path="/"                    element={<Home />}          />
-              <Route exact path="/login"               element={<Login />}         />
-              <Route exact path="/signup"              element={<Signup />}        />
-              <Route exact path="/course-details/:id"  element={<CourseDetails />} />
-              <Route exact path="/course-category"     element={<Category />} />
-              <Route exact path="/shopping-cart"       element={<ShoppingCart />}  />
-              <Route exact path="/perfil"              element={<Perfil />}        />
-              <Route exact path="/my-courses"          element={<MyCourses />}     />
-              <Route exact path="/my-certificates"     element={<MyCertificates />}/>
-              <Route exact path="/my-payment-info"     element={<MyPaymentInfo />} />
-              <Route exact path="/check-out"           element={<CartCheckOut />}  />
-              <Route exact path="/admin"               element={<Admin />}         />
-              <Route exact path="/watch-course/:id"    element={<WatchCourse />}   />
-            </Routes>
-
-            <div>
-              {location.pathname === "/login" ||
-              location.pathname === "/signup" ||
-              location.pathname === "/admin" ? null : (
-                <Footer />
-              )}
-            </div>
-
-            <div></div>
-          </CreditCardProvider>
+          <CategoryProvider>
+            <CreditCardProvider>
+              <div>
+                {location.pathname === "/login"  ||
+                 location.pathname === "/signup" ||
+                 location.pathname === "/admin"  ?
+                  null : (
+                  <Header />
+                )}
+              </div>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+              <Routes>
+                <Route exact path="/"                    element={<Home />}          />
+                <Route exact path="/login"               element={<Login />}         />
+                <Route exact path="/signup"              element={<Signup />}        />
+                <Route exact path="/course-details/:id"  element={<CourseDetails />} />
+                <Route exact path="/course-category"     element={<Category />} />
+                <Route exact path="/shopping-cart"       element={<ShoppingCart />}  />
+                <Route exact path="/perfil"              element={<Perfil />}        />
+                <Route exact path="/my-courses"          element={<MyCourses />}     />
+                <Route exact path="/my-certificates"     element={<MyCertificates />}/>
+                <Route exact path="/my-payment-info"     element={<MyPaymentInfo />} />
+                <Route exact path="/check-out"           element={<CartCheckOut />}  />
+                <Route exact path="/admin"               element={<Admin />}         />
+                <Route exact path="/watch-course/:id"    element={<WatchCourse />}   />
+                <Route exact path="/teste"               element={<AdminCategoryTest />}   />
+              </Routes>
+              <div>
+                {location.pathname === "/login" ||
+                location.pathname === "/signup" ||
+                location.pathname === "/admin" ? null : (
+                  <Footer />
+                )}
+              </div>
+              <div></div>
+            </CreditCardProvider>
+          </CategoryProvider>
         </CourseProvider>
       </AuthProvider>
     </div>
