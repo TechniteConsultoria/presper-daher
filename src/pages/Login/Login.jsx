@@ -127,7 +127,7 @@ function Login() {
             <Link to="/presper" style={{ color: "#14B8A6" }}>
               Esqueceu a senha?
             </Link>
-            <Link to="signup" style={{ color: "#14B8A6" }}>
+            <Link to="/signup" style={{ color: "#14B8A6" }}>
               Não possui uma conta? Registre-se
             </Link>
           </form>
