@@ -4,7 +4,8 @@ import CourseService from "../CourseService";
 import { useCourse } from "../../contexts/CourseContext";
 
 export const useCoursePage = () => {
-  const { getCourses, isUpdated, createCourses } = useCourse();
+
+  const { getCourses, isUpdated, createCourses, deleteOneCourse  } = useCourse();
 
   const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
     useState(false);
@@ -72,7 +73,10 @@ export const useCoursePage = () => {
 
   const deleteCourse = async (id) => {
     try {
-      const response = await CourseService.deleteCourse(id);
+
+      console.log("id")
+      console.log(id)
+      const response = await deleteOneCourse(id);
       setResult(response.status);
     } catch (error) {
       console.error(error);
