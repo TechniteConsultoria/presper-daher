@@ -9,9 +9,11 @@ import servidorErrorMessage from '../../utils/servidorErrorMessage'
 
 
 export default async function comentarioUpdate(data, id) {
-    return api.put(`comentario/${id}`, {
-      data
-      })
+
+
+  console.log("data")
+  console.log(data)
+    return api.put(`comentario/${id}`, data)
       .then((response) => {
         let mensagemOk = 'Seu comentario foi alterado com sucesso! Ele será revisado e logo estará na plataforma :)'
         let mensagemNaoOK = 'Revise os dados do comentario :('
