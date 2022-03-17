@@ -59,8 +59,11 @@ export const useLoginPage = () => {
       
       let role = await loginUser(email, password)
 
-      if(role == 'admin') navigate("/admin")
-      else if(role == 'pessoa') navigate("/")
+      if(role == 'admin'){
+        window.location.pathname = "/admin"
+        console.log("nosjdnvosdnvjsnbvsdnvnviowjsnvnoiwdjnvoivnwroinoinvodwnonewovnwovnowi")
+      }
+      else if(role == 'pessoa') window.location.pathname = ''
       else toast.error("Login incorreto!")
 
     }
