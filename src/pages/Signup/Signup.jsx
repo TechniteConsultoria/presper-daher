@@ -7,9 +7,26 @@ import { toast } from "react-toastify";
 import cadastro from "../../services/user/cadastro";
 import LoadingGif from "../../componentes/LoadingGif";
 
+
+import { loadReCaptcha } from 'react-recaptcha-google'
+
+import { ReCaptcha } from 'react-recaptcha-google'
+
 function Signup() {
+  useEffect(
+    () => {
+      loadReCaptcha()
+      console.log(loadReCaptcha())
+    },[]
+  )
+  // site Key:
+  // 6Ldd3PoeAAAAAN8eEfc2Q5Qz0tkH4LamNqyc9dOq
+  // secret key
+  // 6Ldd3PoeAAAAADr6fBwEDJcpF1CQqSH538XmrIMy
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [confirmaEmail, setConfirmaEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
   const [inscricao, setInscricao] = useState(false);
@@ -24,8 +41,7 @@ function Signup() {
     isSubmit(true);
     setLoading(true)
 
-    if (senha === confirmaSenha) {
-    }
+    if (senha === confirmaSenha && email === confirmaEmail) {
       try {
         let isOk = await cadastro(nome, email, senha, "1");
         if (isOk == "ok") {
@@ -36,7 +52,8 @@ function Signup() {
         console.error(error);
       }
       isSubmit(false);
-
+    }
+      
     setLoading(false)
   }
 
@@ -49,7 +66,7 @@ function Signup() {
       <div className="container-signup">
         <section>
           <div className="card p-5">
-            <h2 className="title-card">Sign up</h2>
+            <h2 className="title-card">Cadastro</h2>
 
             {submit && senha !== confirmaSenha && (
               <Alert variant="danger">As senhas são inválidas!</Alert>
@@ -89,6 +106,16 @@ function Signup() {
                 }}
               />
               <input
+                type="email"
+                className="form"
+                placeholder="Confirmar Email"
+                required
+                name="email"
+                onChange={(e) => {
+                  setConfirmaEmail(e.target.value);
+                }}
+              />
+              <input
                 type="password"
                 className="form"
                 placeholder="Senha"
@@ -108,6 +135,16 @@ function Signup() {
                   setConfirmaSenha(e.target.value);
                 }}
               />
+
+          <ReCaptcha
+            // ref={(el) => {this.captchaDemo = el;}}
+            size="normal"
+            data-theme="dark"            
+            render="explicit"
+            sitekey="your_site_key"
+            onloadCallback={console.log("this.onLoadRecaptcha")}
+            verifyCallback={console.log("this.verifyCallback")}
+          />
 
               {/* <div className="form-check">
                 <input
