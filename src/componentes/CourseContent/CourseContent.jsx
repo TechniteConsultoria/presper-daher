@@ -18,7 +18,7 @@ function CourseContent(props) {
                 <span id="icon-play" onClick={() => props.onClick(item, id)}>
                   <BsPlayCircle />
                 </span>
-                <span>{item.titulo || `Aula ${ id + 1 }`  }</span>
+                <span>{`Aula ${ id + 1 }`  }</span>
               </div>
               {/* <div>{item.time || "Duração"} min</div> */}
             </ListGroup.Item>
