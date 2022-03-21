@@ -60,7 +60,8 @@ function Signup() {
         let isOk = await cadastro(nome, email, senha, phone, cpf, "1");
         if (isOk == "ok") {
           toast.success("OK!");
-          navigate("/");
+          // navigate("/");
+          window.location.pathname = ''
         } else console.log("erro?");
       } catch (error) {
         console.error(error);
@@ -116,6 +117,7 @@ function Signup() {
                     className="form"
                     type="text"
                     name="phoneNumber"
+                    id="phoneNumber"
                     mask="(11) 11111-1111"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -124,9 +126,9 @@ function Signup() {
               <MaskedInput
                     className="form"
                     type="text"
-                    name="phoneNumber"
+                    name="setCpf"
+                    id="setCpf"
                     mask="111.111.111-11"
-                    value={phone}
                     onChange={(e) => setCpf(e.target.value)}
                     
               />
