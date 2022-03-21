@@ -13,7 +13,6 @@ export default function CommentProvider({ children }) {
     try {
 
       let comentarios = await comentarioLoad()
-      console.log(comentarios)
 
       setAllComments(comentarios);
 

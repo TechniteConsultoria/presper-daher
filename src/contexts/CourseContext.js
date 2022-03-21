@@ -15,7 +15,6 @@ export default function CourseProvider({ children }) {
     try {
 
       let cursos = await cursoLoad()
-      console.log(cursos)
 
       setAllCourses(cursos);
 
