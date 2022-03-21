@@ -28,6 +28,7 @@ import CreditCardProvider from "./contexts/CreditCardContext.js";
 import CategoryProvider from "./contexts/CategoryContext.js";
 import CommentProvider from "./contexts/CommentsContex.js";
 import BannerProvider from "./contexts/BannerContext.js";
+import MyCertificate from "./pages/MyCertificate/MyCertificate.jsx";
 
 function App() {
   const location = useLocation();
@@ -58,16 +59,17 @@ function App() {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                  />
+                  />  
                   <Routes>
                     <Route exact path="/"                    element={<Home />}          />
                     <Route exact path="/login"               element={<Login />}         />
                     <Route exact path="/signup"              element={<Signup />}        />
                     <Route exact path="/course-details/:id"  element={<CourseDetails />} />
-                    <Route exact path="/course-category"     element={<Category />} />
+                    <Route exact path="/course-category"     element={<Category />} /> 
                     <Route exact path="/shopping-cart"       element={<ShoppingCart />}  />
                     <Route exact path="/perfil"              element={<Perfil />}        />
                     <Route exact path="/my-courses"          element={<MyCourses />}     />
+                    <Route exact path="/my-certificate/:id"     element={<MyCertificate />}/>
                     <Route exact path="/my-certificates"     element={<MyCertificates />}/>
                     <Route exact path="/my-payment-info"     element={<MyPaymentInfo />} />
                     <Route exact path="/check-out"           element={<CartCheckOut />}  />

@@ -18,6 +18,11 @@ body {
 
   /* background-color: #f0e9f1; */
 }
+/* 
+img{
+  object-fit: cover;
+}
+*/
 
 .header {
   /* display: flex; */
