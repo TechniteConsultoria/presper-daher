@@ -24,8 +24,9 @@ function CartCheckOut() {
   const { getCreditCards, creditCardList } = useCreditCard();
   const { removeItemFromCart, getTotalAmount,  getCart, deleteAllCart } = useCart();
   const [showAddCardForm, setShowAddCardForm] = useState(false);
+  const [card  ,  setCard   ] = useState({});
   const [cards ,  setCards  ] = useState([]);
-  const [amount, setAmount] = useState([]);
+  const [amount,  setAmount ] = useState([]);
 
   const [result, setResult] = useState({
     operation: "",
@@ -84,6 +85,9 @@ function CartCheckOut() {
         formatedProd.produtos.push(cartProp.produto)
         } 
     )
+    formatedProd.card = card
+
+    console.log(formatedProd.card)
 
     let pedidoGenerated = await createPedidoWithFatura(formatedProd)
     
@@ -92,13 +96,18 @@ function CartCheckOut() {
       return
     }
 
-    let deletedAllCart =  await deleteAllCart()
+    console.log("pedidoGenerated.id")
+    console.log( pedidoGenerated.id )
+
+    // let deletedAllCart =  await deleteAllCart()
+
 
     
     // create a array to make a map in backend 
     await clienteProdutoCertificado.create(formatedProd)
     
-    if(deletedAllCart) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado, mas sem fatura :(")
+    // if(deletedAllCart) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado, mas sem fatura :(")
+    if(pedidoGenerated) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado, mas sem fatura :(")
   }
 
   return (
@@ -123,12 +132,18 @@ function CartCheckOut() {
                   {
                   cards.map(
                   (card) => (
-                  <Form.Check
-                    type="radio"
-                    label={card.numero}
-                    name="formHorizontalRadios"
-                    id={card.id}
-                  />
+                  <div
+                  onClick={(_) => {
+                    setCard(card)
+                  }}
+                  >    
+                    <Form.Check
+                      type="radio"
+                      label={card.numero}
+                      name="formHorizontalRadios"
+                      id={card.id}
+                    />
+                  </div>
                     )
                   )
                   }
