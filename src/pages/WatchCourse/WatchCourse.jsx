@@ -1,7 +1,6 @@
 import "./WatchCourse.styles.css";
 import "video-react/dist/video-react.css"; // import css
 import React, { useState, useEffect } from "react";
-
 import CourseContent from "../../componentes/CourseContent/CourseContent";
 import RateThisCourse from "../../componentes/RateThisCourse/RateThisCourse";
 import SendQuestion from "../../componentes/SendQuestion/SendQuestion";
@@ -21,10 +20,12 @@ import {
 
 import { Tabs, Tab, Container } from "react-bootstrap";
 
+import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
 import getIdFromUrl from '../../utils/getIdFromUrl'
 import cursoFindWithRelations from "../../services/curso/cursoFindWithRelations";
 
 import LoadingGif from "../../componentes/LoadingGif";
+import { toast } from "react-toastify";
 
 function WatchCourse() {
 
@@ -33,6 +34,7 @@ function WatchCourse() {
   const [prodId, setProdId] = useState('');
   const [index , setIndex ] = useState(0);
   const [videos, setVideos] = useState([]);
+  const [lastVideo , setLastVideo ] = useState('');
 
   function setPlayVideo(newVideo, newIndex) {
     console.log("newVideo.url");
@@ -54,6 +56,7 @@ function WatchCourse() {
     console.log(product)
 
     setVideos(product.produtoModulo)
+    // setLastVideo(product.produtoModulo[product.produtoModulo.length - 1])
     setVideo(product.produtoModulo[0])
     console.log(product.produtoModulo[0].url)
 
@@ -62,6 +65,13 @@ function WatchCourse() {
   useEffect(() => {
     handleLoadCursoModulo()
   }, []);
+
+  async function generateCertify(id){
+    let data = {isCertificado: 1}
+    let a  = await clienteProdutoCertificado.update(id, data)
+
+    toast.info("Curso Finalizado! Certificado Gerado!")
+  }
 
   return (
     <>
@@ -80,6 +90,11 @@ function WatchCourse() {
               fluid={false}
               height={600}
               width={'100%'}
+              onEnded={() => {
+                if(videoIndex !== videos.length-1) return
+
+                generateCertify(video.id)
+              }}
               >
                 {/* <source src="http://localhost:8142/api/file/download?privateUrl=tenant/883fa309-da4f-4300-85d5-bb59af61a8ac/produto/imagem1/video3.mp4" /> */}
                 <source src={video.url} />
@@ -92,6 +107,9 @@ function WatchCourse() {
                   <VolumeMenuButton />
                 </ControlBar>
               </Player>
+              {
+                // console.log(video)
+              }
             </div>
             ) : false
           )
