@@ -12,6 +12,8 @@ import { loadReCaptcha } from 'react-recaptcha-google'
 
 import { ReCaptcha } from 'react-recaptcha-google'
 
+import MaskedInput from "react-maskedinput";
+
 function Signup() {
   useEffect(
     () => {
@@ -30,19 +32,24 @@ function Signup() {
    let siteKey = '6LfO6PoeAAAAAAujWa_8zELc0haxuEMjx2GrxxqX'
 
   const [nome, setNome] = useState("");
+  const [cpf , setCpf ] = useState("");
   const [email, setEmail] = useState("");
   const [confirmaEmail, setConfirmaEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
   const [inscricao, setInscricao] = useState(false);
   
-  const [isVerify, setIsVerify] = useState(false);
+  const [isVerify, setIsVerify] = useState("");
   const [submit, isSubmit] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
   const [loading,   setLoading  ] = useState(false);
 
+  const [phone, setPhone] = useState("");
+
   const navigate = useNavigate();
+
+  console.log(isVerify)
 
   async function handleSubmit() {
     isSubmit(true);
@@ -50,7 +57,7 @@ function Signup() {
 
     if (senha === confirmaSenha && email === confirmaEmail && isVerify) {
       try {
-        let isOk = await cadastro(nome, email, senha, "1");
+        let isOk = await cadastro(nome, email, senha, phone, cpf, "1");
         if (isOk == "ok") {
           toast.success("OK!");
           navigate("/");
@@ -105,6 +112,24 @@ function Signup() {
                   setNome(e.target.value);
                 }}
               />
+              <MaskedInput
+                    className="form"
+                    type="text"
+                    name="phoneNumber"
+                    mask="(11) 11111-1111"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    
+              />
+              <MaskedInput
+                    className="form"
+                    type="text"
+                    name="phoneNumber"
+                    mask="999.999.999-99"
+                    value={phone}
+                    onChange={(e) => setCpf(e.target.value)}
+                    
+              />
               <input
                 type="email"
                 className="form"
@@ -152,7 +177,7 @@ function Signup() {
             data-theme="dark"            
             render="explicit"
             sitekey={siteKey}
-            // onloadCallback={e => console.log(e)}
+            onloadCallback={e => console.log(e)}
             verifyCallback={e => setIsVerify(e)}
           />
 

@@ -11,11 +11,13 @@ import servidorErrorMessage from '../../utils/servidorErrorMessage'
 
 // NÃO POSSUI NOME
 
-export default async function cadastro(name, email, password, role, invitationToken,  tenantId) {
+export default async function cadastro(name, email, password, phone, cpf, role, invitationToken,  tenantId) {
 
     return apiWithoutTenant.post('auth/sign-up', {
       fullName:        name,
       email:           email, 
+      telefone:        phone, 
+      cpf:             cpf, 
       password:        password, 
       role:            role, 
       invitationToken: invitationToken,
