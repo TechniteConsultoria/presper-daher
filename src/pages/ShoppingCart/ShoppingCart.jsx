@@ -136,7 +136,7 @@ function ShoppingCart() {
               <div className="card-text">
                 Você não possui nenhum produto adicionado ao seu carrinho.
               </div>
-              <Link to="">
+              <Link to="/">
                 <Button id="card-button">Comprar agora</Button>
               </Link>
             </div>
