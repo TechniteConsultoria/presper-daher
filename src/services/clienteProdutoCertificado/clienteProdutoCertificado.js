@@ -19,9 +19,9 @@ export default class clienteProdutoCertificado{
       return responseData
 
   }
-  static async update(data){
+  static async update(id, data){
 
-    let response = await api.put(`clienteProdutoCertificado`, {
+    let response = await api.put(`clienteProdutoCertificado/${id}`, {
       data
       })
       .catch(() => {
@@ -66,6 +66,18 @@ export default class clienteProdutoCertificado{
   static async listWithFilter(filter ,value){
 
     let response = await api.get(`clienteProdutoCertificado?filter%5B${filter}%5D=${value}`)
+      .catch(() => {
+        servidorErrorMessage()
+      })
+
+      let responseData = response.data.rows
+
+      return responseData
+    
+  }
+
+  static async listWithManyFilters(filters){
+    let response = await api.get(`clienteProdutoCertificado?${filters}`)
       .catch(() => {
         servidorErrorMessage()
       })
