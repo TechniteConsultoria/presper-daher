@@ -27,7 +27,8 @@ function AddCardForm() {
       expiry: cardExpiry,
       cvc: cardCvc,
     };
-    addCreditCard(data);
+    await addCreditCard(data);
+    window.location.reload()
   }
 
   useEffect(() => {
@@ -40,7 +41,8 @@ function AddCardForm() {
   return (
     <>
       <Form
-        onSubmit={(e) => {
+        onSubmit={
+          async (e) => {
           e.preventDefault();
           handleSubmit();
         }}

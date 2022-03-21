@@ -24,14 +24,24 @@ export default function CreditCardProvider({ children }) {
   const addCreditCard = async (data) => {
     try {
       const body = {
-        userId: user.id,
-        name: data.name,
-        number: data.number,
-        expiry: data.expiry,
-        cvc: data.cvc,
+        apelido:     id,
+        numero:      data.number,
+        nomeTitular: data.name,
+        validade:    data.expiry,
+        cvv:         data.cvc,
       };
 
-      const response = await CreditCardService.createCreditCard(body);
+      console.log(body)
+
+      const response = await CreditCardService.createCreditCard(
+        {
+          apelido:     id,
+          numero:      data.number,
+          nomeTitular: data.name,
+          validade:    data.expiry,
+          cvv:         data.cvc,
+        }
+      );
       console.log(response);
 
       //TODO - exibir a lista de carões atualizada depois de adiocionar um novo cartão
