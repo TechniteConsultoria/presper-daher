@@ -125,7 +125,7 @@ function Signup() {
                     className="form"
                     type="text"
                     name="phoneNumber"
-                    mask="999.999.999-99"
+                    mask="111.111.111-11"
                     value={phone}
                     onChange={(e) => setCpf(e.target.value)}
                     
