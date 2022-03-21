@@ -73,6 +73,7 @@ function CartCheckOut() {
   // deletarCarrinho()
 
   async function handleGeneratePedidos(cart){
+    if(!card.cvv) return toast.error("Selecione um cartão!")
 
     let formatedProd = {
       produtos: [],
@@ -92,22 +93,22 @@ function CartCheckOut() {
     let pedidoGenerated = await createPedidoWithFatura(formatedProd)
     
     if (!pedidoGenerated){
-      toast.error("Erro...")
+      toast.error("Erro ao gerar o pedido...")
       return
     }
 
     console.log("pedidoGenerated.id")
     console.log( pedidoGenerated.id )
 
-    // let deletedAllCart =  await deleteAllCart()
+    let deletedAllCart =  await deleteAllCart()
 
 
     
     // create a array to make a map in backend 
-    await clienteProdutoCertificado.create(formatedProd)
-    
-    // if(deletedAllCart) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado, mas sem fatura :(")
-    if(pedidoGenerated) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado, mas sem fatura :(")
+    let createdAcess = await clienteProdutoCertificado.create(formatedProd)
+    if(!createdAcess) toast.error("Erro na criação da fatura... :(")
+
+    if(createdAcess && pedidoGenerated && deletedAllCart) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado e fatura autorizada! :)")
   }
 
   return (
