@@ -14,6 +14,7 @@ import "./MyCertificates.styles.css";
 
 import cursos from "../../data/cursos";
 import { id } from "../../services/api";
+import { Link } from "react-router-dom";
 
 function MyCertificates() {
 
@@ -105,7 +106,7 @@ function MyCertificates() {
               </Col>
             </Row>
           </div>
-          <hr></hr>
+          <hr/>
           <div className="container-filtro">
             <div className="filtro-item">
               <Form.Label column sm="6">
@@ -198,16 +199,20 @@ function MyCertificates() {
         </Container>
         <div className="container-item" id="cursos-list">
           <div className="courses-container">
-            {certificatesList?.map((item) => (
-              <CertificateCard
-                key={item.id}
-                title={item.produto.nome}
-                author={item.produto.autor}
-                onClick={() => {
-                  //   setCourse(item);
-                  //   showEditCourseModal(true);
-                }}
-              />
+            {certificatesList?.map(({id, produto}) => (
+              <Link
+              to={`/my-certificate/${id}`}
+              >
+                <CertificateCard
+                  key={id}
+                  title={produto.nome}
+                  author={produto.autor}
+                  onClick={() => {
+                    //   setCourse(item);
+                    //   showEditCourseModal(true);
+                  }}
+                />
+              </Link>
             ))}
           </div>
         </div>

@@ -91,6 +91,7 @@ export default class clienteProdutoCertificado{
   static async find(id){
 
     let response = await api.get(`clienteProdutoCertificado/${id}`)
+
       .catch(() => {
         servidorErrorMessage()
       })
