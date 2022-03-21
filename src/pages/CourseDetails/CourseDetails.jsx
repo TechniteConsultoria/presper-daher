@@ -13,6 +13,8 @@ import "./CourseDetails.styles.css";
 import { formatPrice } from "../../utils/format";
 import comentarioCreate from "../../services/comentario/comentarioCreate";
 import comentarioLoadFiler from "../../services/comentario/comentarioLoadFiler";
+import { tenantId } from "../../services/api";
+import { toast } from "react-toastify";
 
 const axios = require("axios").default;
 
@@ -53,6 +55,7 @@ function CourseDetails() {
       autor:       result.produto.autor,
       preco:       result.produto.preco,
       description: result.produto.descricao,
+      categoriaNome: result.produto.categoriaNome,
       descricao:   result.produto.descricao,
       imagemUrl:   result.produto.imagemUrl,
       videos:      result.produtoModulo
@@ -68,13 +71,14 @@ function CourseDetails() {
 
   useEffect(() => {
     getCourse();
-  }, []);
-
-  useEffect(() => {
     getComment();
-  }, []);
+  }, [id]);
 
-  
+  async function handleAddCart(course){
+    if(!tenantId) return toast.error("Faça login ou cadastro para poder utilizar a plataforma")
+    await addItemToCart(course) 
+  }
+
 
   return (
     <>
@@ -82,7 +86,7 @@ function CourseDetails() {
         <Container id="course-info">
           <div className="info-container">
             <h2>{course?.titulo}</h2>
-            <h5>{course?.id}</h5>
+            <h5>{course?.categoriaNome}</h5>
             <h6>{course?.autor}</h6>
             <h6>
               <div className="certificate-container">
@@ -100,8 +104,8 @@ function CourseDetails() {
           <div className="img-btn-container">
             <Image src={course?.imagemUrl} id="course-img" />
             <Button id="btn-add-cart" onClick={
-              async () => {
-              await addItemToCart(course) 
+              () => {
+                handleAddCart(course)
             }}>
               Adicionar ao carrinho
             </Button>
