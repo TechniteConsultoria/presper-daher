@@ -13,6 +13,7 @@ import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/
 import "./MyCertificates.styles.css";
 
 import cursos from "../../data/cursos";
+import { id } from "../../services/api";
 
 function MyCertificates() {
 
@@ -77,16 +78,19 @@ function MyCertificates() {
   }
 
   async function handleListCourses(){
-    let clientCourses = await clienteProdutoCertificado.listWithFilter('isActive', 1)
+    let filter = `filter%5BuserId%5D=${id}&filter%5BisCertificado%5D=1`
+    // filter%5Brole%5D=admin&filter%5Bstatus%5D=pendente
+    let clientCourses = await clienteProdutoCertificado.listWithManyFilters(filter)
+    // console.log(clientCourses)
     setCertificatesList(clientCourses)
   }
 
 
-  // useEffect(
-  //   () => {
-  //     handleListCourses()
-  //   }, []
-  // )
+    useEffect(
+      () => {
+        handleListCourses()
+      }, []
+    )
 
   
   return (
@@ -197,8 +201,8 @@ function MyCertificates() {
             {certificatesList?.map((item) => (
               <CertificateCard
                 key={item.id}
-                title={item.title}
-                author={item.author}
+                title={item.produto.nome}
+                author={item.produto.autor}
                 onClick={() => {
                   //   setCourse(item);
                   //   showEditCourseModal(true);
