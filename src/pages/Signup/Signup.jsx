@@ -19,10 +19,15 @@ function Signup() {
       console.log(loadReCaptcha())
     },[]
   )
-  // site Key:
-  // 6Ldd3PoeAAAAAN8eEfc2Q5Qz0tkH4LamNqyc9dOq
-  // secret key
-  // 6Ldd3PoeAAAAADr6fBwEDJcpF1CQqSH538XmrIMy
+  /*
+  'presper teste' has been registered.
+  site key 
+    6LfO6PoeAAAAAAujWa_8zELc0haxuEMjx2GrxxqX
+  secret key
+   6LfO6PoeAAAAAOwDuXzuUtONm-k8-BQ2qSyzTEHT
+  */
+
+   let siteKey = '6LfO6PoeAAAAAAujWa_8zELc0haxuEMjx2GrxxqX'
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +35,8 @@ function Signup() {
   const [senha, setSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
   const [inscricao, setInscricao] = useState(false);
+  
+  const [isVerify, setIsVerify] = useState(false);
   const [submit, isSubmit] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -41,7 +48,7 @@ function Signup() {
     isSubmit(true);
     setLoading(true)
 
-    if (senha === confirmaSenha && email === confirmaEmail) {
+    if (senha === confirmaSenha && email === confirmaEmail && isVerify) {
       try {
         let isOk = await cadastro(nome, email, senha, "1");
         if (isOk == "ok") {
@@ -52,6 +59,9 @@ function Signup() {
         console.error(error);
       }
       isSubmit(false);
+    }
+    else{
+      toast.error("Cheque seus dados")
     }
       
     setLoading(false)
@@ -141,9 +151,9 @@ function Signup() {
             size="normal"
             data-theme="dark"            
             render="explicit"
-            sitekey="your_site_key"
-            onloadCallback={console.log("this.onLoadRecaptcha")}
-            verifyCallback={console.log("this.verifyCallback")}
+            sitekey={siteKey}
+            // onloadCallback={e => console.log(e)}
+            verifyCallback={e => setIsVerify(e)}
           />
 
               {/* <div className="form-check">
