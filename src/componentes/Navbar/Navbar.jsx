@@ -19,7 +19,7 @@ import "../Navbar/Navbar.style.css";
 
 import logo from "../../assets/project-logo.png";
 import loadCategorias from "../../services/categoria/loadCategorias";
-import { token, role } from "../../services/api";
+import { token, tenantId, role, id, status, Email } from "../../services/api";
 import ComboBox from "./comboBox.jsx";
 
 
@@ -145,7 +145,12 @@ function NavbarComponent() {
                   </Nav.Link>
 
                   {
-                  token ? (
+                  token||
+                  tenantId||
+                  role||
+                  id||
+                  status||
+                  Email ? (
                     <>
                       <NavDropdown title="Minha Conta" id="basic-nav-dropdown">
                         <NavDropdown.Item
