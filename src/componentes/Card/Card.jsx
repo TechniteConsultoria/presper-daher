@@ -15,6 +15,8 @@ export default class CardComponent extends React.Component {
       price: props.price,
       sold: props.sold,
       onClick: props.onClick,
+      avalationSums: props.avalationSums,
+      avaliationsQuantity: props.avaliationsQuantity,
     };
   }
 
@@ -56,7 +58,11 @@ export default class CardComponent extends React.Component {
                 alignItems: "center",
               }}
             >
-              <ReactStars value={this.state.rating} edit={false} size={18} />
+              <ReactStars
+              value={
+                this.state.avalationSums / this.state.avaliationsQuantity
+              }
+              edit={false} size={18} />
               <Card.Text
                 style={{
                   fontSize: "16px",
