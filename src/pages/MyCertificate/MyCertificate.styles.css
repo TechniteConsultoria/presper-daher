@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Yellowtail&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
 
 .container-my-certificates {
   background-color: #fff !important;
@@ -46,13 +47,16 @@ img{
   background-position: center;
   border: 0;
   margin: 0 auto;
-
-
+  color: #3d4978;
+  line-height: 1;
 }
 
-.courseContainer span.assinado{
-  font-family: 'Yellowtail', cursive;
+.courseContainer p{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
 
+.assinado{
+  font-family: 'Yellowtail', serif !important;
 }
 
 @media (max-width: 593px) {
