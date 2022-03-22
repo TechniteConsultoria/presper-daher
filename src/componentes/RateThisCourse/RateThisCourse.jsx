@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import ReactStars from "react-rating-stars-component";
 import comentarioCreate from "../../services/comentario/comentarioCreate";
 import { id } from "../../services/api";
+import changeProduct from "../../services/produto/changeProduct";
+import updateProductRatings from "../../services/produto/updateProductRatings";
 
 function RateThisCourse(props) {
   const [rateValue, setRateValue] = useState(0);
@@ -19,6 +21,7 @@ function RateThisCourse(props) {
       comentario: testimonial,
       produtoId:  props.courseId,
       userId:     id,
+      estrelas:   rateValue
     };
 
     console.log(data)
@@ -26,7 +29,14 @@ function RateThisCourse(props) {
 
     setTestimonial("");
     setRateValue(0);
+
+    console.log(props.courseId)
+
+
+    updateProductRatings(props.courseId, rateValue)
   }
+
+  console.log(rateValue)
 
   return (
     <>
