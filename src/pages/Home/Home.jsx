@@ -192,7 +192,8 @@ function Home() {
                     img={item.imagemUrl}
                     title={item.nome}
                     author={item.autor}
-                    rating={item.rating}
+                    avalationSums={item.somatoriaAvaliacoes}
+                    avaliationsQuantity={item.quantidadeAvaliacoes}
                     price={item.preco}
                     sold={item.sold}
                   />
