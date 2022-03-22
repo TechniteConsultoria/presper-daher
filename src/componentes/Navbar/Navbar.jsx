@@ -107,7 +107,8 @@ function NavbarComponent() {
                     {categorias.map((item) => {
                       return (
                         <li key={item.id}>
-                          <NavDropdown.Item href={`/`} id="categories-items">
+                          <NavDropdown.Item href={`/course-category/${item.id}`}
+                          id="categories-items">
                             {item.nome}
                           </NavDropdown.Item>
                         </li>
