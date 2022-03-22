@@ -20,7 +20,7 @@ function MyCoursesCardComponent(props) {
         <Card.Img
           variant="top"
           src={props.img}
-          style={{ borderRadius: "4px 4px 0px 0px", height: "120px" }}
+          style={{ borderRadius: "4px 4px 0px 0px", height: "120px", objectFit: "cover",}}
         />
         <Card.Body>
           <Card.Title style={{ fontSize: "14px" }}>{props.title}</Card.Title>
