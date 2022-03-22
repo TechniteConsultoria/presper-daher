@@ -88,17 +88,12 @@ function NavbarComponent() {
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand> */}
 
-            {
-            role == 'admin' ? (
-              <Navbar.Brand href="/admin" id="nav-brand">
+            
+            <Navbar.Brand href="/" id="nav-brand">
               <img src={logo} alt="logo" id="navbar-logo" />
             </Navbar.Brand>
-            ) : (
-              <Navbar.Brand href="/" id="nav-brand">
-              <img src={logo} alt="logo" id="navbar-logo" />
-            </Navbar.Brand>
-            )
-            }
+            
+            
 
             <Navbar.Collapse id="basic-navbar-nav">
               <div className="navbar-items ">
@@ -208,7 +203,7 @@ function NavbarComponent() {
                   role === "admin" && (
                     <NavDropdown title="Admin" id="basic-nav-dropdown">
                       <NavDropdown.Item href={`/admin`} id="minhaconta-items">
-                        Certificados
+                        Página do Admin
                       </NavDropdown.Item>
                       <NavDropdown.Item
                         id="minhaconta-items"
