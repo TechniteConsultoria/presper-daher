@@ -24,6 +24,7 @@ import ComboBox from "./comboBox.jsx";
 
 
 import cursoLoad from "../../services/curso/cursoLoad";
+import { Link } from "react-router-dom";
 
 function NavbarComponent() {
   const { cart, update } = useCart();
@@ -102,9 +103,15 @@ function NavbarComponent() {
                     {categorias.map((item) => {
                       return (
                         <li key={item.id}>
-                          <NavDropdown.Item href={`/course-category/${item.id}`}
+                          <NavDropdown.Item
+                          className="noPadding"
                           id="categories-items">
-                            {item.nome}
+                            <Link
+                             className="category"
+                             to={`/course-category/${item.id}`}
+                            >
+                              {item.nome}
+                            </Link>
                           </NavDropdown.Item>
                         </li>
                       );
