@@ -7,7 +7,8 @@ import Comunication from "../../componentes/AdminComunication/AdminComunication"
 import Banners from "../../componentes/AdminBanners/AdminBanners";
 import Category from "../../componentes/AdminCategory/AdminCategory";
 
-import { BsFillArrowRightSquareFill } from "react-icons/bs";
+import { BsFillArrowRightSquareFill, BsFillHouseFill } from "react-icons/bs";
+
 
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -63,6 +64,14 @@ function Admin() {
                       </Nav.Link>
                     );
                   })}
+
+                  <Nav.Link
+                  href="/"
+                  >
+                        <div id="link">
+                          <span><BsFillHouseFill /></span> <span>Home</span>
+                        </div>
+                  </Nav.Link>
 
                   <Nav.Link
                     onClick={() => {
