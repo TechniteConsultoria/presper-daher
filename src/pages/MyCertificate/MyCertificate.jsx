@@ -65,15 +65,17 @@ function MyCertificate() {
               >
                 <div className="course">
                   <p>
-                    <span>Certifica-se que </span> 
-                    <br/>
+                    Certifica-se que  
+                  </p>
+                  <p>
                     {certificate?.user?.name}
                   </p>
                 </div>
                 <div>
                   <p>
-                    <span>Completou o curso</span>
-                    <br/>
+                    Completou o curso
+                  </p>
+                  <p>
                     {certificate?.produto?.nome}
                   </p>
                 </div>
@@ -86,13 +88,13 @@ function MyCertificate() {
                   moment(courseDate).format('LLLL')} </p>
                 </div>
                 <div>
-                  <p>
-                    <span
-                    className="assinado"
-                    >
-                      Assinado
-                    </span>
+                  <p className="assinado">
+                    Assinado
                   </p>
+                  <p className="assinado">
+                    Presper Daher
+                  </p>
+
                 </div>
             </div>
             ): false
