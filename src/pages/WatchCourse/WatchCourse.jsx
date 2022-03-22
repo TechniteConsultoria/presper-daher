@@ -54,11 +54,13 @@ function WatchCourse() {
     console.log(id);
     let product = await cursoFindWithRelations(id)
     console.log(product)
+    setProdId(product.produto.id)
+    console.log(product.produto.id)
 
     setVideos(product.produtoModulo)
     // setLastVideo(product.produtoModulo[product.produtoModulo.length - 1])
     setVideo(product.produtoModulo[0])
-    console.log(product.produtoModulo[0].url)
+    console.log(product.produtoModulo)
 
   }
 
@@ -67,8 +69,9 @@ function WatchCourse() {
   }, []);
 
   async function generateCertify(id){
-    let data = {isCertificado: 1}
-    let a  = await clienteProdutoCertificado.update(id, data)
+    let data = { isCertificado: 1 }
+    console.log("id" + prodId);
+    let a  = await clienteProdutoCertificado.update(prodId, data)
 
     toast.info("Curso Finalizado! Certificado Gerado!")
   }
@@ -133,13 +136,13 @@ function WatchCourse() {
             <CourseContent videos={videos} onClick={setPlayVideo} />
           </Tab>
           <Tab className="tab-link" eventKey="rate" title="Avaliar">
-            <RateThisCourse courseId={videos[0]?.id} />
+            <RateThisCourse courseId={prodId} />
           </Tab>
           <Tab className="tab-link" eventKey="doubts" title="Dúvidas">
-            <SendQuestion courseId={videos[0]?.id} />
+            <SendQuestion courseId={prodId} />
           </Tab>
           <Tab className="tab-link" eventKey="share" title="Compartilhar">
-            <ShareCourse courseId={videos[0]?.id} />
+            <ShareCourse courseId={prodId} />
           </Tab>
         </Tabs>
       </Container>
