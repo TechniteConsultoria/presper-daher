@@ -10,9 +10,12 @@ import bannerLoad from "../../services/banner/bannerLoad";
 
 import "../CourseCategory/CourseCategory.style.css";
 
+import { useParams } from "react-router-dom";
+import productFindWithFilter from "../../services/produto/productFindWithFilter";
 
 
 function Category (){
+  const { id } = useParams();
 
 
 const [coursesList,     setCoursesList    ] = useState([]);
@@ -20,24 +23,19 @@ const [bannerList,      setBannerList     ] = useState([]);
 
 
 async function getCourses() {
+  console.log(id)
 
-  let cursos = await cursoLoad()
+  let cursos = await productFindWithFilter("categoriaId", id)
 
+ console.log(cursos)
   setCoursesList(cursos)
-}
-
-async function getBanners(){
-  let banner = await bannerLoad()
-
-  setBannerList(banner)
 }
 
 
 useEffect(async () => {
-  getBanners();
   getCourses()
 
-}, []);
+}, [id]);
 
 
     return(
