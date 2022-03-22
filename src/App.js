@@ -65,7 +65,7 @@ function App() {
                     <Route exact path="/login"               element={<Login />}         />
                     <Route exact path="/signup"              element={<Signup />}        />
                     <Route exact path="/course-details/:id"  element={<CourseDetails />} />
-                    <Route exact path="/course-category"     element={<Category />} /> 
+                    <Route exact path="/course-category/:id"     element={<Category />} /> 
                     <Route exact path="/shopping-cart"       element={<ShoppingCart />}  />
                     <Route exact path="/perfil"              element={<Perfil />}        />
                     <Route exact path="/my-courses"          element={<MyCourses />}     />
