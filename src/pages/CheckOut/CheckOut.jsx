@@ -12,21 +12,30 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+import { useCourse } from "../../contexts/CourseContext";
 import { useCreditCard } from "../../contexts/CreditCardContext";
 import { formatPrice } from "../../utils/format";
 import { api, id } from "../../services/api";
 import { toast } from "react-toastify";
+
 import createPedidoWithFatura from "../../services/pedido/createPedidoWithFatura";
 import clienteProdutoCertificado from "../../services/clienteProdutoCertificado/clienteProdutoCertificado";
+import { suppressDeprecationWarnings } from "moment";
+import LoadingGif from "../../componentes/LoadingGif";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
+  const { getCourseById, updateCourse, deleteOneCourse  } = useCourse();
   const { getCreditCards, creditCardList } = useCreditCard();
   const { removeItemFromCart, getTotalAmount,  getCart, deleteAllCart } = useCart();
+
+
   const [showAddCardForm, setShowAddCardForm] = useState(false);
   const [card  ,  setCard   ] = useState({});
   const [cards ,  setCards  ] = useState([]);
   const [amount,  setAmount ] = useState([]);
+  const [loading,  setLoading ] = useState(false);
+
 
   const [result, setResult] = useState({
     operation: "",
@@ -68,13 +77,32 @@ function CartCheckOut() {
   }, []);
 
 
+  async function handleUpdateCourseAmount(formatedProd){
+    formatedProd.produtos.map(
+      async (e) => {
+        let data = await getCourseById(e.id)
+
+        if(data.volumeVendas == null)  data.volumeVendas = 0
+
+        data.volumeVendas = Number(data.volumeVendas ) + 1 
+
+
+        let updatedAmoutCourse = await updateCourse(e.id, data)
+      }
+    )
+  }
 
   
   // deletarCarrinho()
 
   async function handleGeneratePedidos(cart){
-    if(!card.cvv) return toast.error("Selecione um cartão!")
 
+    setLoading(true)
+    
+    if(!card.cvv) {
+      setLoading(false)
+      return toast.error("Selecione um cartão!")
+    }
     let formatedProd = {
       produtos: [],
      }
@@ -94,6 +122,7 @@ function CartCheckOut() {
     
     if (!pedidoGenerated){
       toast.error("Erro ao gerar o pedido...")
+      setLoading(false)
       return
     }
 
@@ -106,10 +135,19 @@ function CartCheckOut() {
     
     // create a array to make a map in backend 
     let createdAcess = await clienteProdutoCertificado.create(formatedProd)
-    if(!createdAcess) toast.error("Erro na criação da fatura... :(")
+    if(!createdAcess) {
+      toast.error("Erro na criação da fatura... :(")
+      setLoading(false)
+    }
 
+    await handleUpdateCourseAmount(formatedProd)
+    
     if(createdAcess && pedidoGenerated && deletedAllCart) toast.success("Pedido Gerado, carrinho apagado, acesso autorizado e fatura autorizada! :)")
+
+    setLoading(false)
+
   }
+
 
   return (
     <>
@@ -199,15 +237,20 @@ function CartCheckOut() {
               }</div>
             </div>
             
-            <Button
-            onClick={
-              () => handleGeneratePedidos(prods)
+            
+           {
+           !loading ? (
+              <Button
+              onClick={
+                () => handleGeneratePedidos(prods)
+              }
+              id="btn-checkout">
+                Finalizar Compra
+              </Button>
+            ) : (
+              <LoadingGif />
+            )
             }
-            id="btn-checkout"> Finalizar Compra </Button>
-
-            {/* <Link to="/">
-              <Button id="btn-checkout"> Finalizar Compra </Button>
-            </Link> */}
           </div>
         </div>
       </Container>
