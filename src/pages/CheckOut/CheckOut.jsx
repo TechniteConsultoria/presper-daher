@@ -178,7 +178,7 @@ function CartCheckOut() {
                   >    
                     <Form.Check
                       type="radio"
-                      label={card.numero}
+                      label={card.apelido}
                       name="formHorizontalRadios"
                       id={card.id}
                     />
@@ -186,10 +186,7 @@ function CartCheckOut() {
                     )
                   )
                   }
-
-
                   
-
                   <Form.Check
                     type="radio"
                     label="Novo Cartão"
@@ -207,13 +204,13 @@ function CartCheckOut() {
               {showAddCardForm && <AddCardForm />}
             </div>
             <div>
-              {creditCardList?.map((card) => {
+              {/* {creditCardList?.map((card) => {
                 return (
                   <div key={card.id}>
                     <p> {card.name} </p>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </div>
 

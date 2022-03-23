@@ -48,7 +48,7 @@ export default class CardComponent extends React.Component {
               {this.state.author}
             </Card.Text>
             <Card.Text style={{ fontSize: "12px" }}>
-              {this.state.sold} vendidos
+              { this.state.sold ? this.state.sold : 0 } vendidos
             </Card.Text>
 
             <div
