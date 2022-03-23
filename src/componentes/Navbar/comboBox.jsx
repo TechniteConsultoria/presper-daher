@@ -41,17 +41,31 @@ function ComboBox(props) {
 
   return (
     <div >
-      <Form>
+      <Form
+      onSubmit={
+        e => e.preventDefault()
+      }
+      >
         <FormControl
           type="text"
           placeholder={props.placeholder}
           className="me-2"
           aria-label="Search"
           id="search-bar"
+          onSubmit={
+            e => e.preventDefault()
+          }
           // eslint-disable-next-line no-unused-expressions
-          onChange={(e) => {setWordEntered(e.target.value)
+          onChange={(e) => {
+            setWordEntered(e.target.value)
             e.preventDefault()}}
           value={wordEntered}
+          onKeyUp={
+            (e) => {
+              console.log(e.key)
+              if(e.key == "Enter") window.location.pathname = `/course-search/${wordEntered}`
+            }
+          }
         />
 
         
