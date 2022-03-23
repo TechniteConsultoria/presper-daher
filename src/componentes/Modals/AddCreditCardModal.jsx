@@ -17,6 +17,7 @@ function AddCreditCardModal(props) {
 
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
   const [focus, setFocus] = useState("");
@@ -35,7 +36,7 @@ function AddCreditCardModal(props) {
 
 
     const data = {
-      apelido:     id,
+      apelido:     nickname,
       numero:      number,
       nomeTitular: name,
       validade:    expiry,
@@ -85,6 +86,20 @@ function AddCreditCardModal(props) {
               />
             </div>
             <div>
+            <Form.Group className="mb-3">
+                <Form.Label column sm="2">
+                  Apelido
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Apelido do Cartão"
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                  // onFocus={(_) => setFocus("name")}
+                  required
+                />
+              </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label column sm="2">
                   Número
