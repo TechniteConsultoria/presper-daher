@@ -114,6 +114,7 @@ function Signup() {
                 }}
               />
               <MaskedInput
+                    placeholder="Telefone"
                     className="form"
                     type="text"
                     name="phoneNumber"
@@ -124,6 +125,7 @@ function Signup() {
                     
               />
               <MaskedInput
+                    placeholder="CPF"
                     className="form"
                     type="text"
                     name="setCpf"
