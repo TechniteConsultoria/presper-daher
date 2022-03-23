@@ -10,7 +10,7 @@ export default async function uploadImage(newImage, setImage) {
 
     formData.append('file', newImage)
 
-    let imageName = newImage.name
+    let imageName = newImage.name.replace(/ /g, "_") 
     console.log(imageName)
 
     let credentials = await api.get(`file/credentials`, {
