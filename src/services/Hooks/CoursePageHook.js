@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CourseService from "../CourseService";
 
 import { useCourse } from "../../contexts/CourseContext";
+import { toast } from "react-toastify";
 
 export const useCoursePage = () => {
 
@@ -29,6 +30,12 @@ export const useCoursePage = () => {
   const [result, setResult] = useState(null);
 
   const createCourse = async () => {
+  if(videosList.length < 1) return toast.error("Adicione um vídeo!")
+
+  if(price < 1) return toast.error("O preço precisa ser maior que 1!")
+
+
+  console.log(price)
     const data = {
       // courseImage: image,
       nome: title,
@@ -45,7 +52,7 @@ export const useCoursePage = () => {
     console.log(data)
 
     try {
-      // const response = await CourseService.createCourse(body);
+
       const response = await createCourses(data);
       console.log(response)
       // setResult(response);
@@ -53,21 +60,33 @@ export const useCoursePage = () => {
       console.error(error);
     }
     setCourse(data);
-    setResultCreateCourseModalShow(true);
+
+    // setResultCreateCourseModalShow(true);
     setVideosErrors([]);
+
+    setResult(null);
+    setVideosList();
+
     getCourses();
+    
+    return "ok"
   };
 
   const updateCourse = async (id, data) => {
     const body = data;
     try {
+
       const response = await CourseService.updateCourse(id, body);
+
       // setResult(response.status);
-      isUpdated(true);
-    } catch (error) {
+      
+    }
+
+    catch (error) {
       console.error(error);
     }
-    setResultEditCourseModalShow(true);
+
+    // setResultEditCourseModalShow(true);
     getCourses();
   };
 
@@ -78,7 +97,9 @@ export const useCoursePage = () => {
       console.log(id)
       const response = await deleteOneCourse(id);
       setResult(response.status);
-    } catch (error) {
+    }
+    
+    catch (error) {
       console.error(error);
     }
     setResultDeleteCourseModalShow(true);
