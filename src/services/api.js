@@ -14,7 +14,8 @@ export const loadingGif = 'https://contribua.org/mb-static/images/loading.gif'
 // export let ip = "http://localhost";//teste local
 export let ip = "https://projetos.42dias.com.br";//servidor/
 
-export let porta = '8146'
+// export let porta = '8146'
+export let porta = '8147'
 
 export const api = axios.create({
   baseURL: `${ip}:${porta}/api/tenant/${tenantId}/`,
