@@ -117,7 +117,7 @@ function NavbarComponent() {
                       );
                     })}
                   </NavDropdown>
-                  <Form>
+                  <>
                     {/* <FormControl
                       type="search"
                       placeholder="Pesquisar cursos"
@@ -131,7 +131,7 @@ function NavbarComponent() {
                     
                     <ComboBox placeholder="Pesquisar cursos" data={coursesList2}/>
                    
-                  </Form>
+                  </>
             {/*================================================================================
                                           AQUI
                ================================================================================
