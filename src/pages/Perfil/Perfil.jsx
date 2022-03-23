@@ -27,6 +27,7 @@ function Perfil(props) {
   const [user, setUser] = useState({});
 
   const [name, setName] = useState("");
+  const [cpf , setCpf ] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [profession, setProfession] = useState("");
@@ -55,6 +56,7 @@ function Perfil(props) {
     setProfession(loggedInUser.profissao)
     setBio(loggedInUser.bio)
     setPic(loggedInUser.imagemUrl)
+    setCpf( loggedInUser.cpf )
     setPhone(loggedInUser.telefone)
 
   }
@@ -67,6 +69,7 @@ function Perfil(props) {
       fistName:         name       || user.fistName,
       telefone:         phone      || user.telefone,
       profissao:        profession || user.profissao,
+      cpf:              cpf        || user.cpf,
       bio:              bio        || user.bio,
       imagemUrl:        pic        || user.imagemUrl,
     };
@@ -170,6 +173,31 @@ function Perfil(props) {
                     onChange={(e) => setEmail(e.target.value)}
                   /> */}
                 </Form.Group>
+
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label column sm="5">
+                    CPF
+                  </Form.Label>
+                  {/* <Form.Control
+                    type="text"
+                    defaultValue={user.phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  /> */}
+                  <MaskedInput
+                    value={cpf}
+                    className="masked-input"
+                    type="text"
+                    name="setCpf"
+                    id="setCpf"
+                    mask="111.111.111-11"
+                    onChange={(e) => setCpf(e.target.value)}
+              />
+                </Form.Group>
+
+                
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
