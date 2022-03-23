@@ -29,6 +29,7 @@ import CategoryProvider from "./contexts/CategoryContext.js";
 import CommentProvider from "./contexts/CommentsContex.js";
 import BannerProvider from "./contexts/BannerContext.js";
 import MyCertificate from "./pages/MyCertificate/MyCertificate.jsx";
+import CourseSearch from "./pages/CourseSearch/CourseCategory.jsx";
 
 function App() {
   const location = useLocation();
@@ -66,6 +67,7 @@ function App() {
                     <Route exact path="/signup"              element={<Signup />}        />
                     <Route exact path="/course-details/:id"  element={<CourseDetails />} />
                     <Route exact path="/course-category/:id"     element={<Category />} /> 
+                    <Route exact path="/course-search/:name"     element={<CourseSearch />} /> 
                     <Route exact path="/shopping-cart"       element={<ShoppingCart />}  />
                     <Route exact path="/perfil"              element={<Perfil />}        />
                     <Route exact path="/my-courses"          element={<MyCourses />}     />
