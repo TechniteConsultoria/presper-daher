@@ -68,7 +68,7 @@ useEffect(async () => {
                     author={item.autor}
                     rating={item.rating}
                     price={item.preco}
-                    sold={item.sold}
+                    sold={item.volumeVendas}
                   />
                 </Link>
               ))}

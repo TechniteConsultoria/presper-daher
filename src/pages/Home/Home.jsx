@@ -195,7 +195,7 @@ function Home() {
                     avalationSums={item.somatoriaAvaliacoes}
                     avaliationsQuantity={item.quantidadeAvaliacoes}
                     price={item.preco}
-                    sold={item.sold}
+                    sold={item.volumeVendas}
                   />
                 </Link>
               ))}
