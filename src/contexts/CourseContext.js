@@ -6,6 +6,7 @@ import cursoFind from "../services/curso/cursoFind";
 import cursoFindWithRelations from "../services/curso/cursoFindWithRelations";
 import cursoLoad from "../services/curso/cursoLoad";
 import cursoUpdate from "../services/curso/cursoUpdate";
+import responseHandler from "../utils/responseHandler";
 
 export const CourseContext = createContext({});
 
@@ -61,8 +62,13 @@ export default function CourseProvider({ children }) {
   const updateCourse = async (id, data) => {
     try {
       const response = await cursoUpdate(data, id);
+
+      let mensagemOk = 'Seu produto foi alterado com sucesso! :)'
+      let mensagemNaoOK = 'Revise os dados do produto :('
+      responseHandler(response, mensagemOk, mensagemNaoOK)
       
       await getCourses()
+      
       
       return response;
     }
