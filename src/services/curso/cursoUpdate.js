@@ -13,13 +13,8 @@ export default async function cursoUpdate(data, id) {
       data
       })
       .then((response) => {
-        // let mensagemOk = 'Seu produto foi alterado com sucesso! Ele será revisado e logo estará na plataforma :)'
-        // let mensagemNaoOK = 'Revise os dados do produto :('
-        // responseHandler(response.status, mensagemOk, mensagemNaoOK)
-        if (response.status == 200) {
-          //first check the http response, returning the result to user
-          return response.status
-        }
+        
+        return response.status
 
       })
       // .catch(() => {
