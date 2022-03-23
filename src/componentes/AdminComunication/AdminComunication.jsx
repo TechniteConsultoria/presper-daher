@@ -413,14 +413,14 @@ function Comunication() {
         </div>
 
         <div id="pagination-container" className="container-item">
-          <Pagination
+          {/* <Pagination
             activePage={currentPage}
             itemsCountPerPage={5}
             totalItemsCount={totalItems}
             onChange={loadCategorias}
             itemClass="page-item"
             linkClass="page-link"
-          />
+          /> */}
         </div>
       </Container>
     </>
