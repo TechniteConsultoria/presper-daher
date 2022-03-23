@@ -116,6 +116,7 @@ function CreateCourseModal(props) {
     try {
       let categories = await loadCategorias();
       setCategorias(categories)
+      setCategory(categories[0].id)
     }
     
     catch (error) {
@@ -145,12 +146,14 @@ function CreateCourseModal(props) {
         <Form
           encType="nultipart/form-data"
           action="submit"
-          onSubmit={() => {
-            props.onHide();
-            setResult(null);
-            setVideosList();
-            createCourse();
-          }}
+          onSubmit={
+            async (e) => {
+            e.preventDefault()
+            if(await createCourse() == 'ok'){
+              props.onHide()
+            }
+          }
+        }
         >
           <Modal.Body>
             <Form.Group className="mb-3">
@@ -263,7 +266,7 @@ function CreateCourseModal(props) {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Vídeos selecionados:</Form.Label>
 
-              {/* {videosList?.length > 0
+              {videosList?.length > 0
                 ? videosList.map((video, id) => {
                   return (
                     <Form.Check
@@ -275,18 +278,9 @@ function CreateCourseModal(props) {
                     />
                   );
                 })
-                : ""}
-                    return (
-                      <Form.Check
-                        type="checkbox"
-                        label={video.name}
-                        key={id}
-                        checked
-                        onChange={() => console.log(video.name)}
-                      />
-                    );
-                  })
-                : ""} */}
+                : 
+                ( <p> Nenhum vídeo adicionado </p> ) 
+              }
             </Form.Group>
 
             {/* {videosErrors?.length ? (
@@ -316,7 +310,7 @@ function CreateCourseModal(props) {
               onClick={() => {
                 props.onHide();
                 setVideosErrors([]);
-                setVideosList();
+                // setVideosList();
               }}
             >
               Cancelar
@@ -335,12 +329,12 @@ function CreateCourseModal(props) {
           </Modal.Footer>
         </Form>
       </Modal>
-      <ResultCreateCourseModal
+      {/* <ResultCreateCourseModal
         show={resultCreateCourseModalShow}
         onHide={() => setResultCreateCourseModalShow(false)}
         course={course}
         result={result}
-      />
+      /> */}
     </>
   );
 }
