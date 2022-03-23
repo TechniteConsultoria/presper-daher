@@ -201,7 +201,7 @@ function Courses() {
               />
             </Form>
           </div>
-          <div className="filtro-item">
+          {/* <div className="filtro-item">
             <Form.Label column sm="8">
               Classificar por
             </Form.Label>
@@ -233,7 +233,7 @@ function Courses() {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </div>
+          </div> */}
           <div className="filtro-item">
             <Form.Label column sm="10">
               Filtrar por categoria
