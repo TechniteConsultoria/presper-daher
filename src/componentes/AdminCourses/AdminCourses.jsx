@@ -301,7 +301,7 @@ function Courses() {
                   avalationSums={item.somatoriaAvaliacoes}
                   avaliationsQuantity={item.quantidadeAvaliacoes}
                   price={item.preco}
-                  sold={item.sold}
+                  sold={item.volumeVendas}
                   onClick={() => {
                     setCourse(item);
                     console.log(item)
@@ -321,7 +321,7 @@ function Courses() {
                 avaliationsQuantity={item.quantidadeAvaliacoes}
                 rating={item.rating}
                 price={item.preco}
-                sold={item.sold}
+                sold={item.volumeVendas}
                 onClick={() => {
                   setCourse(item);
                   console.log(item)
