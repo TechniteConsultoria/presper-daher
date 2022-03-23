@@ -20,12 +20,15 @@ import { toast } from "react-toastify";
 
 import { useCourse } from "../../contexts/CourseContext";
 
+import produtoModulo from "../../services/produtoModulo/produtoModulo";
+
+
 function EditCourseModal(props) {
   const { allCourses, updateCourse } = useCourse();
 
-  
-  const oldVideos = props.course.videos;
-  
+  const [videosList, setVideosList] = useState(props.course.produtoModulo);
+  let oldVideos = props.course.produtoModulo;
+
   // const [image, setImage] = useState(props.course.imagemUrl);
   // const [title, setTitle] = useState(props.course.nome);
   // const [author, setAuthor] = useState(props.course.autor);
@@ -61,7 +64,6 @@ function EditCourseModal(props) {
     result,
   } = useCoursePage();
 
-  const [videosList, setVideosList] = useState(props.course.videos);
   const [newVideos, setNewVideos] = useState([]);
   const [newVideo,  setNewVideo] = useState();
   const [videoToDelete, setVideoToDelete] = useState("");
@@ -71,7 +73,8 @@ function EditCourseModal(props) {
   // const [videosErrors, setVideosErrors] = useState([]);
 
   useEffect(() => {
-    setVideosList(oldVideos);
+    setVideosList(props.course.produtoModulo);
+    // setNewVideos(props.course.produtoModulo);
   }, [oldVideos]);
 
   async function handleSubmit() {
@@ -88,22 +91,30 @@ function EditCourseModal(props) {
     };
     console.log(data)
 
-    // cursoUpdate(data, props.course.id)
+    
+    if(newVideos.length > 0) handleAddNewVideos()
+
     await updateCourse(props.course.id, data)
 
-    // setResultEditCourseModalShow(true);
   }
 
-  function handleAddNewVideos(data) {
+  function handleAddNewVideos() {
+    newVideos.map(
+      async (newVideo, index) => {
+        const data = {
+          produtoId: props.course.id,
+          url: newVideo.url,
+        };
 
-    let errors = [];
-    let files = [];
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].type === "video/mp4") files.push(data[i]);
-      else errors.push(data[i]);
-    }
-    setNewVideos(files);
-    setVideosErrors(errors);
+        console.log(data)
+        console.log(index)
+    
+        await produtoModulo.create(data)
+        
+
+      }
+    )
+  
   }
 
   const handleChangePriceOfProduct = (event, value, maskedValue) => {
@@ -131,7 +142,6 @@ function EditCourseModal(props) {
     },[]
   )
 
-  console.log(formatPrice(props.course.preco))
 
 
   async function handleUploadImage(image){
@@ -150,7 +160,7 @@ function EditCourseModal(props) {
       
       let videoPath = await uploadImage(image, setNewVideo)
 
-      handleAddNewVideos(videoPath);
+      handleAddVideos(videoPath);
 
     }
     else {
@@ -164,6 +174,42 @@ function EditCourseModal(props) {
   Line 393:23:  'setDeleteVideoModalShow' is not defined  no-undef
 
   */
+
+  async function deleteVideo(id){
+    await produtoModulo.delete(id)
+
+
+    const data = {
+      id: props.course.id,
+      imagemUrl: image || props.course.imagemUrl,
+      nome: title || props.course.nome,
+      autor: author || props.course.autor,
+      preco: price || props.course.preco,
+      categoriaId: category || props.course.categoriaId,
+      descricao: description || props.course.descricao,
+      videos: newVideos,
+    };
+    console.log(data)
+
+    // cursoUpdate(data, props.course.id)
+    await updateCourse(props.course.id, data)
+
+  }
+
+  function handleAddVideos(pathToVideo) {
+    let data = {
+      url: pathToVideo,
+      ordem: videosList.length
+    }
+    console.log(data)
+    console.log(data.ordem)
+
+    setNewVideos((prevData) => {
+      return [...new Set( [ ...prevData, data  ] )]	
+     } );
+  }
+
+
   return (
     <>
       <Modal {...props} centered animation={false}>
@@ -297,9 +343,9 @@ function EditCourseModal(props) {
                       }}
                     >
                       <span>
-                        {" "}
+                        {" teste "}
                         {"  "}
-                        {video}
+                        {video.url}
                       </span>
                       <span>
                         <BsFillTrashFill
@@ -307,8 +353,9 @@ function EditCourseModal(props) {
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             props.onHide();
-                            setVideoToDelete(video);
-                            setDeleteVideoModalShow(true);
+                            deleteVideo(video.id)
+                            // setVideoToDelete(video);
+                            // setDeleteVideoModalShow(true);
                           }}
                         />
                       </span>
@@ -326,16 +373,15 @@ function EditCourseModal(props) {
                 type="file"
                 multiple
                 onChange={async (e) => {
-                  let video = e.target.file
+                  let video = e.target.files[0]
                   console.log(video)
-                  console.log(e.target.files);
-                  await uploadImage(e.target.files, setNewVideo)
-                  handleAddNewVideos(newVideo);
+                  console.log(video);
+                  await handleUploadVideo(video)
                 }}
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Vídeos selecionados:</Form.Label>
 
               {newVideos?.length > 0
@@ -351,7 +397,7 @@ function EditCourseModal(props) {
                     );
                   })
                 : ""}
-            </Form.Group>
+            </Form.Group> */}
             {videosErrors?.length ? (
               <Alert variant="danger">
                 Os seguintes arquivos não puderam ser carregados pois não
@@ -394,7 +440,7 @@ function EditCourseModal(props) {
               onClick={() => {
                 props.onHide();
                 setVideosErrors([]);
-                setNewVideos();
+                // setNewVideos();
               }}
             >
               Cancelar
