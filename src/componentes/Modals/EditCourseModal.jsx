@@ -36,7 +36,7 @@ function EditCourseModal(props) {
   // const [category, setCategory] = useState(props.course.categoria);
   // const [description, setDescription] = useState(props.course.descricao);
   const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
-  const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.preco));
+  const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.price));
   const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] = useState(false)
 
   const {
@@ -286,7 +286,8 @@ function EditCourseModal(props) {
                   className="currencyInput"
                   currency="BRL" 
                   config={currencyConfig}
-                  value={handleChangePrice}
+                  // value={handleChangePrice}
+                  defaultValue={ formatPrice(props.course.preco) }
                   onChange={handleChangePriceOfProduct} 
               />
             </Form.Group>
