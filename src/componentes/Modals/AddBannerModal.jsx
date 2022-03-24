@@ -103,7 +103,7 @@ function AddBannerModal(props) {
               </Form.Group>
 
 
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Label column sm="2">
                   Status
                 </Form.Label>
@@ -112,7 +112,7 @@ function AddBannerModal(props) {
                   label="Ativo"
                   onChange={(e) => setImgStatus(!imgStatus)}
                 />
-              </Form.Group>
+              </Form.Group> */}
             </div>
           </Modal.Body>
 
