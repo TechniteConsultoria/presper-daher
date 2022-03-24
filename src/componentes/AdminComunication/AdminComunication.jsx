@@ -322,7 +322,7 @@ function Comunication() {
                         )}
                       </td>
                       <td>
-                        {t.visible ? (
+                        {t.isDenunciado ? (
                           <BsFillEyeFill
                             id="visible"
                             className="icon"
@@ -373,12 +373,12 @@ function Comunication() {
                         )}
                       </td>
                       <td>
-                        {t.visible ? (
+                        {t.isDenunciado ? (
                           <BsFillEyeFill
                             id="visible"
                             className="icon"
                             onClick={() => {
-                              handleUpdate(!t.visible, t.id);
+                              handleUpdate(t, t.id);
                               // updateMsgList();
                             }}
                           />
@@ -387,7 +387,7 @@ function Comunication() {
                             id="visible"
                             className="icon"
                             onClick={() => {
-                              handleUpdate(!t.visible, t.id);
+                              handleUpdate(t, t.id);
                               // updateMsgList();
                             }}
                           />
