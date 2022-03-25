@@ -23,7 +23,8 @@ export default async function cadastro(name, email, password, phone, cpf, role, 
       invitationToken: invitationToken,
       tenantId:        tenantId
       })
-      .then((response) => {
+      .then(
+        async (response) => {
 
         let mensagemOk = 'Opa, recebemos o seu registro :)'
 
@@ -31,8 +32,8 @@ export default async function cadastro(name, email, password, phone, cpf, role, 
 
         if (response.status == 200) {
           //first check the http response, returning the result to user
+          await loadUser(response.data)
           handleLocalStorageEmailAndPassword(email, password)
-          loadUser(response.data)
           return 'ok'
         }
 
