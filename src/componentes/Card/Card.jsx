@@ -3,6 +3,8 @@ import { Card } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import { formatPrice } from "../../utils/format";
 
+import './styles.css'
+
 export default class CardComponent extends React.Component {
   constructor(props) {
     super(props);
