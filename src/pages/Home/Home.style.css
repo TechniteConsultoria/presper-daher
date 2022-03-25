@@ -24,6 +24,24 @@
   width: 100%;
 } */
 
+
+/*
+
+
+*/
+.carousel-control-next,
+.carousel-control-prev{
+  margin: 0 11px !important;
+  transition: all ease-in-out .3s;
+}
+
+.carousel-control-next:hover,
+.carousel-control-prev:hover{
+  background-color: rgba(0, 0, 0, 0.459) !important;
+  transition: all ease-in-out .3s;
+
+}
+
 .w-100 {
   max-width: 100%;
   margin: 0px;
