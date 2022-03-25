@@ -18,7 +18,8 @@
   }
 
   #course-img {
-    display: none;
+    /* display: none; */
+    object-fit: cover;
   }
 }
 
