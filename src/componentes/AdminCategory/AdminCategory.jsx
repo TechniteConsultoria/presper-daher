@@ -27,6 +27,7 @@ function Category() {
     try {
       let categoryList = await allCategorys
       setCategoriesList(categoryList)
+      console.log(categoryList)
     }
     catch (error) {
       console.error(error);
@@ -35,6 +36,7 @@ function Category() {
 
   useEffect(() => {
     getCategories();
+    console.log(allCategorys)
   }, [allCategorys]);
 
   return (
@@ -102,7 +104,7 @@ function Category() {
                           onClick={() => {
                             setCategory(cat);
                             isShowEditCategoryModal(true);
-                            console.log(category);
+                            console.log(cat);
                           }}
                         />
                       </td>
@@ -125,7 +127,7 @@ function Category() {
                           onClick={() => {
                             setCategory(cat);
                             isShowEditCategoryModal(true);
-                            console.log(category);
+                            console.log(cat);
                           }}
                         />
                       </td>
