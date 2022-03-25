@@ -27,6 +27,7 @@ import loadCategorias from "../../services/categoria/loadCategorias.js";
 //* DONE - 2. fazer a integração consumindo os dados do back
 //*
 import { useComment } from "../../contexts/CommentsContex";
+import VisualizeComment from "../Modals/VisualizeComment";
 
 function Comunication() {
   const { allComments, updateComment, deleteComment } = useComment();
@@ -37,6 +38,8 @@ function Comunication() {
   const [lastPage, setLastPage] = useState(1);
   const [totalItems, setTotalItems] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [index, setIndex] = useState(0);
 
   const [classificar, setClassificar] = useState("Sem classificação");
   const [filtroStatus, setFiltroStatus] = useState("Sem filtro");
@@ -95,6 +98,8 @@ function Comunication() {
   const [allTestimonials, setAllTestimonials] = useState([]);
   const [testimonialsList, setTestimonialsList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
+  const [showAddBannerModal, isShowAddBannerModal] = useState(false);
+
 
   // async function getTestimonials() {
   //   setAllTestimonials(mock);
@@ -292,6 +297,7 @@ function Comunication() {
             <Table responsive>
               <thead>
                 <tr>
+                  <th>VER</th>
                   <th>CURSO</th>
                   <th>CLIENTE</th>
                   <th>DATA</th>
@@ -304,7 +310,17 @@ function Comunication() {
                 testimonialsList == allComments ? (
                   testimonialsList?.map((t, id) => (
                     <tr key={id}>
-                      {/* <td>{"hahahahaahahahah"}</td> */}
+                      <td
+                      onClick={() => {
+                        setIndex(id)
+                        isShowAddBannerModal(true)
+                      }}
+                      >
+                        <BsFillEyeFill
+                        id="showModal"
+                        className="icon"
+                        />
+                      </td>
                       <td>{t.produto.nome || "Sem curso"}</td>
                       <td>{t.user.name}</td>
                       <td>
@@ -355,6 +371,16 @@ function Comunication() {
                 ):(
                   testimonialsList?.map((t, id) => (
                     <tr key={t.id}>
+                      <td
+                      onClick={() => {
+                        setIndex(id)
+                        isShowAddBannerModal(true)
+                      }}
+                      >
+                        <BsFillEyeFill
+                        id="showModal"
+                        className="icon"/>
+                      </td>
                       {/* <td>{"hahahahaahahahah"}</td> */}
                       <td>{t.produto.nome || "Sem curso"}</td>
                       <td>{t.user.name}</td>
@@ -411,6 +437,7 @@ function Comunication() {
             </Table>
           </Container>
         </div>
+        
 
         <div id="pagination-container" className="container-item">
           {/* <Pagination
@@ -423,6 +450,11 @@ function Comunication() {
           /> */}
         </div>
       </Container>
+      <VisualizeComment
+        show={showAddBannerModal}
+        onHide={() => isShowAddBannerModal(false)}
+        comment={testimonialsList[index]}
+      />
     </>
   );
 }
