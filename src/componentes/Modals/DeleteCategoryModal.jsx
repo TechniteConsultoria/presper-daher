@@ -4,11 +4,12 @@ import { toast } from "react-toastify";
 
 import ResultDeleteCategoryModal from "./ResultDeleteCategoryModal";
 
-import { useBanner } from "../../contexts/BannerContext";
+import { useCategory } from "../../contexts/CategoryContext";
 
 function DeleteCategoryModal(props) {
-  const { allBanners, deleteBanner } = useBanner();
-
+  const { deleteCategory } = useCategory();
+  
+  
   // console.log("props")
   // console.log(props)
 
@@ -17,12 +18,12 @@ function DeleteCategoryModal(props) {
 
   async function handleSubmit() {
     //* APENAS PARA DESENVOLVIMENTO ------>
-    const id = props.category.id;
+    const id = props.category;
 
-    const url = "https://fake-api-json-server-presper.herokuapp.com/categorias";
     try {
-      await deleteBanner(id)
-    } catch (error) {
+      await deleteCategory(id)
+    }
+    catch (error) {
       console.error(error);
     }
     //* APENAS PARA DESENVOLVIMENTO ------>
