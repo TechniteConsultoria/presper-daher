@@ -1,16 +1,21 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useCreditCard } from "../../contexts/CreditCardContext";
 
 const axios = require("axios").default;
 
+
+
 function DeleteCreditCardModal(props) {
-  const { result, ...rest } = props;
+  
+  const { getCreditCards, creditCardList, addCreditCard, deleteCreditCart } = useCreditCard();
+
+  const { ...rest } = props;
 
   async function handleClick(id) {
-    const url = "https://fake-api-json-server-presper.herokuapp.com/cartoes";
-    axios.delete(`${url}/${id}`).then((res) => {
-      result(res.status);
-    });
+    await deleteCreditCart(id)
+
+    
   }
 
   return (
