@@ -26,6 +26,7 @@ import loadPergunta from "../../services/pergunta/perguntaLoad";
 import bannerLoad from "../../services/banner/bannerLoad";
 import { role } from "../../services/api";
 import LoadingGif from "../../componentes/LoadingGif";
+import bannerLoadWithFilter from "../../services/banner/bannerLoadWithFilter";
 
 const axios = require("axios").default;
 
@@ -106,7 +107,7 @@ function Home() {
   }
 
   async function getBanners(){
-    let banner = await bannerLoad()
+    let banner = await bannerLoadWithFilter('status', 0)
 
     setBannerList(banner)
   }
