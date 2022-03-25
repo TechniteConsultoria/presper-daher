@@ -68,10 +68,11 @@ function CreateCourseModal(props) {
   //   console.log(image);
   // }, [setImage]);
 
-  function handleAddVideos(pathToVideo) {
+  function handleAddVideos(pathToVideo, imageName) {
     let data = {
-      url: pathToVideo,
-      ordem: videosList.length
+      url:   pathToVideo,
+      ordem: videosList.length,
+      nome:  imageName,
     }
     console.log(data)
     console.log(data.ordem)
@@ -94,10 +95,12 @@ function CreateCourseModal(props) {
 
   async function handleUploadVideo(image){
     if (image.type.includes('mp4')) {
-      
+
+      console.log("image")
+      console.log(image.name)
       let videoPath = await uploadImage(image, setNewVideo)
 
-      handleAddVideos(videoPath);
+      handleAddVideos(videoPath, image.name);
 
     }
     else {
@@ -271,10 +274,10 @@ function CreateCourseModal(props) {
                   return (
                     <Form.Check
                       type="checkbox"
-                      label={video.name}
+                      label={video.nome}
                       key={id}
                       checked
-                      onChange={() => console.log(video.name)}
+                      onChange={() => console.log(video.nome)}
                     />
                   );
                 })
