@@ -22,6 +22,7 @@ function EditCategoryModal(props) {
     try {
       const id = props.category.id;
 
+
       const data = {
         nome: categoryName,
         updatedAt: Date.now(),
@@ -38,6 +39,8 @@ function EditCategoryModal(props) {
   }
 
   useEffect(() => {}, []);
+
+  console.log(props.category.id)
 
   return (
     <>
@@ -115,7 +118,7 @@ function EditCategoryModal(props) {
         onHide={() => {
           isShowDeleteModal(false);
         }}
-        category={props.category}
+        category={props.category.id}
       />
 
       <ResultEditCategoryModal
