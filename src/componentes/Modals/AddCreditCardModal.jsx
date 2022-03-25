@@ -8,10 +8,11 @@ import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import cartaoCreate from "../../services/cartao/cartaoCreate";
 import { id } from "../../services/api";
-
-const axios = require("axios").default;
+import { useCreditCard } from "../../contexts/CreditCardContext";
 
 function AddCreditCardModal(props) {
+  const { getCreditCards, creditCardList, addCreditCard, deleteCreditCart } = useCreditCard();
+
   // const [resultAddCreditCard, setResultAddCreditCard] = useState(false);
   // const [submited, isSubmited] = useState(false);
 
@@ -43,7 +44,7 @@ function AddCreditCardModal(props) {
       cvv:         cvc,
     };
 
-    let newCartao = await cartaoCreate(data)
+    let newCartao = await addCreditCard(data)
     console.log(newCartao)
     setNumber("");
     setName("");
@@ -51,6 +52,7 @@ function AddCreditCardModal(props) {
     setCvc("");
     // isSubmited(false);
     props.onHide();
+    // window.location.reload()
   }
 
   useEffect(() => {
