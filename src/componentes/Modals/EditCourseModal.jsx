@@ -160,7 +160,7 @@ function EditCourseModal(props) {
       
       let videoPath = await uploadImage(image, setNewVideo)
 
-      handleAddVideos(videoPath);
+      handleAddVideos(videoPath, image.name);
 
     }
     else {
@@ -196,10 +196,11 @@ function EditCourseModal(props) {
 
   }
 
-  function handleAddVideos(pathToVideo) {
+  function handleAddVideos(pathToVideo, imageName) {
     let data = {
-      url: pathToVideo,
-      ordem: videosList.length
+      url:   pathToVideo,
+      ordem: videosList.length,
+      nome:  imageName
     }
     console.log(data)
     console.log(data.ordem)
@@ -344,9 +345,9 @@ function EditCourseModal(props) {
                       }}
                     >
                       <span>
-                        {" teste "}
                         {"  "}
-                        {video.url}
+                        {"  "}
+                        {video.nome || video.url }
                       </span>
                       <span>
                         <BsFillTrashFill
@@ -399,6 +400,40 @@ function EditCourseModal(props) {
                   })
                 : ""}
             </Form.Group> */}
+            {newVideos?.map((video, index) => {
+                  return (
+                    <ListGroup.Item
+                      key={index}
+                      as="li"
+                      style={{
+                        justifyContent: "space-between",
+                        display: "flex",
+                        fontSize: "14px",
+                        // alignItems: "center",
+                        textAlign: "center",
+                      }}
+                    >
+                      <span>
+                        {"  "}
+                        {"  "}
+                        {video.nome || video.url }
+                      </span>
+                      <span>
+                        <BsFillTrashFill
+                          color="rgb(220, 53, 69)"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+
+                            let updatedVideos = [...newVideos]
+                            updatedVideos.splice(index, 1);
+                            setNewVideos(updatedVideos)
+
+                          }}
+                        />
+                      </span>
+                    </ListGroup.Item>
+                  );
+                })}
             {videosErrors?.length ? (
               <Alert variant="danger">
                 Os seguintes arquivos não puderam ser carregados pois não
