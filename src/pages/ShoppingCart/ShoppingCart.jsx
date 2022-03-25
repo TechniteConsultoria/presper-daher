@@ -28,6 +28,7 @@ function ShoppingCart() {
 
   async function getCart(){
     let loadedCart = await loadCart()
+    if (!loadedCart ) return setCart([])
     setCart(loadedCart)
 
     let totalAmount = await getTotalAmount()
@@ -104,18 +105,23 @@ function ShoppingCart() {
             <div className="container-checkout">
               <div className="checkout-card">
                 <div className="card-title">Checkout</div>
-                {cart?.map(({ produto }, idx) => {
-                  return (
-                    <div className="card-prod-list" key={idx}>
-                      <div id="prod-title">{produto.nome}</div>
-                      <div id="prod-price">{ formatPrice(produto.preco) }</div>
-                    </div>
-                  );
-                })}
+                {
+                cart.length > 0 ?(
+                  cart?.map(({ produto }, idx) => {
+                    return (
+                      <div className="card-prod-list" key={idx}>
+                        <div id="prod-title">{produto.nome}</div>
+                        <div id="prod-price">{ formatPrice(produto.preco) }</div>
+                      </div>
+                    );
+                  }
+                  )
+                ) : false
+                }
                 <hr />
                 <div className="card-total-container">
                   <div id="total-title">Total</div>
-                  <div id="total-amount"> {  formatPrice(amount)  }</div>
+                  <div id="total-amount"> {  cart.length > 0 ? formatPrice(amount) : false  }</div>
                 </div>
 
                 <button className="buy-btn" onClick={handleGeneratePedidos}>
