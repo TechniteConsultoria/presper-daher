@@ -19,7 +19,7 @@ import {
 import { ip } from "../../services/api";
 
 function ShareCourse(props) {
-  const shareURL = `${ip}/course-details/${props.courseId}`;
+  const shareURL = `${window.location.origin}/course-details/${props.courseId}`;
   return (
     <>
       <Container>
