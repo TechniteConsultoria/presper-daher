@@ -20,7 +20,7 @@ export default async function uploadImage(newImage, setImage) {
         },
     })
     if (credentials.status != 200) {
-        toast.info('Imagem inválida, ou problemas com o servidor :(')
+        toast.info('Arquivo inválido, ou problemas com o servidor :(')
         return
     }
 
@@ -42,10 +42,10 @@ export default async function uploadImage(newImage, setImage) {
     })
     if (upload.status != 200) {
         console.log(upload)
-        toast.info('Imagem inválida')
+        toast.info('Arquivo inválido!')
         return
     }
-    toast.success('Imagem Válida!')
+    toast.success('Arquivo Válido!')
 
     let pathToImage = `${ip}:${porta}/api${downloadExtension}`
 
