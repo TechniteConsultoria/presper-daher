@@ -143,7 +143,7 @@ function MyCourses() {
                     {classificar}
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
+                  {/* <Dropdown.Menu>
                     <Dropdown.Item
                       onClick={() => setClassificar("Título: A a Z")}
                     >
@@ -154,7 +154,8 @@ function MyCourses() {
                     >
                       Título: Z a A
                     </Dropdown.Item>
-                  </Dropdown.Menu>
+                  </Dropdown.Menu> */}
+                  
                 </Dropdown>
               </div>
               <div className="filtro-item">
