@@ -16,9 +16,10 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "react-share";
+import { ip } from "../../services/api";
 
 function ShareCourse(props) {
-  const shareURL = `http://localhost:3000/course/${props.courseId}`;
+  const shareURL = `${ip}/course-details/${props.courseId}`;
   return (
     <>
       <Container>
