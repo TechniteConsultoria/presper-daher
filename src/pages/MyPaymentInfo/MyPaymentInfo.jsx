@@ -14,9 +14,13 @@ import Alert from "react-bootstrap/Alert";
 import Cards from "react-credit-cards";
 import cartaoLoadFilter from "../../services/cartao/cartaoLoadFilter";
 import { id } from "../../services/api";
+import { useCreditCard } from "../../contexts/CreditCardContext";
 
 
 function MyPaymentInfo() {
+
+  const { getCreditCards, creditCardList, addCreditCard, deleteCreditCart } = useCreditCard();
+
   const [addCreditCardModalShow, setAddCreditCardModalShow] = useState(false);
   const [deleteCreditCardModalShow, setDeleteCreditCardModalShow] =
     useState(false);
@@ -31,19 +35,20 @@ function MyPaymentInfo() {
     status: "",
   });
 
-  async function getCreditCards() {
-      let userCartoes = await cartaoLoadFilter('user', id)
-      console.log(userCartoes)
+  async function getCards() {
+      let userCartoes = await creditCardList
+
+      console.log(creditCardList)
       setCerditCardsList(userCartoes);
     };
   
 
-  const getDeleteResult = (result) => {
-    return setResult({
-      operation: "del",
-      status: result.toString(),
-    });
-  };
+  // const getDeleteResult = (result) => {
+  //   return setResult({
+  //     operation: "del",
+  //     status: result.toString(),
+  //   });
+  // };
 
   const getAddResult = (result) => {
     return setResult({
@@ -56,8 +61,8 @@ function MyPaymentInfo() {
 
 
   useEffect(() => {
-    getCreditCards()
-  }, []);
+    getCards()
+  }, [creditCardList]);
 
   
   // useEffect(() => {
@@ -120,7 +125,10 @@ function MyPaymentInfo() {
         )}
         <div className="credit-card-container">
           <div>
-            {creditCardsList?.map((c, id) => {
+            {
+            creditCardsList ==  creditCardList ? (
+
+            creditCardsList?.map((c, id) => {
               return (
                 <div key={id} className="card-box">
                   <div
@@ -153,8 +161,49 @@ function MyPaymentInfo() {
                     </button>
                   </div>
                 </div>
-              );
-            })}
+              )
+            })  
+            ):(
+              
+
+              creditCardsList?.map((c, id) => {
+                return (
+                  <div key={id} className="card-box">
+                    <div
+                      onClick={() => {
+                        setShowCvc(!showCvc);
+                        setCardNumber(c.number);
+                      }}
+                    >
+                      <Cards
+                        id="credit-card"
+                        number={c.numero}
+                        name={c.nomeTitular}
+                        expiry={c.validade}
+                        cvc={c.cvv}
+                        focused={
+                          showCvc && cardNumber === c.number ? "cvc" : null
+                        }
+                      />
+                    </div>
+  
+                    <div>
+                      <button
+                        className="btn-del"
+                        onClick={() => {
+                          setCardId(c.id);
+                          setDeleteCreditCardModalShow(true);
+                        }}
+                      >
+                        Excluir
+                      </button>
+                    </div>
+                  </div>
+                )
+              }) 
+
+            )
+          }
           </div>
         </div>
       </Container>
@@ -167,7 +216,7 @@ function MyPaymentInfo() {
       <DeleteCreditCardModal
         show={deleteCreditCardModalShow}
         onHide={() => setDeleteCreditCardModalShow(false)}
-        result={getDeleteResult}
+        // result={getDeleteResult}
         id={cardId}
       />
     </>
