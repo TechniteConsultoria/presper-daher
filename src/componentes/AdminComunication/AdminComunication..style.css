@@ -67,6 +67,10 @@
   color: #dc3545;
 }
 
+#showModal{
+  margin-left: 5px;
+}
+
 .row {
   display: flex;
   flex-direction: column;
