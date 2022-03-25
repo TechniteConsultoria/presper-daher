@@ -8,11 +8,12 @@ export default async function cartaoDelete(cartaoId){
       params:{
         id: cartaoId,
       }
-    }).then((response) => {
-            // console.log(response)
-            let cartaoData = response.data
+    })
+    .then(
+      ( {data, status} ) => {
+            if(status != 200) toast.error("Algo deu errado! :(")
             toast.success("Excluido com sucesso!")
-            // location.reload(true)
-            return cartaoData
-          });
+            return data
+          }
+      );
 }
