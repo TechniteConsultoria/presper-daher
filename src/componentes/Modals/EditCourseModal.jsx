@@ -86,6 +86,7 @@ function EditCourseModal(props) {
   function clearVideos(){
     console.log("cleared!")
     setNewVideos([])
+    setImage('')
   }
 
   async function handleSubmit() {
@@ -341,6 +342,16 @@ function EditCourseModal(props) {
                 onChange={(e) => handleUploadImage(e.target.files[0])}
               />
             </Form.Group>
+
+
+            <Form.Group controlId="formFile" className="mb-3">
+                  <img
+                  style={{
+                    borderRadius: '5px'
+                  }}
+                  src={ image || props.course.imagemUrl }
+                  alt="" srcset="" />
+              </Form.Group>
 
             <Form.Group controlId="formBasicCheckbox" className="mb-3">
               <Form.Label column sm="2">
