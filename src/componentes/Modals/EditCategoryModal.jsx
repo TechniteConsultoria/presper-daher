@@ -71,7 +71,7 @@ function EditCategoryModal(props) {
 
           <Modal.Footer>
             <Button
-              type="submit"
+              type="button"
               style={{
                 backgroundColor: "#fff",
                 border: "1px solid rgb(108, 117, 125, 0.3)",
