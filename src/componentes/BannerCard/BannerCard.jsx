@@ -46,7 +46,7 @@ function BannerCard(props) {
       <div className="banner-title">{props.title}</div>
       <div className="banner-icons">
         <div className="banner-status">
-          {props.status == 1 ? (
+          {props.status != 1 ? (
             <BsEyeFill onClick={() => toggleShow(props.status)} id="active-icon" />
           ) : (
             <BsEyeSlashFill onClick={() => toggleShow(props.status)}   id="inactive-icon" />
