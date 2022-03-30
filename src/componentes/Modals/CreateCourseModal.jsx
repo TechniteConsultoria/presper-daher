@@ -123,6 +123,10 @@ function CreateCourseModal(props) {
     },[]
   )
   
+  function clearImage(){
+    setImage('')
+
+  }
 
 
   function handleShowVideo(url) {
@@ -132,7 +136,15 @@ function CreateCourseModal(props) {
 
   return (
     <>
-      <Modal {...props} centered animation={false}>
+      <Modal
+      {...props}
+      onHide={() => {
+        clearImage()
+        props.onHide()
+      }}
+      centered
+      animation={false}
+      >
         <Modal.Header
           closeButton
           onClick={() => {
@@ -244,6 +256,14 @@ function CreateCourseModal(props) {
                     handleUploadImage(e.target.files[0])
                   }}
                 />
+              </Form.Group>
+              <Form.Group controlId="formFile" className="mb-3">
+                  <img
+                  style={{
+                    borderRadius: '5px'
+                  }}
+                  src={ image || 'https://www.corsan.com.br/themes/padrao2019/images/outros/GD_imgSemImagem.png' }
+                  alt="" srcset="" />
               </Form.Group>
             </Form.Group>
             <Form.Group controlId="formFileMultiple" className="mb-3">
