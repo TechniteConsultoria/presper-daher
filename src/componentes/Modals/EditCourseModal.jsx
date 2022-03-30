@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Alert } from "react-bootstrap";
 import { useCoursePage } from "../../services/Hooks/CoursePageHook";
-import { BsFillTrashFill } from "react-icons/bs";
+import { BsFillCameraVideoFill, BsFillTrashFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
@@ -22,6 +22,9 @@ import { useCourse } from "../../contexts/CourseContext";
 
 import produtoModulo from "../../services/produtoModulo/produtoModulo";
 
+import LoadingGif from "../../componentes/LoadingGif";
+
+import ShowVideoModal from './ShowVideoModal'
 
 function EditCourseModal(props) {
   const { allCourses, updateCourse } = useCourse();
@@ -38,6 +41,8 @@ function EditCourseModal(props) {
   const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
   const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.price));
   const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] = useState(false)
+  const [showVideoModal, setShowVideoModal] = useState(false)
+  const [videoModalUrl, setVideoModalUrl] = useState('')
 
   const {
     image,
@@ -69,6 +74,7 @@ function EditCourseModal(props) {
   const [videoToDelete, setVideoToDelete] = useState("");
   // const [videosErrors, setVideosErrors] = useState([]);
   const [categorias,              setCategorias  ]      = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // const [videosErrors, setVideosErrors] = useState([]);
 
@@ -76,6 +82,11 @@ function EditCourseModal(props) {
     setVideosList(props.course.produtoModulo);
     // setNewVideos(props.course.produtoModulo);
   }, [oldVideos]);
+
+  function clearVideos(){
+    console.log("cleared!")
+    setNewVideos([])
+  }
 
   async function handleSubmit() {
 
@@ -103,7 +114,8 @@ function EditCourseModal(props) {
       async (newVideo, index) => {
         const data = {
           produtoId: props.course.id,
-          url: newVideo.url,
+          url:  newVideo.url,
+          nome: newVideo.nome,
         };
 
         console.log(data)
@@ -111,6 +123,7 @@ function EditCourseModal(props) {
     
         await produtoModulo.create(data)
         
+        setNewVideos([])
 
       }
     )
@@ -210,11 +223,16 @@ function EditCourseModal(props) {
      } );
   }
 
+  function handleShowVideo(url) {
+    setVideoModalUrl(url)
+    setShowVideoModal(true)
+  }
+
 
   return (
     <>
-      <Modal {...props} centered animation={false}>
-        <Modal.Header closeButton>
+      <Modal {...props} centered animation={false} onHide={() => {props.onHide(); clearVideos()}} >
+        <Modal.Header closeButton onClick={(e) => console.log("bnnvjbcdvbsjibvbsdjsvbsdj")}>
           <Modal.Title>Editar curso</Modal.Title>
         </Modal.Header>
         <Form
@@ -345,7 +363,16 @@ function EditCourseModal(props) {
                       }}
                     >
                       <span>
-                        {"  "}
+                        <div
+                            style={{
+                              display: 'inline'
+                            }}
+                            onClick={ () => handleShowVideo(video.url)}
+                          >
+                            <BsFillCameraVideoFill />
+                          </div>
+                      </span>
+                      <span>
                         {"  "}
                         {video.nome || video.url }
                       </span>
@@ -371,16 +398,23 @@ function EditCourseModal(props) {
               <Form.Label column sm="4">
                 Adicionar vídeo
               </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                onChange={async (e) => {
-                  let video = e.target.files[0]
-                  console.log(video)
-                  console.log(video);
-                  await handleUploadVideo(video)
-                }}
-              />
+              { loading ? (
+                <LoadingGif/>
+                ):(
+                <Form.Control
+                  type="file"
+                  multiple
+                  onChange={async (e) => {
+                    let video = e.target.files[0]
+
+                    setLoading(true)
+
+                    await handleUploadVideo(video)
+
+                    setLoading(false)
+                  }}
+                />
+              )}
             </Form.Group>
 
             {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -460,6 +494,7 @@ function EditCourseModal(props) {
                 color: "#000",
               }}
               onClick={() => {
+                clearVideos()
                 setResultDeleteCourseModalShow(true);
                 props.onHide();
               }}
@@ -475,6 +510,7 @@ function EditCourseModal(props) {
               variant="danger"
               onClick={() => {
                 props.onHide();
+                clearVideos()
                 setVideosErrors([]);
                 // setNewVideos();
               }}
@@ -515,6 +551,11 @@ function EditCourseModal(props) {
         video={videoToDelete}
         // course={props.course}
         // result={"not-okay"}
+      />
+      <ShowVideoModal
+        onHide={() => setShowVideoModal(false)}
+        show={showVideoModal}
+        url={ videoModalUrl }
       />
     </>
   );
