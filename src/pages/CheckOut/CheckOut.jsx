@@ -25,8 +25,8 @@ import LoadingGif from "../../componentes/LoadingGif";
 
 function CartCheckOut() {
   // TODO - buscar lista de cartoes do context
-  const { getCourseById, updateCourse, deleteOneCourse  } = useCourse();
-  const { getCreditCards, creditCardList } = useCreditCard();
+  const { getCourseById, updateCourse, addCreditCard  } = useCourse();
+  const { getCreditCards, creditCardList, } = useCreditCard();
   const { removeItemFromCart, getTotalAmount,  getCart, deleteAllCart } = useCart();
 
 
@@ -169,7 +169,7 @@ function CartCheckOut() {
                 <Col sm={10}>
 
                   {
-                  cards.map(
+                  creditCardList.map(
                   (card) => (
                   <div
                   onClick={(_) => {
@@ -201,7 +201,7 @@ function CartCheckOut() {
             </div>
 
             <div className="form-container">
-              {showAddCardForm && <AddCardForm />}
+              {showAddCardForm && <AddCardForm onHide={() => setShowAddCardForm(false)}/>}
             </div>
             <div>
               {/* {creditCardList?.map((card) => {
