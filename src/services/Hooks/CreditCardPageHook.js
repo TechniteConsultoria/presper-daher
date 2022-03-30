@@ -9,12 +9,14 @@ export const useCreditCardPage = () => {
   const [cardNumber, setCardNumber] = useState("");
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvc, setCardCvc] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const [creditCardsList, setCerditCardsList] = useState([]);
   //   const [cardId, setCardId] = useState("");
 
   const addCreditCard = async () => {
     const body = {
+      apelido: nickname,
       name: cardName,
       number: cardNumber,
       expiry: cardExpiry,
@@ -32,6 +34,7 @@ export const useCreditCardPage = () => {
     setCardName("");
     setCardExpiry("");
     setCardCvc("");
+    setNickname("")
     // setCourse(body);
     // setResultCreateCourseModalShow(true);
     // setVideosErrors([]);
@@ -51,5 +54,7 @@ export const useCreditCardPage = () => {
     setCardCvc,
     //---------------
     addCreditCard,
+    nickname,
+    setNickname
   };
 };
