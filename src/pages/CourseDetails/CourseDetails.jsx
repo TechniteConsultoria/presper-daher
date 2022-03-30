@@ -25,27 +25,15 @@ function CourseDetails() {
   const { getCourseByIdWithRelations } = useCourse();
 
   const [course,   setCourse  ] = useState();
+  const [estrelas,   setEstrelas  ] = useState(0);
   const [comments, setComments] = useState();
+  
 
-  let somas = null
-  let qttd = null
 
-  if (course?.somatoriaAvaliacoes == null || undefined) {
-    somas = 0
-  } else {
-    somas = course?.somatoriaAvaliacoes
-  }
-
-  if (course?.quantidadeAvaliacoes == null || undefined) {
-    qttd = 0
-  } else {
-    qttd = course?.quantidadeAvaliacoes
-  }
-
-  const rating = somas / qttd
 
   async function getCourse() {
     const result = await getCourseByIdWithRelations(id);
+    console.log("result")
     console.log(result)
 
     setCourse({
@@ -58,8 +46,10 @@ function CourseDetails() {
       categoriaNome: result.produto.categoriaNome,
       descricao:   result.produto.descricao,
       imagemUrl:   result.produto.imagemUrl,
-      videos:      result.produtoModulo
+      videos:      result.produtoModulo,
+      estrelas: result.produto.somatoriaAvaliacoes / result.produto.quantidadeAvaliacoes,
     });
+    setEstrelas(result.produto.somatoriaAvaliacoes / result.produto.quantidadeAvaliacoes)
   }
 
   async function getComment(){
@@ -79,6 +69,8 @@ function CourseDetails() {
     await addItemToCart(course) 
   }
 
+  // console.log(course?.estrelas)
+  // console.log(estrelas)
 
   return (
     <>
@@ -94,7 +86,16 @@ function CourseDetails() {
                 Certificado
               </div>
             </h6>
-            <ReactStars value={rating} edit={false} size={18} />
+            
+            {
+            course?.estrelas && <ReactStars
+            value={
+              course?.estrelas
+            }
+            edit={false}
+            size={18} />
+            }
+
             <h6>{course?.volumeVendas != null ? course?.volumeVendas : 0} vendidos</h6>
 
             <h6 style={{ fontSize: "24px", color: "#6CB1CF" }}>
