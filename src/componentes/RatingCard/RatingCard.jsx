@@ -35,6 +35,7 @@ export default class RatingCard extends React.Component {
                 height: "112px",
                 width: "112px",
                 boxShadow: "0px 3px 14px -8px rgba(98,63,101,0.53)",
+                objectFit: 'cover'
               }}
             />
             <Card.Body>
