@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { Modal, Button, Form, Row } from "react-bootstrap";
+import { Modal, Button, Form, Row, ListGroup, Alert } from "react-bootstrap";
 import { useCoursePage } from "../../services/Hooks/CoursePageHook";
 import ResultCreateCourseModal from "./ResultCreateCourseModal";
 import { toast } from "react-toastify"
@@ -11,30 +11,22 @@ import '../../index.css'
 
 import currencyConfig from "../../utils/currenryConfig";
 
-import cursoCreate from "../../services/curso/cursoCreate";
 import loadCategorias from "../../services/categoria/loadCategorias";
+import LoadingGif from "../../componentes/LoadingGif";
+
+import { BsFillCameraVideoFill, BsFillTrashFill } from "react-icons/bs"; 
+
+import ShowVideoModal from './ShowVideoModal'
 
 function CreateCourseModal(props) {
-  // const [resultCreateCourseModalShow, setResultCreateCourseModalShow] =
-  //   useState(false);
-
-  // const [image,                   setImage       ]      = useState("");
-  // const [title,                   setTitle       ]      = useState("");
-  // const [author,                  setAuthor      ]      = useState("");
-  // const [price,                   setPrice       ]      = useState("");
-  // const [category,                setCategory    ]      = useState("");
-  // const [description,             setDescription ]      = useState("");
-  // const [videosErrors,            setVideosErrors]      = useState([]);
-  // const [videos,                  setVideos      ]      = useState([]);
   const [handleChangePrice,       setHandleChangePrice] = useState();
-  const [categorias,              setCategorias  ]      = useState([]);
-  const [newVideo,                setNewVideo    ] = useState();
-
-
-
-  // const [videosList, setVideosList] = useState([]);
-
-  // const [course, setCourse] = useState({});
+  const [categorias,              setCategorias       ] = useState([]);
+  const [newVideo,                setNewVideo         ] = useState();
+  
+  const [showVideoModal, setShowVideoModal] = useState(false)
+  const [videoModalUrl, setVideoModalUrl] = useState('')
+  const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => { }, []);
   
@@ -64,9 +56,6 @@ function CreateCourseModal(props) {
     setResultCreateCourseModalShow,
   } = useCoursePage();
 
-  // useEffect(() => {
-  //   console.log(image);
-  // }, [setImage]);
 
   function handleAddVideos(pathToVideo, imageName) {
     let data = {
@@ -133,6 +122,13 @@ function CreateCourseModal(props) {
       getCategories()
     },[]
   )
+  
+
+
+  function handleShowVideo(url) {
+    setVideoModalUrl(url)
+    setShowVideoModal(true)
+  }
 
   return (
     <>
@@ -254,31 +250,69 @@ function CreateCourseModal(props) {
               <Form.Label column sm="4">
                 Adicionar vídeo
               </Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                required
-                onChange={async (e) => {
-                  let video = e.target.files[0]
-                  console.log(video)
-                  console.log(video);
-                  await handleUploadVideo(video)
-                }}
-              />
+              { loading ? (
+                <LoadingGif/>
+                ):(
+                <Form.Control
+                  type="file"
+                  multiple
+                  onChange={async (e) => {
+                    let video = e.target.files[0]
+
+                    setLoading(true)
+
+                    await handleUploadVideo(video)
+
+                    setLoading(false)
+                  }}
+                />
+              )
+              }
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Vídeos selecionados:</Form.Label>
 
               {videosList?.length > 0
-                ? videosList.map((video, id) => {
+                ? videosList.map((video, index) => {
                   return (
-                    <Form.Check
-                      type="checkbox"
-                      label={video.nome}
-                      key={id}
-                      checked
-                      onChange={() => console.log(video.nome)}
-                    />
+                  <ListGroup.Item
+                      key={index}
+                      as="li"
+                      style={{
+                        justifyContent: "space-between",
+                        display: "flex",
+                        fontSize: "14px",
+                        // alignItems: "center",
+                        textAlign: "center",
+                      }}
+                    >
+                       <span>
+                         <div
+                             style={{
+                               display: 'inline'
+                             }}
+                             onClick={ () => handleShowVideo(video.url)}
+                           >
+                             <BsFillCameraVideoFill />
+                           </div>
+                       </span>
+                      <span>
+                        {video.nome || video.url }
+                      </span>
+                      <span>
+                        <BsFillTrashFill
+                          color="rgb(220, 53, 69)"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+
+                            let updatedVideos = [...videosList]
+                            updatedVideos.splice(index, 1);
+                            setVideosList(updatedVideos)
+
+                          }}
+                        />
+                      </span>
+                    </ListGroup.Item>
                   );
                 })
                 : 
@@ -338,6 +372,11 @@ function CreateCourseModal(props) {
         course={course}
         result={result}
       /> */}
+      <ShowVideoModal
+        onHide={() => setShowVideoModal(false)}
+        show={showVideoModal}
+        url={ videoModalUrl }
+      />
     </>
   );
 }
