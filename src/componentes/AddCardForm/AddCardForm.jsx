@@ -6,7 +6,7 @@ import { useCreditCardPage } from "../../services/Hooks/CreditCardPageHook";
 
 import { useCreditCard } from "../../contexts/CreditCardContext";
 
-function AddCardForm() {
+function AddCardForm(props) {
   const {
     cardNumber,
     setCardNumber,
@@ -16,19 +16,22 @@ function AddCardForm() {
     setCardExpiry,
     cardCvc,
     setCardCvc,
+    nickname,
+    setNickname
   } = useCreditCardPage();
 
   const { addCreditCard } = useCreditCard();
 
   async function handleSubmit() {
     const data = {
-      name: cardName,
-      number: cardNumber,
-      expiry: cardExpiry,
-      cvc: cardCvc,
+      apelido:     nickname,
+      numero:      cardNumber,
+      nomeTitular: cardName,
+      validade:    cardExpiry,
+      cvv:         cardCvc,
     };
     await addCreditCard(data);
-    window.location.reload()
+    props.onHide()
   }
 
   useEffect(() => {
@@ -36,6 +39,7 @@ function AddCardForm() {
     setCardName("");
     setCardExpiry("");
     setCardCvc("");
+    setNickname("")
   }, []);
 
   return (
@@ -47,6 +51,19 @@ function AddCardForm() {
           handleSubmit();
         }}
       >
+
+
+        <Form.Group className="mb-3">
+          <Form.Label> Apelido do Cartão</Form.Label>
+          <Form.Control
+            style={{ width: "200px" }}
+            type="text"
+            placeholder="Nome no cartão"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            required
+          />
+        </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label> Nome no Cartão</Form.Label>
           <Form.Control
