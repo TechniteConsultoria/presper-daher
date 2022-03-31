@@ -182,7 +182,7 @@ function Courses() {
 
         <Container className="container-filtro">
           <div className="filtro-item">
-            <Form.Label column sm="6">
+            {/* <Form.Label column sm="6">
               Pesquisar
             </Form.Label>
             <Form className="search-bar">
@@ -199,7 +199,7 @@ function Courses() {
                   e.preventDefault();
                 }}
               />
-            </Form>
+            </Form> */}
           </div>
           {/* <div className="filtro-item">
             <Form.Label column sm="8">
@@ -235,7 +235,7 @@ function Courses() {
             </Dropdown>
           </div> */}
           <div className="filtro-item">
-            <Form.Label column sm="10">
+            {/* <Form.Label column sm="10">
               Filtrar por categoria
             </Form.Label>
             <Dropdown>
@@ -266,7 +266,7 @@ function Courses() {
                   );
                 })}
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </Container>
 

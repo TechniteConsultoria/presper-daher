@@ -188,7 +188,7 @@ function Comunication() {
         <Container className="container-filtro">
           <div className="filtro-item">
             <Row>
-              <Form.Label column sm="8">
+              {/* <Form.Label column sm="8">
                 Classificar por
               </Form.Label>
               <Dropdown>
@@ -214,12 +214,12 @@ function Comunication() {
                     Mais antigas
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Row>
           </div>
           <div className="filtro-item">
             <Row>
-              <Form.Label column sm="9">
+              {/* <Form.Label column sm="9">
                 Filtrar por status
               </Form.Label>
               <Dropdown>
@@ -248,13 +248,13 @@ function Comunication() {
                     Não visível
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Row>
           </div>
           <div className="filtro-item">
             {" "}
             <Row>
-              <Form.Label column sm="8">
+              {/* <Form.Label column sm="8">
                 Filtrar por curso
               </Form.Label>
               <Dropdown>
@@ -285,7 +285,7 @@ function Comunication() {
                     );
                   })}
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </Row>
           </div>
         </Container>

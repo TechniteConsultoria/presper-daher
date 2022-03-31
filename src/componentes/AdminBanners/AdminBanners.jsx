@@ -80,7 +80,7 @@ function Banners(props) {
 
         <Container className="container-filtro">
           <div className="filtro-item">
-            <Form.Label column sm="6">
+            {/* <Form.Label column sm="6">
               Pesquisar
             </Form.Label>
             <Form className="search-bar">
@@ -113,8 +113,7 @@ function Banners(props) {
                   width: "200px",
                 }}
               >
-                {/* {classificar} */}
-              </Dropdown.Toggle>
+              </Dropdown.Toggle> */}
 
               {/* <Dropdown.Menu>
                 <Dropdown.Item onClick={() => setClassificar("Mais vendidos")}>
@@ -130,7 +129,7 @@ function Banners(props) {
                   Menor preço
                 </Dropdown.Item>
               </Dropdown.Menu> */}
-            </Dropdown>
+            {/* </Dropdown> */}
           </div>
           <div className="filtro-item">
             {/* <Form.Label column sm="10">
