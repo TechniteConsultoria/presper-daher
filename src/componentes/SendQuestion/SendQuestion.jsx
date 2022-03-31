@@ -1,13 +1,15 @@
 import "./SendQuestion.styles.css";
 import React, { useState } from "react";
 
-import { id } from "../../services/api"
+import { Email, id } from "../../services/api"
 
 
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import comentarioCreate from "../../services/comentario/comentarioCreate";
+import MessageService from "../../services/MessageService";
+import { toast } from "react-toastify";
 
 function SendQuestion(props) {
   const [message, setMessage] = useState("");
@@ -15,16 +17,21 @@ function SendQuestion(props) {
   async function handleSubmit() {
 
     const data = {
-      // cir: props.courseId,
       comentario: message,
       produtoId:  props.courseId,
       userId:     id,
+
     };
+    try {
+      const response = await MessageService.createMessageProduto(data);
+      setMessage("")
+    }
+    
+    catch (error) {
+      console.error(error);
+      toast.error(error)
+    }
 
-    console.log(data)
-    await comentarioCreate(data)
-
-    setMessage("");
   }
 
   return (
