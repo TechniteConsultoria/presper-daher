@@ -28,7 +28,13 @@ function CourseDetails() {
   const [estrelas,   setEstrelas  ] = useState(0);
   const [comments, setComments] = useState();
   
+  function makeStars(sum, qtd){
+    let starsNumber = sum / qtd
 
+    if(Number.isNaN(starsNumber)) return 0.1
+    
+    return starsNumber
+  }
 
 
   async function getCourse() {
@@ -47,7 +53,7 @@ function CourseDetails() {
       descricao:   result.produto.descricao,
       imagemUrl:   result.produto.imagemUrl,
       videos:      result.produtoModulo,
-      estrelas: result.produto.somatoriaAvaliacoes / result.produto.quantidadeAvaliacoes,
+      estrelas: makeStars(result.produto.somatoriaAvaliacoes, result.produto.quantidadeAvaliacoes)
     });
     setEstrelas(result.produto.somatoriaAvaliacoes / result.produto.quantidadeAvaliacoes)
   }
@@ -90,7 +96,7 @@ function CourseDetails() {
             {
             course?.estrelas && <ReactStars
             value={
-              course?.estrelas
+               course?.estrelas 
             }
             edit={false}
             size={18} />
@@ -99,7 +105,7 @@ function CourseDetails() {
             <h6>{course?.volumeVendas != null ? course?.volumeVendas : 0} vendidos</h6>
 
             <h6 style={{ fontSize: "24px", color: "#6CB1CF" }}>
-              { formatPrice(Number( course?.preco )) }
+              {course?.preco && formatPrice(Number( course?.preco )) }
             </h6>
           </div>
           <div className="img-btn-container">
