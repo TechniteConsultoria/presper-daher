@@ -13,7 +13,7 @@ export default async function cadastrarProduct(data) {
       data
       })
       .then((response) => {
-        let mensagemOk = 'Recebemos seu produto, ele será revisado e logo estará na plataforma :)'
+        let mensagemOk = 'Produto criado com sucesso! :)'
         let mensagemNaoOK = 'Revise os dados do produto :('
         responseHandler(response.status, mensagemOk, mensagemNaoOK)
         if (response.status == 200) {
