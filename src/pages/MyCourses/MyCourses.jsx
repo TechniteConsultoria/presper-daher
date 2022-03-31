@@ -102,7 +102,7 @@ function MyCourses() {
           <hr></hr>
           <div className="container-filtro">
             <div className="filtro-item">
-              <Form.Label column className="label">
+              {/* <Form.Label column className="label">
                 Pesquisar
               </Form.Label>
 
@@ -123,11 +123,11 @@ function MyCourses() {
                     setBuscarCurso(e.target.value);
                   }}
                 />
-              </Form>
+              </Form> */}
             </div>
             <div className="filtros-container">
               <div className="filtro-item">
-                <Form.Label column className="label">
+                {/* <Form.Label column className="label">
                   Classificar por
                 </Form.Label>
                 <Dropdown>
@@ -143,7 +143,7 @@ function MyCourses() {
                     {classificar}
                   </Dropdown.Toggle>
 
-                  {/* <Dropdown.Menu>
+                  <Dropdown.Menu>
                     <Dropdown.Item
                       onClick={() => setClassificar("Título: A a Z")}
                     >
@@ -154,12 +154,12 @@ function MyCourses() {
                     >
                       Título: Z a A
                     </Dropdown.Item>
-                  </Dropdown.Menu> */}
+                  </Dropdown.Menu>
                   
-                </Dropdown>
+                </Dropdown> */}
               </div>
               <div className="filtro-item">
-                <Form.Label column className="label">
+                {/* <Form.Label column className="label">
                   Filtrar por categoria
                 </Form.Label>
                 <Dropdown>
@@ -190,7 +190,7 @@ function MyCourses() {
                       );
                     })}
                   </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown> */}
               </div>
             </div>
           </div>
@@ -208,6 +208,8 @@ function MyCourses() {
                   title={item.produto.nome}
                   author={item.produto.autor}
                   rating={item.produto.somatoriaDeAvaliacoes}
+                  avalationSums={item.somatoriaAvaliacoes}
+                  avaliationsQuantity={item.quantidadeAvaliacoes}
                   onClick={() => {
                     //   setCourse(item);
                     //   showEditCourseModal(true);

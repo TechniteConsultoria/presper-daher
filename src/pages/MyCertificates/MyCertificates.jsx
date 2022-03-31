@@ -109,7 +109,7 @@ function MyCertificates() {
           <hr/>
           <div className="container-filtro">
             <div className="filtro-item">
-              <Form.Label column sm="6">
+              {/* <Form.Label column sm="6">
                 Pesquisar
               </Form.Label>
               <Form className="search-bar">
@@ -127,10 +127,10 @@ function MyCertificates() {
                     e.preventDefault();
                   }}
                 />
-              </Form>
+              </Form> */}
             </div>
             <div className="filtro-item">
-              <Form.Label column sm="11">
+              {/* <Form.Label column sm="11">
                 Classificar por
               </Form.Label>
               <Dropdown>
@@ -159,7 +159,7 @@ function MyCertificates() {
                     Título: Z a A
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </div>
             {/* <div className="filtro-item">
               <Form.Label column sm="10">
