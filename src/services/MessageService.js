@@ -1,5 +1,6 @@
 import { ApiService } from "../services/ApiService";
 import sendEmailPergunta from "./email/sendEmailPergunta";
+import sendEmailPerguntaProduto from "./email/sendEmailPerguntaProduto";
 
 class MessageService {
   async createMessage(body) {
@@ -12,6 +13,20 @@ class MessageService {
       return error;
     }
   }
+
+
+  async createMessageProduto(body) {
+    try {
+      console.log("body")
+      console.log(body)
+      const response = await sendEmailPerguntaProduto(body);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+
+
 
   async getMessage(query) {
     try {
