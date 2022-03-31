@@ -25,7 +25,7 @@ function MyCoursesCardComponent(props) {
         <Card.Body>
           <Card.Title style={{ fontSize: "14px" }}>{props.title}</Card.Title>
           <Card.Text style={{ fontSize: "12px" }}>{props.author}</Card.Text>
-
+          
           <div
             style={{
               justifyContent: "space-between",
@@ -33,7 +33,8 @@ function MyCoursesCardComponent(props) {
               alignItems: "center",
             }}
           >
-            <ReactStars value={props.rating} edit={false} size={16} />
+
+            {/* <ReactStars value={ props.avalationSums / props.avaliationsQuantity } edit={false} size={16} /> */}
           </div>
         </Card.Body>
       </Card>
