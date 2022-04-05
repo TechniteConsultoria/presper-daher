@@ -15,8 +15,8 @@ function ResultDeleteVideoModal(props) {
           </Modal.Body>
         ) : (
           <Modal.Body>
-            Ops! Ocorreu um problema ao excluir o curso{" "}
-            <strong>{props.course.title}</strong>. Tente novamente.
+             O curso <strong>{props.course.title}</strong> foi excluído com
+            sucesso!
           </Modal.Body>
         )}
 
