@@ -429,8 +429,6 @@ function CreateCourseModal(props) {
         show={showCreateCategoryModal}
         onHide={() => {
           isShowCreateCategoryModal(false)
-          // getCategories()
-
           setTimeout(() => {
             getCategories()
           }, 1000);
