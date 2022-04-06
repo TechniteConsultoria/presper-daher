@@ -36,10 +36,6 @@ function Category() {
 
   async function handleDeleteCategory(id){
     await deleteCategory(id)
-
-    console.log("bndknbdfnbkjfnbdjfnbjkdfn")
-
-
   }
 
   useEffect(() => {
