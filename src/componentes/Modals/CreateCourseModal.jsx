@@ -127,7 +127,7 @@ function CreateCourseModal(props) {
     () => {
 
       getCategories()
-    },[]
+    },[props.show]
   )
   
   function clearImage(){
