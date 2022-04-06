@@ -109,7 +109,11 @@ function CreateCourseModal(props) {
 
   async function getCategories(){
     try {
-      let categories = await loadCategorias();
+      let categories = await loadCategorias()
+
+      console.log("categories")
+      console.log(categories)
+
       setCategorias(categories)
       setCategory(categories[0].id)
     }
@@ -197,8 +201,10 @@ function CreateCourseModal(props) {
                   as="select"
                   onChange={(e) => setCategory(e.target.value)}
                   required
+                  value={category}
                 >
                   {
+                   
                     categorias.map(
                       (category) => (
                         <option key={category.id} value={category.id}>
@@ -206,6 +212,7 @@ function CreateCourseModal(props) {
                         </option>
                       )
                     )
+
                   }
                 </Form.Control>
                 <BsFillPlusSquareFill
@@ -420,9 +427,15 @@ function CreateCourseModal(props) {
 
     <CreateCategoryModal
         show={showCreateCategoryModal}
-        onHide={() => isShowCreateCategoryModal(false)}
-      />
+        onHide={() => {
+          isShowCreateCategoryModal(false)
+          // getCategories()
 
+          setTimeout(() => {
+            getCategories()
+          }, 1000);
+        }}
+      />
     </>
   );
 }
