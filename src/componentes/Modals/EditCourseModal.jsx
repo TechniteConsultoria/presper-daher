@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Modal, Button, Form, ListGroup, Alert } from "react-bootstrap";
 import { useCoursePage } from "../../services/Hooks/CoursePageHook";
-import { BsFillCameraVideoFill, BsFillTrashFill } from "react-icons/bs";
+import { BsFillCameraVideoFill, BsFillTrashFill, BsFillPlusSquareFill } from "react-icons/bs";
 
 import ResultEditCourseModal from "./ResultEditCourseModal";
 import DeleteVideoModal from "./DeleteVideoModal";
@@ -25,9 +25,12 @@ import produtoModulo from "../../services/produtoModulo/produtoModulo";
 import LoadingGif from "../../componentes/LoadingGif";
 
 import ShowVideoModal from './ShowVideoModal'
+import CreateCategoryModal from "./CreateCategoryModal";
+
 
 function EditCourseModal(props) {
   const { allCourses, updateCourse } = useCourse();
+
 
   const [videosList, setVideosList] = useState(props.course.produtoModulo);
   let oldVideos = props.course.produtoModulo;
@@ -38,6 +41,7 @@ function EditCourseModal(props) {
   // const [price, setPrice] = useState(props.course.preco);
   // const [category, setCategory] = useState(props.course.categoria);
   // const [description, setDescription] = useState(props.course.descricao);
+  const [showCreateCategoryModal, isShowCreateCategoryModal] = useState(false);
   const [deleteVideoModalShow, setDeleteVideoModalShow] = useState(false);
   const [handleChangePrice,           setHandleChangePrice        ] = useState(formatPrice(props.course.price));
   const [resultDeleteCourseModalShow, setResultDeleteCourseModalShow] = useState(false)
@@ -140,8 +144,13 @@ function EditCourseModal(props) {
 
   async function getCategories(){
     try {
-      let categories = await loadCategorias();
+      let categories = await loadCategorias()
+
+      console.log("categories")
+      console.log(categories)
+
       setCategorias(categories)
+      setCategory(categories[0].id)
     }
     
     catch (error) {
@@ -229,6 +238,12 @@ function EditCourseModal(props) {
     setShowVideoModal(true)
   }
 
+  useEffect(
+    () => {
+      getCategories()
+    },[props.show]
+  )
+
 
   return (
     <>
@@ -260,23 +275,42 @@ function EditCourseModal(props) {
               <Form.Label column sm="2">
                 Categoria
               </Form.Label>
-              <Form.Control
-                as="select"
-                defaultValue={props.course.categoriaId}
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              >
+              <div
+              style={
                 {
-                  categorias.map(
-                    (category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.nome}
-                      </option>
-                    )
-                  )
+                  display: 'flex',
+                  justifyContent: 'center',
                 }
+              }
+              >
+                <Form.Control
+                  as="select"
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                  value={category}
+                >
+                  {
+                   
+                    categorias.map(
+                      (category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.nome}
+                        </option>
+                      )
+                    )
 
-              </Form.Control>
+                  }
+                </Form.Control>
+                <BsFillPlusSquareFill
+                  onClick={() => isShowCreateCategoryModal(true)}
+                  size="2.45em"
+                  style={
+                    { color: "rgb(20, 184, 166)",
+                    marginLeft: '5px',
+                    cursor: 'pointer' }
+                    } />
+                {" "}
+              </div>
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -567,6 +601,18 @@ function EditCourseModal(props) {
         onHide={() => setShowVideoModal(false)}
         show={showVideoModal}
         url={ videoModalUrl }
+      />
+
+    <CreateCategoryModal
+        show={showCreateCategoryModal}
+        onHide={() => {
+          isShowCreateCategoryModal(false)
+          // getCategories()
+
+          setTimeout(() => {
+            getCategories()
+          }, 1000);
+        }}
       />
     </>
   );
