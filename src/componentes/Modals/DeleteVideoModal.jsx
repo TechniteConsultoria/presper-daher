@@ -44,7 +44,7 @@ function DeleteVideoModal(props) {
               }}
               onClick={() => {
                 handleClick();
-                setResultDeleteVideoModalShow(true);
+                // setResultDeleteVideoModalShow(true);
                 props.onHide();
               }}
             >
@@ -53,11 +53,11 @@ function DeleteVideoModal(props) {
           </Modal.Footer>
         </>
       </Modal>
-      <ResultDeleteVideoModal
+      {/* <ResultDeleteVideoModal
         show={resultDeleteVideoModalShow}
         onHide={() => setResultDeleteVideoModalShow(false)}
         video={props.video}
-      />
+      /> */}
     </>
   );
 }

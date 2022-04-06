@@ -59,19 +59,23 @@ function Admin() {
                         }}
                       >
                         <div id="link">
-                          <span>{val.icon}</span> <span>{val.title}</span>
+                          <Navbar.Toggle>
+                            <span>{val.icon}</span> <span>{val.title}</span>
+                          </Navbar.Toggle>
                         </div>
                       </Nav.Link>
                     );
                   })}
 
-                  <Nav.Link
-                  href="/"
-                  >
-                        <div id="link">
-                          <span><BsFillHouseFill /></span> <span>Home</span>
-                        </div>
-                  </Nav.Link>
+                    <Nav.Link
+                    href="/"
+                    >
+                          <div id="link">
+                            <Navbar.Toggle>
+                              <span><BsFillHouseFill /></span> <span>Home</span>
+                            </Navbar.Toggle>
+                          </div>
+                    </Nav.Link>
 
                   <Nav.Link
                     onClick={() => {
@@ -79,10 +83,12 @@ function Admin() {
                     }}
                   >
                     <div id="link">
-                      <span>
-                        <BsFillArrowRightSquareFill />
-                      </span>{" "}
-                      <span>Sair</span>
+                      <Navbar.Toggle>
+                        <span>
+                          <BsFillArrowRightSquareFill />
+                        </span>{" "}
+                        <span>Sair</span>
+                      </Navbar.Toggle>
                     </div>
                   </Nav.Link>
                 </Nav>

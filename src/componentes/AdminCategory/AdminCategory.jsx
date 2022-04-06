@@ -6,7 +6,7 @@ import EditCategoryModal from "../Modals/EditCategoryModal";
 
 import loadCategorias from '../../services/categoria/loadCategorias'
 
-import { BsFillPencilFill } from "react-icons/bs";
+import { BsFillPencilFill, BsFillTrash2Fill, BsFillTrashFill, BsTrash } from "react-icons/bs";
 
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
 
@@ -15,7 +15,7 @@ import { useCategory } from "../../contexts/CategoryContext";
 
 function Category() {
 
-  const { allCategorys } = useCategory();
+  const { allCategorys, deleteCategory } = useCategory();
 
 
   const [showCreateCategoryModal, isShowCreateCategoryModal] = useState(false);
@@ -32,6 +32,14 @@ function Category() {
     catch (error) {
       console.error(error);
     }
+  }
+
+  async function handleDeleteCategory(id){
+    await deleteCategory(id)
+
+    console.log("bndknbdfnbkjfnbdjfnbjkdfn")
+
+
   }
 
   useEffect(() => {
@@ -107,6 +115,14 @@ function Category() {
                             console.log(cat);
                           }}
                         />
+                         <BsFillTrashFill
+                          className="icon"
+                          id="icon-delete"
+                          onClick={() => {
+                            handleDeleteCategory(cat.id);
+                            console.log(cat);
+                          }}
+                        />
                       </td>
                     </tr>
                   )
@@ -121,6 +137,7 @@ function Category() {
                       </td>
 
                       <td className="icons-column">
+                        
                         <BsFillPencilFill
                           className="icon"
                           id="icon-edit"
@@ -130,7 +147,20 @@ function Category() {
                             console.log(cat);
                           }}
                         />
+                        
+
+                        <BsFillPencilFill
+                          className="icon"
+                          id="icon-delete"
+                          onClick={() => {
+                            setCategory(cat);
+                            isShowEditCategoryModal(true);
+                            console.log(cat);
+                          }}
+                        />
+                        
                       </td>
+                      
                     </tr>
                   )
                 )
