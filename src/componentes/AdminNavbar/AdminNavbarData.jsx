@@ -20,22 +20,22 @@ export const AdminNavbarData = [
     cod: 2,
   },
   {
+    title: "Categorias",
+    icon: <BsTagsFill />,
+    link: "/admin/categoria",
+    cod: 3,
+  },
+  {
     title: "Comunicação",
     icon: <BsFillChatLeftFill />,
     link: "/admin/comunicacao",
-    cod: 3,
+    cod: 4,
   },
   {
     title: "Banners",
     icon: <BsFillBarChartLineFill />,
     link: "/admin/banners",
-    cod: 4,
-
-  },
-  {
-    title: "Categorias",
-    icon: <BsTagsFill />,
-    link: "/admin/categoria",
     cod: 5,
+
   },
 ];
