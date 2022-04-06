@@ -14,14 +14,17 @@ import currencyConfig from "../../utils/currenryConfig";
 import loadCategorias from "../../services/categoria/loadCategorias";
 import LoadingGif from "../../componentes/LoadingGif";
 
-import { BsFillCameraVideoFill, BsFillTrashFill } from "react-icons/bs"; 
+import { BsFillAwardFill, BsFillCameraVideoFill, BsFillPlusSquareFill, BsFillTrashFill } from "react-icons/bs"; 
 
 import ShowVideoModal from './ShowVideoModal'
+import CreateCategoryModal from "./CreateCategoryModal";
 
 function CreateCourseModal(props) {
   const [handleChangePrice,       setHandleChangePrice] = useState();
   const [categorias,              setCategorias       ] = useState([]);
   const [newVideo,                setNewVideo         ] = useState();
+  const [showCreateCategoryModal, isShowCreateCategoryModal] = useState(false);
+
   
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [videoModalUrl, setVideoModalUrl] = useState('')
@@ -182,22 +185,39 @@ function CreateCourseModal(props) {
               <Form.Label column sm="2">
                 Categoria
               </Form.Label>
-              <Form.Control
-                as="select"
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              >
+              <div
+              style={
                 {
-                  categorias.map(
-                    (category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.nome}
-                      </option>
-                    )
-                  )
+                  display: 'flex',
+                  justifyContent: 'center',
                 }
-
-              </Form.Control>
+              }
+              >
+                <Form.Control
+                  as="select"
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                >
+                  {
+                    categorias.map(
+                      (category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.nome}
+                        </option>
+                      )
+                    )
+                  }
+                </Form.Control>
+                <BsFillPlusSquareFill
+                  onClick={() => isShowCreateCategoryModal(true)}
+                  size="2.45em"
+                  style={
+                    { color: "rgb(20, 184, 166)",
+                    marginLeft: '5px',
+                    cursor: 'pointer' }
+                    } />
+                {" "}
+              </div>
               
             </Form.Group>
             <Form.Group className="mb-3">
@@ -397,6 +417,12 @@ function CreateCourseModal(props) {
         show={showVideoModal}
         url={ videoModalUrl }
       />
+
+    <CreateCategoryModal
+        show={showCreateCategoryModal}
+        onHide={() => isShowCreateCategoryModal(false)}
+      />
+
     </>
   );
 }
