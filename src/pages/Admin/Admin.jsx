@@ -50,6 +50,18 @@ function Admin() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
+
+                  <Nav.Link
+                      href="/"
+                      >
+                            <div id="link">
+                              <Navbar.Toggle>
+                                <span><BsFillHouseFill /></span> <span>Home</span>
+                              </Navbar.Toggle>
+                            </div>
+                  </Nav.Link>
+
+
                   {AdminNavbarData.map((val, key) => {
                     return (
                       <Nav.Link
@@ -67,15 +79,6 @@ function Admin() {
                     );
                   })}
 
-                    <Nav.Link
-                    href="/"
-                    >
-                          <div id="link">
-                            <Navbar.Toggle>
-                              <span><BsFillHouseFill /></span> <span>Home</span>
-                            </Navbar.Toggle>
-                          </div>
-                    </Nav.Link>
 
                   <Nav.Link
                     onClick={() => {
@@ -97,10 +100,10 @@ function Admin() {
           </Container>
         </Navbar>
         <Container>
-          {showPage === 2 && <Courses />}
-          {showPage === 3 && <Comunication />}
-          {showPage === 4 && <Banners />}
-          {showPage === 5 && <Category />}
+          { showPage === 2 && <Courses      /> }
+          { showPage === 3 && <Category     /> }
+          { showPage === 4 && <Comunication /> }
+          { showPage === 5 && <Banners      /> }
         </Container>
       </div>
     </>
