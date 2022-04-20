@@ -17,8 +17,8 @@ import MaskedInput from "react-maskedinput";
 function Signup() {
   useEffect(
     () => {
-      loadReCaptcha()
-      console.log(loadReCaptcha())
+      // loadReCaptcha()
+      // console.log(loadReCaptcha())
     },[]
   )
   /*
@@ -29,7 +29,7 @@ function Signup() {
    6LfO6PoeAAAAAOwDuXzuUtONm-k8-BQ2qSyzTEHT
   */
 
-   let siteKey = '6LfO6PoeAAAAAAujWa_8zELc0haxuEMjx2GrxxqX'
+  let siteKey = '6LfO6PoeAAAAAAujWa_8zELc0haxuEMjx2GrxxqX'
 
   const [nome, setNome] = useState("");
   const [cpf , setCpf ] = useState("");
@@ -39,7 +39,7 @@ function Signup() {
   const [confirmaSenha, setConfirmaSenha] = useState("");
   const [inscricao, setInscricao] = useState(false);
   
-  const [isVerify, setIsVerify] = useState("");
+  const [isVerify, setIsVerify] = useState(true);
   const [submit, isSubmit] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -175,7 +175,7 @@ function Signup() {
                 }}
               />
 
-          <ReCaptcha
+          {/* <ReCaptcha
             // ref={(el) => {this.captchaDemo = el;}}
             size="normal"
             data-theme="dark"            
@@ -183,7 +183,7 @@ function Signup() {
             sitekey={siteKey}
             onloadCallback={e => console.log(e)}
             verifyCallback={e => setIsVerify(e)}
-          />
+          /> */}
 
               {/* <div className="form-check">
                 <input
