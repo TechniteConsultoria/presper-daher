@@ -21,8 +21,8 @@ function AddBannerModal(props) {
   async function handleSubmit() {
     const data = {
       imagemUrl: imgFile,
-      titulo: imgTitle,
-      descricao: imgDesc,
+      // titulo: imgTitle,
+      // descricao: imgDesc,
       status: imgStatus,
     };
 
@@ -78,7 +78,7 @@ function AddBannerModal(props) {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3">
+              {/* <Form.Group className="mb-3">
                 <Form.Label column sm="2">
                   Título
                 </Form.Label>
@@ -100,7 +100,7 @@ function AddBannerModal(props) {
                   onChange={(e) => setImgDesc(e.target.value)}
                   required
                 />
-              </Form.Group>
+              </Form.Group> */}
 
 
               {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">

@@ -174,7 +174,7 @@ function Banners(props) {
                 <BannerCard
                   key={banner.id}
                   id={banner.id}
-                  title={banner.titulo}
+                  // title={banner.titulo}
                   status={banner.status}
                   action={() => {
                     console.log("Executa uma ação");

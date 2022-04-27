@@ -146,7 +146,7 @@ function Home() {
                 />
 
                 <Carousel.Caption>
-                  <h3>
+                  {/* <h3>
                     {
                     titulo
                     }
@@ -155,7 +155,7 @@ function Home() {
                     {
                       descricao
                     }
-                  </p>
+                  </p> */}
                 </Carousel.Caption>
               </Carousel.Item>
               ) )
